@@ -7,6 +7,7 @@ public class Keyboardmovement : MonoBehaviour
     public GameObject ball;
     private Rigidbody ballPhysics;
     public GameObject racket;
+    public float playerSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,19 +20,19 @@ public class Keyboardmovement : MonoBehaviour
         if (Input.GetKey("w") || Input.GetKey("up"))
         {
             //Debug.Log("Hi");
-            gameObject.transform.Translate(0.01f,0,0);
+            gameObject.transform.Translate(playerSpeed,0,0);
         }
         if (Input.GetKey("a") || Input.GetKey("left"))
         {
-            gameObject.transform.Translate(0, 0, 0.01f);
+            gameObject.transform.Translate(0, 0, playerSpeed);
         }
         if (Input.GetKey("s") || Input.GetKey("down"))
         {
-            gameObject.transform.Translate(-0.01f, 0, 0);
+            gameObject.transform.Translate(-playerSpeed, 0, 0);
         }
         if (Input.GetKey("d") || Input.GetKey("right"))
         {
-            gameObject.transform.Translate(0, 0, -0.01f);
+            gameObject.transform.Translate(0, 0, -playerSpeed);
         }
         if (Input.GetKey("e"))
         {
