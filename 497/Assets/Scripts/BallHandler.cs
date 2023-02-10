@@ -44,10 +44,9 @@ public class BallHandler : MonoBehaviour
     void HitBall()
     {
         Vector3 currVelocity = ballPhysics.velocity;
-        ballPhysics.velocity = new Vector3(-currVelocity.x, currVelocity.y, -currVelocity.z);
-        //Vector3 normalVector = racket.transform.up;
-        //normalVector = Quaternion.Euler(0, 0, -90) * normalVector;
-        //ballPhysics.velocity = Vector3.Reflect(ballPhysics.velocity, normalVector);
+        Vector3 normalVector = racket.transform.rotation * Vector3.right; // will probably have to change later
+        //Debug.Log(normalVector);
+        ballPhysics.velocity = Vector3.Reflect(ballPhysics.velocity, normalVector);
         ballPhysics.velocity *= 0.8f;
         ballPhysics.AddForce(10, 3, 0, ForceMode.VelocityChange);
     }

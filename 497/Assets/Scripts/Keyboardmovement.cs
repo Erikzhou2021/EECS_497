@@ -56,5 +56,12 @@ public class Keyboardmovement : MonoBehaviour
         {
             gameObject.transform.Rotate(0, 0.5f, 0);
         }
+        if (Input.GetKey("f"))
+        {
+            Vector3 force = Vector3.MoveTowards(ballPhysics.position, racket.transform.position, 1);
+            force.Normalize();
+            force = force * 10;
+            ballPhysics.AddForce(force);
+        }
     }
 }
