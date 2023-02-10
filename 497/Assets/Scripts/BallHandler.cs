@@ -9,8 +9,7 @@ public class BallHandler : MonoBehaviour
     float lastSwing;
     public GameObject ball;
     private Rigidbody ballPhysics;
-    public GameObject racket;
-    // Start is called before the first frame update
+
     void Start()
     {
         lastSwing = 0;
@@ -19,7 +18,7 @@ public class BallHandler : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Time.time - lastSwing > 1)
+        if (Time.time - lastSwing >= 1)
         {
             isSwinging = false;
             hit = false;
@@ -31,8 +30,8 @@ public class BallHandler : MonoBehaviour
         }
         if (isSwinging && !hit)
         {
-            bool isInFront = ballPhysics.position.x >= racket.transform.position.x;
-            bool isCloseEnough = Vector3.Distance(racket.transform.position, ballPhysics.position) < 1;
+            bool isInFront = ballPhysics.position.x >= transform.position.x;
+            bool isCloseEnough = Vector3.Distance(transform.position, ballPhysics.position) < 1;
             if (isInFront && isCloseEnough)
             {
                 hit = true;
@@ -44,10 +43,48 @@ public class BallHandler : MonoBehaviour
     void HitBall()
     {
         Vector3 currVelocity = ballPhysics.velocity;
-        Vector3 normalVector = racket.transform.rotation * Vector3.right; // will probably have to change later
+        Vector3 normalVector = transform.rotation * Vector3.right; // will probably have to change later
         //Debug.Log(normalVector);
         ballPhysics.velocity = Vector3.Reflect(ballPhysics.velocity, normalVector);
         ballPhysics.velocity *= 0.8f;
-        ballPhysics.AddForce(10, 3, 0, ForceMode.VelocityChange);
+
+        float force = 12;
+        int aimPos = 0;
+        float height = 1;
+        Vector3 aim;
+        //straight force
+        //aim = new Vector3(10,0,0);
+
+        switch (aimPos)
+        {
+            case -1:
+                // aim toward the mid left
+                aim = Vector3.Normalize(new Vector3(-ballPhysics.position.x, 0, -ballPhysics.position.z + 2));
+                break;
+            case -2:
+                // aim toward the far left
+                aim = Vector3.Normalize(new Vector3(-ballPhysics.position.x, 0, -ballPhysics.position.z + 4));
+                break;
+            case 1:
+                // aim toward the mid right
+                aim = Vector3.Normalize(new Vector3(-ballPhysics.position.x, 0, -ballPhysics.position.z - 2));
+                break;
+            case 2:
+                // aim toward the far right
+                aim = Vector3.Normalize(new Vector3(-ballPhysics.position.x, 0, -ballPhysics.position.z - 4));
+                break;
+            default:
+                // aimbot toward center
+                aim = Vector3.Normalize(Vector3.MoveTowards(-ballPhysics.position, Vector3.zero, 1));
+                aim = Vector3.ProjectOnPlane(aim, Vector3.up);
+                break;
+        }   
+        ballPhysics.AddForce(aim*force, ForceMode.VelocityChange);
+        
+        ballPhysics.AddForce(0, height*4 + 4,0, ForceMode.VelocityChange);
+    }
+    public bool getSwing()
+    {
+        return isSwinging;
     }
 }
