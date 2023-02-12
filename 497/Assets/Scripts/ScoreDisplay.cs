@@ -9,6 +9,10 @@ public class ScoreDisplay : MonoBehaviour
 
     private void Update()
     {
+        DisplayScore();
+    }
+    public void DisplayScore()
+    {
         scoreDisplay.text = GameManager.Instance.players[0].GetComponent<Player>().GetScore().ToString() + "-" +
             GameManager.Instance.players[1].GetComponent<Player>().GetScore().ToString();
     }
