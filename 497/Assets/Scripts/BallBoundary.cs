@@ -88,6 +88,8 @@ public class BallBoundary : MonoBehaviour
                         }
                     }
                 }
+                // else if (!bouncedInOpponentCourtOnce && isanyserving) 
+                //   other team add score
                 touchedGroundOnceOut = true;
             }
             // if ball hits the ground in your court on your turn, 

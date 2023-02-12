@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Boundary playerBoundary;
     public int points = 0; //1, 2, 3, ...
     public int score = 0; //15, 30, 40, ...
-    private bool myTurn = false;
+    private bool myTurn = false; // will players still be allowed to swing when its not their turn? 
 
     public GameObject otherPlayerObject;
     Player otherPlayer;
@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
     // if other player hits ball and ball bounces in their court or hits net, you receive a point  
     // if other player misses ball and ball hits within bounds, you receive a point 
     //          ball collides with opponent ground after bouncng once on their side 
-    //  when you score a point, reset ball, [i think change who is serving? i'll need to research specific rules sadge] 
+    //  research when to switch serving 
     //why are there so many rules luigi gah
 
     //collisions, if racket hits ball 
