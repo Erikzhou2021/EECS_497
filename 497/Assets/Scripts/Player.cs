@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public int playerTeam;
+    [SerializeField] private Boundary playerBoundary;
     public int points = 0; //1, 2, 3, ...
     public int score = 0; //15, 30, 40, ...
-    public bool myTurn = false;
+    private bool myTurn = false;
 
     public GameObject otherPlayerObject;
     Player otherPlayer;
@@ -14,6 +16,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         otherPlayer = otherPlayerObject.GetComponent<Player>();
+        playerBoundary = GetComponent<PlayerBoundary>().playerBoundary; 
     }
     private void Update()
     {
@@ -45,14 +48,13 @@ public class Player : MonoBehaviour
     }
 
     //how to score a point 
-    // if other player hits ball out of bounds immediately, you receive a point 
+    // if other player hits ball out of bounds immediately, you receive a point : done 
+
     // if other player hits ball and ball bounces in their court or hits net, you receive a point  
     // if other player misses ball and ball hits within bounds, you receive a point 
     //          ball collides with opponent ground after bouncng once on their side 
-    //  when you score a point, reset ball, [i think change woh is serving? i'll need to research specific rules sadge] 
+    //  when you score a point, reset ball, [i think change who is serving? i'll need to research specific rules sadge] 
     //why are there so many rules luigi gah
-    //isServing bool 
-    //myTurn bool 
 
     //collisions, if racket hits ball 
     public void AddScore()
@@ -77,7 +79,7 @@ public class Player : MonoBehaviour
                 score = 40;
                 break;
             case (> 3):
-                score += 1;
+                score = 40 + (points - 3);
                 break;
             default:
                 break;

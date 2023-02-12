@@ -5,9 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-
-    public GameObject player1;
-    public GameObject player2;
+    public GameObject[] players;
 
     private void Awake()
     {
