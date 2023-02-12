@@ -15,61 +15,82 @@ public class Boundary
 public class BallBoundary : MonoBehaviour
 {
     [SerializeField] private Boundary boundary;
-    private bool touchedGround = false;
+    [SerializeField] private float timeTillReset;
+    private bool touchedGroundOnceOut = false;
     private bool bouncedInOpponentCourtOnce = false;
+
+    public bool isAnyServing = true;
+    public int servingTeam;
+    public int playerTurn;
 
     public GameObject outText;
     public float textOffset;
 
+    //private Coroutine currentCoroutine;
+
     private void Update()
     {
-        if (OutofBounds())
-        {
-            Debug.Log("ball out of bounds");
-        }
-        if (OutofBounds() && touchedGround) // i dont know if i want to put the out sign at the first position or follow the ball 
-        {
-            StartCoroutine(OutBounds());
-        }
+
     }
     IEnumerator OutBounds()
     {
-        outText.SetActive(true);
         Vector3 ballOutPosition = transform.position;
+        outText.SetActive(true);
         outText.transform.position = new Vector3(ballOutPosition.x, ballOutPosition.y + textOffset, ballOutPosition.z);
-        yield return new WaitForSeconds(3f);
-        //outText.SetActive(false);
-        //update score, start new round 
+        yield return new WaitForSeconds(timeTillReset);
+        StartCoroutine(ResetBall());
+    }
+    IEnumerator ResetBall()
+    {
+        outText.SetActive(false);
+        touchedGroundOnceOut = false;
+        transform.position = new Vector3(0, 2, 0); // temporary placement
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        isAnyServing = true;
+        //update score, new round
+        yield return null;
     }
     private bool OutofBounds()
     {
         return transform.position.z < boundary.left || transform.position.z > boundary.right
             || transform.position.x > boundary.top || transform.position.x < boundary.bottom;
     }
-    private int InPlayerCourt() // returns which player's court the ball is in; 
+    private int BallInWhichCourt() // returns which player's court the ball is in; only considers which side of net 
     {
-        if(transform.position.x < 0)
-        {
-            return 0; // in player 1's court 
-        }
-        else
-        {
-            return 1;
-        }
+        return (transform.position.x < 0) ? 0 : 1;
+    }
+    private int OtherTeam(int thisPlayer) // returns team number of other player
+    {
+        return (thisPlayer == 0) ? 1 : 0;
+    }
+    private void SwitchTurn() // update playerTurn bool 
+    {
+        // determine by which player court it is, and has ball bounced in other player's court yet 
+        
     }
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Ground")
         {
-            touchedGround = true;
-            //if(OutofBounds() && InPlayerCourt() == 0) && bounced once in oppnent court
-            //{
-            //    GameManager.Instance.player2.GetComponent<Player>().AddScore();
-            //}
-            //if (OutofBounds() && InPlayerCourt() == 1) && bounced once in oppnent court 
-            //{
-            //    GameManager.Instance.player1.GetComponent<Player>().AddScore();
-            //}
+            Debug.Log(touchedGroundOnceOut);
+            if (!touchedGroundOnceOut)
+            {
+                if (OutofBounds())
+                {
+                    if (isAnyServing) // if serve goes out of bounds, award point to playerturn
+                    {
+                        if (BallInWhichCourt() != servingTeam)
+                        {
+                            isAnyServing = false;
+                            GameManager.Instance.players[BallInWhichCourt()].GetComponent<Player>().AddScore();
+                            StartCoroutine(OutBounds());
+
+                        }
+                    }
+                }
+                touchedGroundOnceOut = true;
+            }
+            // if ball hits the ground in your court on your turn, 
         }
     }
 }
