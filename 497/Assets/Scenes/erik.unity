@@ -1204,7 +1204,7 @@ MonoBehaviour:
   ball: {fileID: 1304041738}
   racketOffset: 1.5
   playerOffset: 3
-  smoothSpeed: 0.1
+  movementSpeed: 4
 --- !u!114 &2013708416
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -48,9 +48,9 @@ public class Player : MonoBehaviour
     }
 
     //how to score a point 
-    // if other player hits ball out of bounds immediately, you receive a point : done 
-
+    // if other player hits ball out of bounds immediately, you receive a point
     // if other player hits ball and ball bounces in their court or hits net, you receive a point  
+
     // if other player misses ball and ball hits within bounds, you receive a point 
     //          ball collides with opponent ground after bouncng once on their side 
     //  research when to switch serving 
@@ -59,8 +59,10 @@ public class Player : MonoBehaviour
     //collisions, if racket hits ball 
     public void AddScore()
     {
-        points += 1;
-        score = GetScore();
+        if(!BallBoundary.Instance.scoreStop){
+            points += 1;
+            score = GetScore();
+        }
     }
     public int GetScore()
     {

@@ -307,22 +307,13 @@ GameObject:
   m_Component:
   - component: {fileID: 258866020}
   - component: {fileID: 258866019}
-  - component: {fileID: 258866018}
   m_Layer: 0
   m_Name: TopDown Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!81 &258866018
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 258866017}
-  m_Enabled: 1
+  m_IsActive: 1
 --- !u!20 &258866019
 Camera:
   m_ObjectHideFlags: 0
@@ -374,7 +365,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 258866017}
   m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 25, z: 0}
+  m_LocalPosition: {x: 0, y: 20, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -616,10 +607,9 @@ GameObject:
   - component: {fileID: 729337175}
   - component: {fileID: 729337174}
   - component: {fileID: 729337178}
-  - component: {fileID: 729337177}
   m_Layer: 0
   m_Name: '"racket"'
-  m_TagString: Untagged
+  m_TagString: Racket
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -702,18 +692,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 729337172}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &729337177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 729337172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9db6d1f9e96be9045ab3aedb3b1694a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &729337178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -723,10 +701,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 729337172}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74e88fa879508d64db9b59236c9585e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 3edfe384f76041f4d9478999e27babd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 1304041738}
+  force: 12
 --- !u!1 &746057063
 GameObject:
   m_ObjectHideFlags: 0
@@ -840,7 +819,7 @@ GameObject:
   - component: {fileID: 872604457}
   m_Layer: 0
   m_Name: '"racket"'
-  m_TagString: Untagged
+  m_TagString: Racket
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -936,6 +915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 1304041738}
+  force: 12
 --- !u!114 &872604457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1628,11 +1608,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boundary:
-    left: -5
-    right: 5
+    left: 5
+    right: -5
     top: 7.5
     bottom: -7.5
   timeTillReset: 2.5
+  touchedGroundOnceOut: 0
+  bouncedInOpponentCourtOnce: 0
+  scoreStop: 1
   isAnyServing: 1
   servingTeam: 0
   playerTurn: 0
@@ -1875,9 +1858,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 1304041738}
-  racketOffset: 1.5
-  playerOffset: 3
-  smoothSpeed: 0.125
+  racketOffset: 2
+  playerOffset: 1
+  movementSpeed: 10
 --- !u!54 &1478404400
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2155,7 +2138,7 @@ Transform:
   m_GameObject: {fileID: 1962594188}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1.5}
+  m_LocalScale: {x: 1.6, y: 1, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
