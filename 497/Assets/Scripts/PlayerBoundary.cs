@@ -47,5 +47,29 @@ public class PlayerBoundary : MonoBehaviour
         {
             transform.position = new Vector3(playerBoundary.top, transform.position.y, transform.position.z);
         }
+
+        // if anyone is serving, dont let player go too close to net bc that is cringe 
+        //if (BallBoundary.Instance.isAnyServing)
+        //{
+        //    if (GetComponent<Player>().playerTeam == 0)
+        //    {
+        //        playerBoundary.top = playerBoundary.bottom / 2;
+        //    }
+        //    else
+        //    {
+        //        playerBoundary.bottom = playerBoundary.top / 2;
+        //    }
+        //}
+        //else
+        //{
+        //    if (GetComponent<Player>().playerTeam == 0)
+        //    {
+        //        playerBoundary.top = 0;
+        //    }
+        //    else
+        //    {
+        //        playerBoundary.bottom = 0;
+        //    }
+        //}
     }
 }

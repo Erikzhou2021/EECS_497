@@ -8,7 +8,6 @@ public class Player : MonoBehaviour
     [SerializeField] private Boundary playerBoundary;
     public int points = 0; //1, 2, 3, ...
     public int score = 0; //15, 30, 40, ...
-    private bool myTurn = false; // will players still be allowed to swing when its not their turn? 
 
     public GameObject otherPlayerObject;
     Player otherPlayer;
@@ -18,29 +17,10 @@ public class Player : MonoBehaviour
         otherPlayer = otherPlayerObject.GetComponent<Player>();
         playerBoundary = GetComponent<PlayerBoundary>().playerBoundary; 
     }
-    private void Update()
+    private void Update() //confusing bc idk if we are doing ai opponent or multiplayer yet 
+        //dont put this in update cus bad, announcement whenever score changes 
     {
-        //win game (no deuce)
-        if(points >= 4 && otherPlayer.points <= 2) //if you are up 40-30, 40-15 or 40-love, and win one more point, you win the game.
-        {
-            GameManager.Instance.WinMatch();
-        }
-        //win game (deuce)
-        if(points >= 4 && otherPlayer.points >= 3 && points - otherPlayer.points >= 2)
-        {
-            GameManager.Instance.WinMatch();
-        }
-
-        //deuce 
-        if(points >= 3 && points == otherPlayer.points)
-        {
-            GameManager.Instance.AnnounceState();
-        }
-        //not deuce, match point 
-        if(points - otherPlayer.points > 1 || otherPlayer.points - points > 1)
-        {
-            GameManager.Instance.AnnounceState();
-        }
+        
 
         //research how to win a tiebreak game 
 
@@ -48,9 +28,9 @@ public class Player : MonoBehaviour
     }
 
     //how to score a point 
-    // if other player hits ball out of bounds immediately, you receive a point : done 
-
+    // if other player hits ball out of bounds immediately, you receive a point
     // if other player hits ball and ball bounces in their court or hits net, you receive a point  
+
     // if other player misses ball and ball hits within bounds, you receive a point 
     //          ball collides with opponent ground after bouncng once on their side 
     //  research when to switch serving 
@@ -59,8 +39,37 @@ public class Player : MonoBehaviour
     //collisions, if racket hits ball 
     public void AddScore()
     {
-        points += 1;
-        score = GetScore();
+        if(!BallBoundary.Instance.scoreStop){
+            points += 1;
+            score = GetScore();
+            Announce();
+        }
+    }
+    public void Announce()
+    {
+        //win game (no deuce)
+        if (points >= 4 && otherPlayer.points <= 2) //if you are up 40-30, 40-15 or 40-love, and win one more point, you win the game.
+        {
+            GameManager.Instance.WinMatch();
+        }
+        //win game (deuce)
+        if (points >= 4 && otherPlayer.points >= 3 && points - otherPlayer.points >= 2)
+        {
+            GameManager.Instance.WinMatch();
+        }
+
+        //deuce 
+        if (points >= 3 && points == otherPlayer.points)
+        {
+            Debug.Log("deuce");
+            StartCoroutine(GameManager.Instance.AnnounceState("DEUCE"));
+        }
+        //not deuce, match point 
+        if (points >= 3 && otherPlayer.points >= 3 && (points - otherPlayer.points == 1 || otherPlayer.points - points == 1))
+        {
+            Debug.Log("match point");
+            StartCoroutine(GameManager.Instance.AnnounceState("MATCH POINT"));
+        }
     }
     public int GetScore()
     {
