@@ -18,11 +18,14 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
     }
-    public IEnumerator AnnounceState()
+    public IEnumerator AnnounceState(string state) // my code is so ugly i apologise
     {
         // play audio 
         // display text "DEUCE" or "MATCH POINT" or current scores
+        GetComponent<ScoreDisplay>().stateDisplay.text = state;
+        GetComponent<ScoreDisplay>().DisplayState();
         yield return new WaitForSeconds(2f);
+        GetComponent<ScoreDisplay>().stateDisplayObj.SetActive(false);
     }
     public IEnumerator WinMatch() 
     {
