@@ -20,15 +20,14 @@ public class BallHandler : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Time.time - lastSwing >= 1)
+        if (Time.time - lastSwing >= 0.5)
         {
             isSwinging = false;
             hit = false;
         }
         if (Input.GetMouseButton(0) && !isSwinging)
         {
-            isSwinging = true;
-            lastSwing = Time.time;
+            SetSwing();
         }
         if (isSwinging && !hit)
         {
@@ -133,8 +132,18 @@ public class BallHandler : MonoBehaviour
         
         return aim;
     }
-    public bool getSwing()
+    public void Serve()
+    {
+        ballPhysics.position = transform.position + new Vector3(0.3f, 1.5f, 0);
+        ballPhysics.velocity = new Vector3(0, 0.2f, 0);
+    }
+    public bool GetSwing()
     {
         return isSwinging;
+    }
+    public void SetSwing()
+    {
+        isSwinging = true;
+        lastSwing = Time.time;
     }
 }
