@@ -43,6 +43,7 @@ public class Keyboardmovement : MonoBehaviour
             BallBoundary.Instance.bouncedInOpponentCourtOnce = false;
             BallBoundary.Instance.playerTurn = 0;
             ballPhysics.GetComponent<Rigidbody>().useGravity = true;
+
             ballPhysics.position = racket.transform.position + new Vector3(0.3f, 1.5f, 0);
             ballPhysics.velocity = new Vector3(0, 0.2f, 0);
         }

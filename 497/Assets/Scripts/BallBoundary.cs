@@ -44,7 +44,7 @@ public class BallBoundary : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(playerTurn);
+ 
     }
     IEnumerator OutBounds()
     {
@@ -131,6 +131,7 @@ public class BallBoundary : MonoBehaviour
             //receiving without letting ball bounce is no bueno 
             if(!bouncedInOpponentCourtOnce && collision.transform.parent.GetComponent<Player>().playerTeam != playerTurn)
             {
+                Debug.Log("touched racket no bounce bad");
                 GameManager.Instance.players[playerTurn].GetComponent<Player>().AddScore();
                 StartCoroutine(ResetBall());
             }
