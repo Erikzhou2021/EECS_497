@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
     }
-    private void FixedUpdate() //temporary player follows ball movement; issue: player is greedy no bueno kinda gross 
+    private void FixedUpdate()  
     {
         Vector3 ballPosition = ball.transform.position;
         //Vector3 velocityDirection = ball.GetComponent<Rigidbody>().velocity.normalized;
