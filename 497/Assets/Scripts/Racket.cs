@@ -29,10 +29,10 @@ public class Racket : MonoBehaviour
         }
         transform.rotation = Quaternion.Slerp(transform.rotation, newRot, 2f * Time.deltaTime);
 
-        debugText.text = Input.gyro.userAcceleration.y.ToString();
+        //debugText.text = Input.gyro.userAcceleration.y.ToString();
         if (Input.gyro.userAcceleration.magnitude > 3)
         {
-            bh.SetSwing();
+            bh.StartSwing();
         }
         if (bh.GetSwing())
         {

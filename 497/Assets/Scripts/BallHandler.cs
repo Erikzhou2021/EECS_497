@@ -25,10 +25,6 @@ public class BallHandler : MonoBehaviour
             isSwinging = false;
             hit = false;
         }
-        if (Input.GetMouseButton(0) && !isSwinging)
-        {
-            SetSwing();
-        }
         if (isSwinging && !hit)
         {
             bool isInFront = ballPhysics.position.x >= transform.position.x;
@@ -50,36 +46,6 @@ public class BallHandler : MonoBehaviour
         ballPhysics.velocity *= 0.8f;
         
         Vector3 aim;
-        /*
-        int aimPos = 0;
-        float height = 1;
-        switch (aimPos)
-        {
-            case -1:
-                // aim toward the mid left
-                aim = Vector3.Normalize(new Vector3(-ballPhysics.position.x, 0, -ballPhysics.position.z + 2));
-                break;
-            case -2:
-                // aim toward the far left
-                aim = Vector3.Normalize(new Vector3(-ballPhysics.position.x, 0, -ballPhysics.position.z + 4));
-                break;
-            case 1:
-                // aim toward the mid right
-                aim = Vector3.Normalize(new Vector3(-ballPhysics.position.x, 0, -ballPhysics.position.z - 2));
-                break;
-            case 2:
-                // aim toward the far right
-                aim = Vector3.Normalize(new Vector3(-ballPhysics.position.x, 0, -ballPhysics.position.z - 4));
-                break;
-            default:
-                // aimbot toward center
-                aim = Vector3.Normalize(Vector3.MoveTowards(-ballPhysics.position, Vector3.zero, 1));
-                aim = Vector3.ProjectOnPlane(aim, Vector3.up);
-                break;
-        }   
-        ballPhysics.AddForce(aim*force, ForceMode.VelocityChange);
-        
-        ballPhysics.AddForce(0, height*4 + 4,0, ForceMode.VelocityChange);*/
 
         // then apply aimBot force
         aim = aimBot();
@@ -141,7 +107,7 @@ public class BallHandler : MonoBehaviour
     {
         return isSwinging;
     }
-    public void SetSwing()
+    public void StartSwing()
     {
         isSwinging = true;
         lastSwing = Time.time;

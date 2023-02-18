@@ -6,12 +6,14 @@ public class Keyboardmovement : MonoBehaviour
 {
     public GameObject ball;
     private Rigidbody ballPhysics;
+    private BallHandler bh;
     public GameObject racket;
     public float playerSpeed;
     // Start is called before the first frame update
     void Start()
     {
         ballPhysics = ball.GetComponent<Rigidbody>();
+        bh = racket.GetComponent<BallHandler>();
     }
 
     // Update is called once per frame
@@ -44,18 +46,8 @@ public class Keyboardmovement : MonoBehaviour
             BallBoundary.Instance.playerTurn = 0;
             ballPhysics.GetComponent<Rigidbody>().useGravity = true;
 
-            ballPhysics.position = racket.transform.position + new Vector3(0.3f, 1.5f, 0);
-            ballPhysics.velocity = new Vector3(0, 0.2f, 0);
+            bh.Serve();
         }
-        /*if (Input.GetKey("q"))
-        {
-            if (ballPhysics.position.x >= racket.transform.position.x && Vector3.Distance(racket.transform.position, ballPhysics.position) < 1)
-            {
-                ballPhysics.velocity += new Vector3(1, 0.3f, 0);
-                Debug.Log("reeee");
-            }
-            Debug.Log(Vector3.Distance(racket.transform.position, ballPhysics.position));
-        }*/
         if (Input.GetKey("q"))
         {
             gameObject.transform.Rotate(0, -0.5f, 0);
@@ -70,6 +62,10 @@ public class Keyboardmovement : MonoBehaviour
             force.Normalize();
             force = force * 10;
             ballPhysics.AddForce(force);
+        }
+        if (Input.GetMouseButton(0) && !bh.GetSwing())
+        {
+            bh.StartSwing();
         }
     }
 }
