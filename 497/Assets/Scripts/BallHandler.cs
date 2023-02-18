@@ -7,14 +7,17 @@ public class BallHandler : MonoBehaviour
 {
     bool isSwinging = false;
     bool hit = false;
-    float lastSwing;
     public GameObject ball;
     public float force = 12;
+    float lastSwing;
+    float lastServe = 0;
     private Rigidbody ballPhysics;
+    
 
     void Start()
     {
         lastSwing = 0;
+        lastServe = 0;
         ballPhysics = ball.GetComponent<Rigidbody>();
     }
 
@@ -43,7 +46,7 @@ public class BallHandler : MonoBehaviour
         Vector3 normalVector = transform.rotation * Vector3.right; // will probably have to change later
         // Bounce the ball off the racket first
         ballPhysics.velocity = Vector3.Reflect(ballPhysics.velocity, normalVector);
-        ballPhysics.velocity *= 0.8f;
+        ballPhysics.velocity *= 0.7f;
         
         Vector3 aim;
 
@@ -64,25 +67,25 @@ public class BallHandler : MonoBehaviour
             {
                 Debug.Log("Mid Left");
                 // aim toward the mid left
-                aim = Vector3.Normalize(new Vector3(-ballPhysics.position.x, 0, -ballPhysics.position.z + 1.5f));
+                aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z + 1.5f));
             }
             else if (otherPos.z >= 2) // opponent is far left
             {
                 Debug.Log("Mid Right");
                 // aim toward the mid right
-                aim = Vector3.Normalize(new Vector3(-ballPhysics.position.x, 0, -ballPhysics.position.z - 1.5f));
+                aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z - 1.5f));
             }
             else if (otherPos.z < 0) // oponent is mid right
             {
                 Debug.Log("Far Left");
                 // aim toward the far left
-                aim = Vector3.Normalize(new Vector3(-ballPhysics.position.x, 0, -ballPhysics.position.z + 3));
+                aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z + 3));
             }
             else if (otherPos.z > 0)
             {
                 Debug.Log("Far Right");
                 // aim toward the far right
-                aim = Vector3.Normalize(new Vector3(-ballPhysics.position.x, 0, -ballPhysics.position.z - 3));
+                aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z - 3));
             }
         }
         aim *= force;
@@ -100,6 +103,7 @@ public class BallHandler : MonoBehaviour
     }
     public void Serve()
     {
+        lastServe = Time.time;
         ballPhysics.position = transform.position + new Vector3(0.3f, 1.5f, 0);
         ballPhysics.velocity = new Vector3(0, 0.2f, 0);
     }
@@ -107,8 +111,13 @@ public class BallHandler : MonoBehaviour
     {
         return isSwinging;
     }
-    public void StartSwing()
+    public void StartSwing(float swingForce)
     {
+        force = swingForce;
+        if (Time.time - lastServe < 0.5) // Get more power on the serve because there is no momentum from a bounce
+        {
+            force += 5;
+        }
         isSwinging = true;
         lastSwing = Time.time;
     }

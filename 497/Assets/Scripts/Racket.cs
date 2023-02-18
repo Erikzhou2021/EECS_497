@@ -7,15 +7,22 @@ public class Racket : MonoBehaviour
 {
     BallHandler bh;
     public TextMeshProUGUI debugText;
+    public bool isPlayer = false;
+    private Rigidbody ballPhysics;
 
     void Start()
     {
         bh = gameObject.GetComponent<BallHandler>();
         Input.gyro.enabled = true;
+        ballPhysics = bh.ball.GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
     {
+        if (!isPlayer)
+        {
+            return;
+        }
         //transform.rotation = Input.gyro.attitude;
         // idk if this clamp does shit
         float rotx = Mathf.Clamp(Input.acceleration.x, -45, 0);
@@ -30,16 +37,29 @@ public class Racket : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, newRot, 2f * Time.deltaTime);
 
         //debugText.text = Input.gyro.userAcceleration.y.ToString();
-        if (Input.gyro.userAcceleration.magnitude > 3)
+        if (Input.gyro.userAcceleration.magnitude > 2)
         {
-            bh.StartSwing();
+            float force = Input.gyro.userAcceleration.magnitude - 2;
+            force *= 4;
+            force += 5;
+            force = Mathf.Clamp(force, 5, 18);
+            debugText.text = force.ToString();
+            bh.StartSwing(force);
         }
         if (bh.GetSwing())
         {
             transform.Rotate(0,-7.2f,0);
         }
-        else if(Input.gyro.userAcceleration.y > 0.5) // need to make this take multiple frames to detect
+        else if(Input.gyro.userAcceleration.y > 0.3) // need to make this take multiple frames to detect
         {
+            // lmao dont look, resetting all variables 
+            BallBoundary.Instance.touchedGroundOnceOut = false;
+            BallBoundary.Instance.scoreStop = false;
+            BallBoundary.Instance.isAnyServing = true;
+            BallBoundary.Instance.bouncedInOpponentCourtOnce = false;
+            BallBoundary.Instance.playerTurn = 0;
+            ballPhysics.GetComponent<Rigidbody>().useGravity = true;
+
             bh.Serve();
         }
     }

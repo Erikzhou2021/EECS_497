@@ -65,7 +65,11 @@ public class Keyboardmovement : MonoBehaviour
         }
         if (Input.GetMouseButton(0) && !bh.GetSwing())
         {
-            bh.StartSwing();
+            bh.StartSwing(8);
         }
+    }
+    public void tempReset() // just so i can get shid to work without reoganizing the whole codebase
+    {
+
     }
 }

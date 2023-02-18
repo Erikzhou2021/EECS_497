@@ -8,7 +8,7 @@ public class OpponentBot : MonoBehaviour
     bool hit = false;
     float lastSwing;
     public GameObject ball;
-    public float force = 12;
+    public float force = 8;
     private Rigidbody ballPhysics;
 
     void Start()
@@ -41,7 +41,7 @@ public class OpponentBot : MonoBehaviour
         Vector3 normalVector = transform.rotation * Vector3.right; // will probably have to change later
         // Bounce the ball off the racket first
         ballPhysics.velocity = Vector3.Reflect(ballPhysics.velocity, normalVector);
-        ballPhysics.velocity *= 0.8f;
+        ballPhysics.velocity *= 0.7f;
 
         Vector3 aim;
        
