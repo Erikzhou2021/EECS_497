@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &5987549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,6 +171,7 @@ MonoBehaviour:
   players:
   - {fileID: 225042754}
   - {fileID: 2013708412}
+  ball: {fileID: 1304041738}
 --- !u!4 &5987551
 Transform:
   m_ObjectHideFlags: 0

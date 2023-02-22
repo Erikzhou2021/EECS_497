@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
-    public GameObject[] players;
+    public static GameManager Instance; // this is what the article i found said to name it don't judge
+    public List<GameObject> players = new List<GameObject>();
+    public GameObject ball;
 
     private void Awake()
     {
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
     }
+
     public IEnumerator AnnounceState(string state) // my code is so ugly i apologise
     {
         // play audio 

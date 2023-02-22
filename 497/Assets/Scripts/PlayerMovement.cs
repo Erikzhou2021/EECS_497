@@ -16,10 +16,19 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()  
     {
+        /*
         Vector3 ballPosition = ball.transform.position;
         //Vector3 velocityDirection = ball.GetComponent<Rigidbody>().velocity.normalized;
         //Debug.Log((Mathf.Atan2(velocityDirection.x, velocityDirection.y) * Mathf.Rad2Deg * Mathf.Sign(velocityDirection.y)));
         Vector3 targetPosition = new Vector3(transform.position.x, transform.position.y, ballPosition.z + (racketOffset * -Mathf.Sign(transform.position.x)));
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
-    } //ballPosition.x + (playerOffset * Mathf.Sign(transform.position.x))
+        //ballPosition.x + (playerOffset * Mathf.Sign(transform.position.x))
+        */
+
+        GameManager gm = GameManager.Instance;
+
+        Vector3 ballPosition = gm.ball.transform.position;
+        Vector3 targetPosition = new Vector3(transform.position.x, transform.position.y, ballPosition.z + (racketOffset * -Mathf.Sign(transform.position.x)));
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
+    } 
 }
