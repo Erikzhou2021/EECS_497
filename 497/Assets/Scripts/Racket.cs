@@ -14,6 +14,13 @@ public class Racket : MonoBehaviour
     {
         bh = gameObject.GetComponent<BallHandler>();
         Input.gyro.enabled = true;
+        StartCoroutine(ballPhys());
+        
+    }
+
+   IEnumerator ballPhys()
+    {
+        yield return new WaitForSeconds(4);
         ballPhysics = bh.ball.GetComponent<Rigidbody>();
     }
 
@@ -37,6 +44,8 @@ public class Racket : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, newRot, 2f * Time.deltaTime);
 
         //debugText.text = Input.gyro.userAcceleration.y.ToString();
+        print("hello");
+        Debug.Log(Input.gyro.userAcceleration.y.ToString());
         if (Input.gyro.userAcceleration.magnitude > 2)
         {
             float force = Input.gyro.userAcceleration.magnitude - 2;
