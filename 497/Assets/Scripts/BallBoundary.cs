@@ -22,9 +22,8 @@ public class BallBoundary : MonoBehaviour
     public bool bouncedInOpponentCourtOnce = false; // check if ball bounced in opponent's service court, else FAULT 
     public bool scoreStop = false;
 
-    public bool isAnyServing = true;
     public int servingTeam;
-    public int playerTurn;
+    public int playerTurn; // this is who is supposed to hit the ball next
 
     public GameObject outText;
     public float textOffset;
@@ -58,13 +57,14 @@ public class BallBoundary : MonoBehaviour
     public IEnumerator ResetBall()
     {
         outText.SetActive(false);
-        touchedGroundOnceOut = false;
+        bouncedInOpponentCourtOnce = false;
         transform.position = new Vector3(0, 2, 0); // temporary placement
         GetComponent<Rigidbody>().useGravity = false;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
-        isAnyServing = true;
+        GameManager.Instance.state = GameState.Serve;
         scoreStop = false;
         playerTurn = servingTeam;
+        Debug.Log(playerTurn);
         //update score, new round
         yield return null;
     }
@@ -81,61 +81,102 @@ public class BallBoundary : MonoBehaviour
     {
         return (thisPlayer == 0) ? 1 : 0;
     }
-    private IEnumerator SwitchTurn() // update playerTurn bool 
+    public void SwitchTurn() // update playerTurn bool 
     {
         // determine by which player court it is, and has ball bounced in other player's court yet
-        yield return null;
         playerTurn = OtherTeam(playerTurn);
         bouncedInOpponentCourtOnce = false;
-        touchedGroundOnceOut = false;
+    }
+    private void ScorePoint(int playerNum)
+    {
+        GameManager.Instance.players[playerNum].GetComponent<Player>().AddScore();
+        StartCoroutine(ResetBall()); // maybe replace with replay system later?
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Ground")
+        // prob shouldn't handle this here since the ball doesn't have to touch the racket to count as a hit
+        /*if (collision.gameObject.tag == "Racket") 
         {
-            if (!touchedGroundOnceOut)
-            {
-                if (OutofBounds())
-                {
-                    //if (true) // if serve (if anything) goes out of bounds, award point to playerturn
-                    //{
-                        if (BallInWhichCourt() != playerTurn)
-                        {
-                            Debug.Log("out of bounds");
-                            isAnyServing = false;
-                            GameManager.Instance.players[BallInWhichCourt()].GetComponent<Player>().AddScore();
-                            StartCoroutine(OutBounds());
+            // now the opponent has to hit it next
+            SwitchTurn();
+            return;
+        }*/
+        if (collision.gameObject.tag != "Ground")
+        {
+            return;
+        }
+        if (bouncedInOpponentCourtOnce)
+        {
+            Debug.Log("you let the ball bounce twice bozo");
+            ScorePoint(OtherTeam(playerTurn));
+            return;
+        }
+        if (OutofBounds())
+        {
+            Debug.Log("you hit the ball out of bounds bogo");
+            ScorePoint(playerTurn);
+            return;
+        }
+        if (BallInWhichCourt() != playerTurn)
+        {
+            Debug.Log("you didn't get the ball over the net bimbo");
+            ScorePoint(playerTurn);
+            return;
+        }
+        // good job you didn't fucc up
+        bouncedInOpponentCourtOnce = true;
 
-                        }
-                    //}
+
+
+            /*if(collision.gameObject.tag == "Ground")
+            {
+                if (!touchedGroundOnceOut) // is this necessary?
+                {
+                    if (OutofBounds()) 
+                    {
+                        //if (true) // if serve (if anything) goes out of bounds, award point to playerturn
+                        //{
+                            if (BallInWhichCourt() != playerTurn)
+                            {
+                                Debug.Log("out of bounds");
+                                GameManager.Instance.state = GameState.Postpoint;
+                                GameManager.Instance.players[BallInWhichCourt()].GetComponent<Player>().AddScore();
+                                StartCoroutine(OutBounds());
+
+                            }
+                        //}
+                    }
+                    touchedGroundOnceOut = true;
                 }
-                touchedGroundOnceOut = true;
+                // if ball bounced in opponent service court once, switch player turn 
+                if (!bouncedInOpponentCourtOnce && BallInWhichCourt() != playerTurn)
+                {
+                    bouncedInOpponentCourtOnce = true;
+                    //GameManager.Instance.state = GameState.Rally; // should be uncessary since it has to be rally already
+                    Debug.Log("Bruh");
+                    StartCoroutine(SwitchTurn());
+                }
+                // if ball hits the ground in your court on your turn, other team gets point 
+                else if (playerTurn == BallInWhichCourt())
+                {
+                    Debug.Log("its your turn and u suck player: " + playerTurn);
+                    GameManager.Instance.players[OtherTeam(playerTurn)].GetComponent<Player>().AddScore();
+                    StartCoroutine(ResetBall());
+                }
             }
-            // if ball hits the ground in your court on your turn, other team gets point 
-            if(playerTurn == BallInWhichCourt())
+            else if (collision.gameObject.tag == "Racket") //ball probably can't touch the ground and the racket at the same time
             {
-                Debug.Log("its your turn and u suck player: " + playerTurn);
-                GameManager.Instance.players[OtherTeam(playerTurn)].GetComponent<Player>().AddScore();
-                StartCoroutine(ResetBall());
-            }
-            // if ball bounced in opponent service court once, switch player turn 
-            if(!bouncedInOpponentCourtOnce && BallInWhichCourt() != playerTurn)
-            {
-                bouncedInOpponentCourtOnce = true;
-                isAnyServing = false;
-                StartCoroutine(SwitchTurn());
-            }
+                // probably can make it so its impossible to hit the ball before it bounces on the serve
+
+                //receiving without letting ball bounce is no bueno 
+                //if(!bouncedInOpponentCourtOnce && collision.transform.parent.GetComponent<Player>().playerTeam != playerTurn)
+                //{
+                    //Debug.Log("touched racket no bounce bad");
+                    //GameManager.Instance.players[playerTurn].GetComponent<Player>().AddScore();
+                    //StartCoroutine(ResetBall());
+                //}
+
+            }*/
         }
-        if (collision.gameObject.tag == "Racket")
-        {
-            //receiving without letting ball bounce is no bueno 
-            if(!bouncedInOpponentCourtOnce && collision.transform.parent.GetComponent<Player>().playerTeam != playerTurn)
-            {
-                Debug.Log("touched racket no bounce bad");
-                GameManager.Instance.players[playerTurn].GetComponent<Player>().AddScore();
-                StartCoroutine(ResetBall());
-            }
-        }
-    }
 }
 // player bounces in oppoenents court, if hadnt bounced before, switch turn 

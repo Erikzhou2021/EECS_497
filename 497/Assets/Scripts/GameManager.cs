@@ -7,6 +7,7 @@ public enum GameState
     Prematch,
     Serve,
     Rally,
+    Postpoint,
     Postmatch
 }
 
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> players = new List<GameObject>();
     public GameObject ball;
     public GameState state = GameState.Serve; // skipping prematch because idk what that is gonna be used for yet
+    public int serveCount = 0;
 
     private void Awake()
     {

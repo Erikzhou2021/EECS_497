@@ -9,9 +9,11 @@ public class Keyboardmovement : MonoBehaviour
     private BallHandler bh;
     public GameObject racket;
     public float playerSpeed;
+    float resetCounter;
     // Start is called before the first frame update
     void Start()
     {
+        resetCounter = Time.time;
         ballPhysics = ball.GetComponent<Rigidbody>();
         bh = racket.GetComponent<BallHandler>();
     }
@@ -19,6 +21,21 @@ public class Keyboardmovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (resetCounter > 0)
+        {
+            resetCounter++;
+        }
+        if (resetCounter > 5)
+        {
+            // lmao dont look, resetting all variables 
+            BallBoundary.Instance.touchedGroundOnceOut = false;
+            BallBoundary.Instance.scoreStop = false;
+            BallBoundary.Instance.bouncedInOpponentCourtOnce = false;
+            BallBoundary.Instance.playerTurn = 0;
+            ballPhysics.GetComponent<Rigidbody>().useGravity = true;
+            bh.Serve();
+            resetCounter = 0;
+        }
         if (Input.GetKey("w") || Input.GetKey("up"))
         {
             //Debug.Log("Hi");
@@ -38,15 +55,8 @@ public class Keyboardmovement : MonoBehaviour
         }
         if (Input.GetKey("r"))
         {
-            // lmao dont look, resetting all variables 
-            BallBoundary.Instance.touchedGroundOnceOut = false;
-            BallBoundary.Instance.scoreStop = false;
-            BallBoundary.Instance.isAnyServing = true;
-            BallBoundary.Instance.bouncedInOpponentCourtOnce = false;
-            BallBoundary.Instance.playerTurn = 0;
-            ballPhysics.GetComponent<Rigidbody>().useGravity = true;
+            resetCounter = 1; // just delaying the serve for a few frames so the other code can run
             GameManager.Instance.state = GameState.Serve;
-            bh.Serve();
         }
         if (Input.GetKey("q"))
         {

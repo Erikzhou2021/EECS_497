@@ -50,12 +50,11 @@ public class Racket : MonoBehaviour
         {
             transform.Rotate(0,-7.2f,0);
         }
-        else if(Input.gyro.userAcceleration.y > 0.3) // need to make this take multiple frames to detect
+        else if(Input.gyro.userAcceleration.y > 0.3 && GameManager.Instance.state == GameState.Serve) // need to make this take multiple frames to detect
         {
             // lmao dont look, resetting all variables 
             BallBoundary.Instance.touchedGroundOnceOut = false;
             BallBoundary.Instance.scoreStop = false;
-            BallBoundary.Instance.isAnyServing = true;
             BallBoundary.Instance.bouncedInOpponentCourtOnce = false;
             BallBoundary.Instance.playerTurn = 0;
             ballPhysics.GetComponent<Rigidbody>().useGravity = true;

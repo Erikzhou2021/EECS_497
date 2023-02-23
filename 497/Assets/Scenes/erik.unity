@@ -173,6 +173,7 @@ MonoBehaviour:
   - {fileID: 2013708412}
   ball: {fileID: 1304041738}
   state: 1
+  serveCount: 0
 --- !u!4 &5987551
 Transform:
   m_ObjectHideFlags: 0
@@ -605,15 +606,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 225042754}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c6e9063cc4b0824a91d6bfe1dc2bc8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serveCount: 0
-  racketOffset: 0
-  playerOffset: 0
-  movementSpeed: 0
+  racketOffset: 1.5
+  playerOffset: 3
+  movementSpeed: 4
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,7 +725,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &738322954
 RectTransform:
   m_ObjectHideFlags: 0
@@ -991,7 +991,7 @@ GameObject:
   - component: {fileID: 797156288}
   m_Layer: 0
   m_Name: Field(Temp)
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1092,7 +1092,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &841871627
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1510,7 +1510,6 @@ MonoBehaviour:
   touchedGroundOnceOut: 0
   bouncedInOpponentCourtOnce: 0
   scoreStop: 0
-  isAnyServing: 1
   servingTeam: 0
   playerTurn: 0
   outText: {fileID: 1803399928}
@@ -1928,7 +1927,7 @@ GameObject:
   - component: {fileID: 1962594189}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2083,7 +2082,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c6e9063cc4b0824a91d6bfe1dc2bc8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serveCount: 0
   racketOffset: 1.5
   playerOffset: 3
   movementSpeed: 4

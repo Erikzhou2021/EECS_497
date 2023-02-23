@@ -7,7 +7,6 @@ public class PlayerMovement : MonoBehaviour
     //public GameObject ball;
     GameManager gm;
     List<Vector3> servingPositions;
-    public int serveCount = 0;
     [SerializeField] private float racketOffset;
     [SerializeField] private float playerOffset;
     [SerializeField] private float movementSpeed;
@@ -40,11 +39,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (gm.state == GameState.Serve)
         {
-            transform.position = servingPositions[serveCount % servingPositions.Count];
+            transform.position = servingPositions[gm.serveCount % servingPositions.Count];
         }
 
-
-        
 
         Vector3 ballPosition = gm.ball.transform.position;
         Vector3 targetPosition = new Vector3(transform.position.x, transform.position.y, ballPosition.z + (racketOffset * -Mathf.Sign(transform.position.x)));
