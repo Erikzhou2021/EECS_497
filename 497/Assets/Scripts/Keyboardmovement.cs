@@ -45,7 +45,7 @@ public class Keyboardmovement : MonoBehaviour
             BallBoundary.Instance.bouncedInOpponentCourtOnce = false;
             BallBoundary.Instance.playerTurn = 0;
             ballPhysics.GetComponent<Rigidbody>().useGravity = true;
-
+            GameManager.Instance.state = GameState.Serve;
             bh.Serve();
         }
         if (Input.GetKey("q"))

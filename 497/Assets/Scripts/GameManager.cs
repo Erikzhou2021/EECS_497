@@ -2,11 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GameState
+{
+    Prematch,
+    Serve,
+    Rally,
+    Postmatch
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance; // this is what the article i found said to name it don't judge
     public List<GameObject> players = new List<GameObject>();
     public GameObject ball;
+    public GameState state = GameState.Serve; // skipping prematch because idk what that is gonna be used for yet
 
     private void Awake()
     {

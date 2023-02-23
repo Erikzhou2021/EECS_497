@@ -12,15 +12,24 @@ public class Player : MonoBehaviour
     public GameObject otherPlayerObject;
     Player otherPlayer;
 
+    GameManager Instance;
+
     private void Start()
     {
+        Instance = GameManager.Instance;
         otherPlayer = otherPlayerObject.GetComponent<Player>();
         playerBoundary = GetComponent<PlayerBoundary>().playerBoundary; 
     }
-    private void Update() //confusing bc idk if we are doing ai opponent or multiplayer yet 
+    private void FixedUpdate() //confusing bc idk if we are doing ai opponent or multiplayer yet 
         //dont put this in update cus bad, announcement whenever score changes 
     {
-        
+        if (Instance.state == GameState.Serve && playerTeam == Instance.ball.GetComponent<BallBoundary>().playerTurn)
+        {
+            transform.Find("Serve").gameObject.SetActive(true);
+        }
+        else{
+            transform.Find("Serve").gameObject.SetActive(false);
+        }
 
         //research how to win a tiebreak game 
 

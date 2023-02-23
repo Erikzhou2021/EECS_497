@@ -103,6 +103,7 @@ public class BallHandler : MonoBehaviour
     }
     public void Serve()
     {
+        GameManager.Instance.state = GameState.Rally;
         lastServe = Time.time;
         ballPhysics.position = transform.position + new Vector3(0.3f, 1.5f, 0);
         ballPhysics.velocity = new Vector3(0, 0.2f, 0);
