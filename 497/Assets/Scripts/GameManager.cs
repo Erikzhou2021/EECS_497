@@ -14,7 +14,7 @@ public enum GameState
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance; // this is what the article i found said to name it don't judge
-    public List<GameObject> players = new List<GameObject>();
+    public List<GameObject> players;
     public GameObject ball;
     public GameState state = GameState.Serve; // skipping prematch because idk what that is gonna be used for yet
     public int serveCount = 0;
@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            players = new List<GameObject>();
         }
         else
         {

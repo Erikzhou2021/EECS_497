@@ -15,11 +15,11 @@ GameObject:
   - component: {fileID: 406901297806643120}
   - component: {fileID: 406901297806643131}
   - component: {fileID: 406901297806643130}
-  - component: {fileID: 406901297806643129}
   - component: {fileID: 4842569795347279663}
   - component: {fileID: 7994573108595304974}
   - component: {fileID: 876695894958180730}
   - component: {fileID: 1738184536380383982}
+  - component: {fileID: -2984790509089041787}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -162,25 +162,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &406901297806643129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 406901297806643121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d58ee1218218a84c9d3e3529e18a043, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerBoundary:
-    left: 0
-    right: 0
-    top: 0
-    bottom: 0
-  fieldX: 10
-  fieldY: 12
 --- !u!114 &4842569795347279663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,6 +254,28 @@ MonoBehaviour:
   compressRotation: 0
   positionPrecision: 0.01
   scalePrecision: 0.01
+--- !u!114 &-2984790509089041787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406901297806643121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c6e9063cc4b0824a91d6bfe1dc2bc8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerBoundary:
+    left: 0
+    right: 0
+    top: 0
+    bottom: 0
+  fieldX: 10
+  fieldY: 12
+  racketOffset: 0
+  playerOffset: 0
+  movementSpeed: 0
 --- !u!1 &406901298219322832
 GameObject:
   m_ObjectHideFlags: 0
