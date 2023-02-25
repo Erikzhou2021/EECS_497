@@ -273,9 +273,9 @@ MonoBehaviour:
     bottom: 0
   fieldX: 10
   fieldY: 12
-  racketOffset: 0
-  playerOffset: 0
-  movementSpeed: 0
+  racketOffset: 1.5
+  playerOffset: 3
+  movementSpeed: 4
 --- !u!1 &406901298219322832
 GameObject:
   m_ObjectHideFlags: 0

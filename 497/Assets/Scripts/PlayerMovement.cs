@@ -58,11 +58,13 @@ public class PlayerMovement : MonoBehaviour
         if (gm.state == GameState.Serve)
         {
             transform.position = servingPositions[gm.serveCount % servingPositions.Count];
+            Debug.Log("GAme serve");
         }
         else if (currPlayer.playerTeam != BallBoundary.Instance.playerTurn)
         {
             Vector3 center = new Vector3(8.5f * (currPlayer.playerTeam * 2 - 1), 1, 0); // move toward the center while waiting for opponent to hit the ball
             transform.position = Vector3.MoveTowards(transform.position, center, movementSpeed * Time.deltaTime);
+            Debug.Log("does not equal");
             // should consider moving at different speeds based on how far you have to move?
             return;
         }
@@ -71,21 +73,21 @@ public class PlayerMovement : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
         Debug.Log(targetPosition.ToString());
         //prevent player from going out of bounds 
-        if (transform.position.z < playerBoundary.left)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, playerBoundary.left);
-        }
-        if (transform.position.z > playerBoundary.right)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, playerBoundary.right);
-        }
-        if (transform.position.x < playerBoundary.bottom)
-        {
-            transform.position = new Vector3(playerBoundary.bottom, transform.position.y, transform.position.z);
-        }
-        if (transform.position.x > playerBoundary.top)
-        {
-            transform.position = new Vector3(playerBoundary.top, transform.position.y, transform.position.z);
-        }
+        //if (transform.position.z < playerBoundary.left)
+        //{
+        //    transform.position = new Vector3(transform.position.x, transform.position.y, playerBoundary.left);
+        //}
+        //if (transform.position.z > playerBoundary.right)
+        //{
+        //    transform.position = new Vector3(transform.position.x, transform.position.y, playerBoundary.right);
+        //}
+        //if (transform.position.x < playerBoundary.bottom)
+        //{
+        //    transform.position = new Vector3(playerBoundary.bottom, transform.position.y, transform.position.z);
+        //}
+        //if (transform.position.x > playerBoundary.top)
+        //{
+        //    transform.position = new Vector3(playerBoundary.top, transform.position.y, transform.position.z);
+        //}
     } 
 }
