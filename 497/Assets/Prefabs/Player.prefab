@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 406901297806643129}
   - component: {fileID: 4842569795347279663}
   - component: {fileID: 7994573108595304974}
+  - component: {fileID: 876695894958180730}
+  - component: {fileID: 1738184536380383982}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -225,6 +227,52 @@ MonoBehaviour:
   compressRotation: 0
   positionPrecision: 0.01
   scalePrecision: 0.01
+--- !u!114 &876695894958180730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406901297806643121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9db6d1f9e96be9045ab3aedb3b1694a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0.1
+  debugText: {fileID: 0}
+  isPlayer: 0
+--- !u!114 &1738184536380383982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406901297806643121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 406901298219322839}
+  clientAuthority: 1
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChange: 1
+  onlySyncOnChangeCorrectionMultiplier: 2
+  rotationSensitivity: 0.01
+  compressRotation: 0
+  positionPrecision: 0.01
+  scalePrecision: 0.01
 --- !u!1 &406901298219322832
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +286,6 @@ GameObject:
   - component: {fileID: 406901298219322837}
   - component: {fileID: 406901298219322838}
   - component: {fileID: 406901298219322843}
-  - component: {fileID: 406901298219322842}
   m_Layer: 0
   m_Name: '"racket"'
   m_TagString: Racket
@@ -338,17 +385,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
   force: 12
---- !u!114 &406901298219322842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 406901298219322832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9db6d1f9e96be9045ab3aedb3b1694a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debugText: {fileID: 0}
-  isPlayer: 0

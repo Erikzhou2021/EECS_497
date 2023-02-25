@@ -33,7 +33,7 @@ namespace Mirror
                 NetworkServer.Spawn(ball);
             }
 
-            if (GameObject.Find("TennisBall(Clone)"))
+            if (GameObject.Find("Ball(Clone)"))
             {
                 Debug.Log("balle exisgs!");
             }
