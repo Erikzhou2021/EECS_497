@@ -5,6 +5,15 @@ using TMPro;
 
 public class Racket : MonoBehaviour
 {
+
+    //public override void OnStartAuthority()
+    //{
+    //    base.OnStartAuthority();
+
+    //    UnityEngine.InputSystem.PlayerInput playerInput = GetComponent<UnityEngine.InputSystem.PlayerInput>();
+    //    playerInput.enabled = true;
+    //}
+
     BallHandler bh;
     public TextMeshProUGUI debugText;
     public bool isPlayer = false;
@@ -14,15 +23,22 @@ public class Racket : MonoBehaviour
     {
         bh = gameObject.GetComponent<BallHandler>();
         Input.gyro.enabled = true;
+        StartCoroutine(ballPhys());
+    }
+
+    IEnumerator ballPhys() // have to use coroutine bc everything instantiated
+    {
+        yield return new WaitForSeconds(4);
         ballPhysics = bh.ball.GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
     {
-        if (!isPlayer)
-        {
-            return;
-        }
+        //if (!isPlayer)
+        //{
+        //    Debug.Log("yoyoyo");
+        //    return;
+        //}
         //transform.rotation = Input.gyro.attitude;
         // idk if this clamp does shit
         float rotx = Mathf.Clamp(Input.acceleration.x, -45, 0);
