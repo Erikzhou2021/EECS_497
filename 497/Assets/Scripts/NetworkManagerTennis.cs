@@ -25,12 +25,14 @@ namespace Mirror
             Transform start = numPlayers == 0 ? leftPlayerSpawn : rightPlayerSpawn;
             GameObject player = Instantiate(playerPrefab, start.position, start.rotation);
             NetworkServer.AddPlayerForConnection(conn, player);
+            GameManager.Instance.players.Add(player);
 
             // spawn ball if two players
             if (numPlayers == 1)
             {
                 ball = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "Ball"));
                 NetworkServer.Spawn(ball);
+                GameManager.Instance.ball = ball;
             }
 
             if (GameObject.Find("Ball(Clone)"))
