@@ -38,7 +38,7 @@ public class Keyboardmovement : MonoBehaviour
         }
         if (Input.GetKey("w") || Input.GetKey("up"))
         {
-            //Debug.Log("Hi");
+            Debug.Log("Hi");
             gameObject.transform.Translate(playerSpeed,0,0);
         }
         if (Input.GetKey("a") || Input.GetKey("left"))
