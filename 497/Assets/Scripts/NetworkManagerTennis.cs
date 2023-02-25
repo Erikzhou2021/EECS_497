@@ -26,6 +26,7 @@ namespace Mirror
             GameObject player = Instantiate(playerPrefab, start.position, start.rotation);
             NetworkServer.AddPlayerForConnection(conn, player);
             GameManager.Instance.players.Add(player);
+            player.GetComponent<Player>().playerTeam = numPlayers - 1;
 
             // spawn ball if two players
             if (numPlayers == 1)

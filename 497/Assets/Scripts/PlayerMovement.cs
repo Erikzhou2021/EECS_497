@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()  
     {
         Vector3 ballPosition = gm.ball.transform.position;
+        //Debug.Log(ballPosition.ToString());
         /*
         //Vector3 velocityDirection = ball.GetComponent<Rigidbody>().velocity.normalized;
         //Debug.Log((Mathf.Atan2(velocityDirection.x, velocityDirection.y) * Mathf.Rad2Deg * Mathf.Sign(velocityDirection.y)));
@@ -68,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 targetPosition = new Vector3(transform.position.x, transform.position.y, ballPosition.z + (racketOffset * -Mathf.Sign(transform.position.x)));
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
-
+        Debug.Log(targetPosition.ToString());
         //prevent player from going out of bounds 
         if (transform.position.z < playerBoundary.left)
         {
