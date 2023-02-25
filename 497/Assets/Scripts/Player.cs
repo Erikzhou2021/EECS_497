@@ -23,13 +23,13 @@ public class Player : MonoBehaviour
     private void FixedUpdate() //confusing bc idk if we are doing ai opponent or multiplayer yet 
         //dont put this in update cus bad, announcement whenever score changes 
     {
-        if (Instance.state == GameState.Serve && playerTeam == Instance.ball.GetComponent<BallBoundary>().playerTurn)
-        {
-            transform.Find("Serve").gameObject.SetActive(true);
-        }
-        else{
-            transform.Find("Serve").gameObject.SetActive(false);
-        }
+        //if (Instance.state == GameState.Serve && playerTeam == Instance.ball.GetComponent<BallBoundary>().playerTurn)
+        //{
+        //    transform.Find("Serve").gameObject.SetActive(true);
+        //}
+        //else{
+        //    transform.Find("Serve").gameObject.SetActive(false);
+        //}
 
         //research how to win a tiebreak game 
 

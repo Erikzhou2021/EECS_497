@@ -18,6 +18,13 @@ public class BallHandler : MonoBehaviour
     {
         lastSwing = 0;
         lastServe = 0;
+        StartCoroutine(setVars()); // have to use coroutine bc everything instantiated
+    }
+
+    IEnumerator setVars()
+    {
+        yield return new WaitForSeconds(1);
+        ball = GameObject.Find("Ball(Clone)");
         ballPhysics = ball.GetComponent<Rigidbody>();
     }
 
