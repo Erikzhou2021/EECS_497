@@ -48,7 +48,7 @@ namespace Mirror
 
             if (isLocalPlayer)
             {
-                Debug.Log("It is local player");
+                //Debug.Log("It is local player");
                 // idk if this clamp does shit
                 float rotx = Mathf.Clamp(Input.acceleration.x, -45, 0);
                 float roty = Mathf.Clamp(Input.acceleration.y, -45, 0);
@@ -57,7 +57,7 @@ namespace Mirror
 
 
                 newRot = new Quaternion(-rotz, -roty, -rotx, 0);
-                Debug.Log(racket.name);
+                //Debug.Log(racket.name);
                 racket.transform.rotation = Quaternion.Slerp(racket.transform.rotation, newRot, 2f * Time.deltaTime);
 
                 //debugText.text = Input.gyro.userAcceleration.y.ToString();

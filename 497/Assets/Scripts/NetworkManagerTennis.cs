@@ -18,6 +18,7 @@ namespace Mirror
         public Transform leftPlayerSpawn;
         public Transform rightPlayerSpawn;
         GameObject ball;
+        public GameObject[] cameras;
 
         public override void OnServerAddPlayer(NetworkConnectionToClient conn)
         {
@@ -27,6 +28,8 @@ namespace Mirror
             NetworkServer.AddPlayerForConnection(conn, player);
             GameManager.Instance.players.Add(player);
             player.GetComponent<Player>().playerTeam = numPlayers - 1;
+
+            cameras[numPlayers - 1].GetComponent<CameraFollow>().setTarget(player.transform);
 
             // spawn ball if two players
             if (numPlayers == 1)
