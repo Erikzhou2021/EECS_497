@@ -19,12 +19,20 @@ namespace Mirror
         public Transform rightPlayerSpawn;
         GameObject ball;
         public GameObject[] cameras;
-
+        GameObject player;
         public override void OnServerAddPlayer(NetworkConnectionToClient conn)
         {
             // add player at correct spawn position
             Transform start = numPlayers == 0 ? leftPlayerSpawn : rightPlayerSpawn;
-            GameObject player = Instantiate(playerPrefab, start.position, start.rotation);
+            if(numPlayers == 0)
+            {
+                player = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "Player"), start.position, start.rotation);
+
+            } else
+            {
+               player = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "Player2"), start.position, start.rotation);
+            }
+            
             NetworkServer.AddPlayerForConnection(conn, player);
             GameManager.Instance.players.Add(player);
             player.GetComponent<Player>().playerTeam = numPlayers - 1;

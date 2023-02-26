@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1327,14 +1327,16 @@ MonoBehaviour:
   offlineScene: 
   onlineScene: 
   transport: {fileID: 1023734732}
-  networkAddress: 192.168.50.205
+  networkAddress: 192.168.1.17
   maxConnections: 100
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 406901297806643121, guid: deb4744f802704530a8149d3b8d07758, type: 3}
+  playerPrefab: {fileID: 1598797573174675663, guid: 0f201fcce09404c35a0a7ed9f2481e5f, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 8838975029230025784, guid: bba15352c8a8642c5baf864de6f235d0, type: 3}
+  - {fileID: 406901297806643121, guid: deb4744f802704530a8149d3b8d07758, type: 3}
+  - {fileID: 406901297806643121, guid: f8a4e615897e94b1cac822070ff64a45, type: 3}
   timeInterpolationGui: 0
   leftPlayerSpawn: {fileID: 580985609}
   rightPlayerSpawn: {fileID: 838943240}
