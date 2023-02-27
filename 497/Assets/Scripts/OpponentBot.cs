@@ -30,7 +30,6 @@ public class OpponentBot : MonoBehaviour
         //Debug.Log(Vector3.Distance(transform.position, ballPhysics.position).ToString());
         if (isInFront && isCloseEnough)
         {
-            Debug.Log("poggers");
             lastSwing = Time.time;
             HitBall();
         }

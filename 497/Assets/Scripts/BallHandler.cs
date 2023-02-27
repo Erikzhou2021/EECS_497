@@ -12,7 +12,7 @@ public class BallHandler : MonoBehaviour
     float lastSwing;
     float lastServe = 0;
     private Rigidbody ballPhysics;
-    
+    public float aimStrength = 1;
 
     void Start()
     {
@@ -54,16 +54,21 @@ public class BallHandler : MonoBehaviour
         // Bounce the ball off the racket first
         ballPhysics.velocity = Vector3.Reflect(ballPhysics.velocity, normalVector);
         ballPhysics.velocity *= 0.7f;
-        
-        Vector3 aim;
 
-        // then apply aimBot force
-        aim = aimBot();
+
+        // combine aimbot force
+        Vector3 aim = aimBot();
+        //aim *= aimStrength;
+        //Debug.Log((ballPhysics.velocity.magnitude + aimStrength));
+        //ballPhysics.velocity = (ballPhysics.velocity + aim)/(2); // take the average of the two
+        //Debug.Log(ballPhysics.velocity);
         ballPhysics.AddForce(aim, ForceMode.VelocityChange);
+
     }
     private Vector3 aimBot()
     {
-        Transform otherPlayer = gameObject.GetComponentInParent<Transform>();
+        int otherTeam = (gameObject.GetComponentInParent<Player>().playerTeam == 0) ? 1 : 0;
+        Transform otherPlayer = GameManager.Instance.players[otherTeam].GetComponent<Transform>();
         Vector3 otherPos = otherPlayer.position;
         // aimbot toward center is default
         Vector3 aim = Vector3.Normalize(Vector3.MoveTowards(-ballPhysics.position, Vector3.zero, 1));
@@ -72,26 +77,22 @@ public class BallHandler : MonoBehaviour
         {
             if (otherPos.z <= -2) // opponent is far right
             {
-                Debug.Log("Mid Left");
-                // aim toward the mid left
+                //Debug.Log("Mid Left"); // aim toward the mid left
                 aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z + 1.5f));
             }
             else if (otherPos.z >= 2) // opponent is far left
             {
-                Debug.Log("Mid Right");
-                // aim toward the mid right
+                //Debug.Log("Mid Right") // aim toward the mid right
                 aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z - 1.5f));
             }
             else if (otherPos.z < 0) // oponent is mid right
             {
-                Debug.Log("Far Left");
-                // aim toward the far left
+                //Debug.Log("Far Left"); // aim toward the far left
                 aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z + 3));
             }
             else if (otherPos.z > 0)
             {
-                Debug.Log("Far Right");
-                // aim toward the far right
+                //Debug.Log("Far Right"); // aim toward the far right
                 aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z - 3));
             }
         }

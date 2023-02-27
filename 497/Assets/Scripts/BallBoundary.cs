@@ -64,7 +64,7 @@ public class BallBoundary : MonoBehaviour
         GameManager.Instance.state = GameState.Serve;
         scoreStop = false;
         playerTurn = servingTeam;
-        Debug.Log(playerTurn);
+        //Debug.Log(playerTurn);
         //update score, new round
         yield return null;
     }
