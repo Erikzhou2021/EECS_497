@@ -27,6 +27,7 @@ public class BallBoundary : MonoBehaviour
 
     public GameObject outText;
     public float textOffset;
+    GameManager gm;
 
     //private Coroutine currentCoroutine;
     private void Awake()
@@ -34,6 +35,7 @@ public class BallBoundary : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            gm = GameManager.Instance;
         }
         else
         {
@@ -41,10 +43,6 @@ public class BallBoundary : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
- 
-    }
     IEnumerator OutBounds()
     {
         Vector3 ballOutPosition = transform.position;
@@ -64,7 +62,6 @@ public class BallBoundary : MonoBehaviour
         GameManager.Instance.state = GameState.Serve;
         scoreStop = false;
         playerTurn = servingTeam;
-        //Debug.Log(playerTurn);
         //update score, new round
         yield return null;
     }
@@ -89,7 +86,7 @@ public class BallBoundary : MonoBehaviour
     }
     private void ScorePoint(int playerNum)
     {
-        GameManager.Instance.players[playerNum].GetComponent<Player>().AddScore();
+        gm.players[playerNum].GetComponent<Player>().AddScore();
         StartCoroutine(ResetBall()); // maybe replace with replay system later?
     }
     private void OnCollisionEnter(Collision collision)
@@ -103,6 +100,11 @@ public class BallBoundary : MonoBehaviour
         }*/
         if (collision.gameObject.tag != "Ground")
         {
+            return;
+        }
+        if (gm.state == GameState.Serve)
+        { // you fucced up the serve but that's ok
+            StartCoroutine(ResetBall());
             return;
         }
         if (bouncedInOpponentCourtOnce)

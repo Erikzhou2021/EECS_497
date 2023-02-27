@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
             float t2 = (float) (-v0 - Math.Sqrt(v0 * v0 - 2 * Physics.gravity.y * (ballPosition.y - racketHeight))) / Physics.gravity.y;
             float t = Math.Max(t1, t2);
             //Debug.Log("time =" + t);
-            if (t != t) // same as isNan() but i can't get that to work
+            if (float.IsNaN(t))
             { // can't get the ball, give up and cry
                 canReachBeforeBounce = false;
             }
@@ -93,9 +93,16 @@ public class PlayerMovement : MonoBehaviour
                 t += Math.Max(t3, t4); //finds when the ball is about to bounce the second time
             }
             targetPosition = gm.ball.transform.position + ballVelocity * t;
+            targetPosition.x = Math.Max(targetPosition.x, playerBoundary.bottom);
+            targetPosition.x = Math.Min(targetPosition.x, playerBoundary.top);
             targetPosition.y = transform.position.y;
-            targetPosition.z += racketOffset * -Mathf.Sign(transform.position.x); // might break if the opponent is left handed
+            targetPosition.z += Math.Max(playerBoundary.left, racketOffset * -Mathf.Sign(transform.position.x)); // might break if the opponent is left handed
+            targetPosition.z = Math.Min(targetPosition.z, playerBoundary.right);
             //Debug.Log(targetPosition);
+            if (float.IsNaN(t) || !float.IsNaN(t) && Vector3.Distance(transform.position, targetPosition) > movementSpeed * t) // still can't find a solution
+            { // just chase the ball and hope you hit
+                targetPosition = new Vector3(transform.position.x, transform.position.y, ballPosition.z + (racketOffset * -Mathf.Sign(transform.position.x)));
+            }
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
         }
 
