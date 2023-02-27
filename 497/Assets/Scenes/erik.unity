@@ -600,8 +600,8 @@ MonoBehaviour:
     right: 0
     top: 0
     bottom: 0
-  fieldX: 10
-  fieldY: 12
+  fieldX: 12
+  fieldY: 16
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1516,6 +1516,7 @@ GameObject:
   - component: {fileID: 1556717610}
   - component: {fileID: 1556717609}
   - component: {fileID: 1556717608}
+  - component: {fileID: 1556717613}
   m_Layer: 0
   m_Name: '"racket"'
   m_TagString: Untagged
@@ -1545,7 +1546,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1556717606}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9db6d1f9e96be9045ab3aedb3b1694a6, type: 3}
   m_Name: 
@@ -1629,6 +1630,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1556717606}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1556717613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556717606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3edfe384f76041f4d9478999e27babd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: 8
 --- !u!1 &1803399928
 GameObject:
   m_ObjectHideFlags: 0
@@ -2014,7 +2028,6 @@ GameObject:
   - component: {fileID: 2013708416}
   - component: {fileID: 2013708415}
   - component: {fileID: 2013708414}
-  - component: {fileID: 2013708421}
   m_Layer: 0
   m_Name: OtherPlayer
   m_TagString: Untagged
@@ -2053,14 +2066,14 @@ MonoBehaviour:
   racketOffset: 1.5
   racketHeight: 1
   playerOffset: 3
-  movementSpeed: 16
+  movementSpeed: 6
   playerBoundary:
     left: 0
     right: 0
     top: 0
     bottom: 0
-  fieldX: 10
-  fieldY: 12
+  fieldX: 12
+  fieldY: 16
 --- !u!114 &2013708416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2163,17 +2176,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2013708421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013708412}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3edfe384f76041f4d9478999e27babd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ball: {fileID: 1304041738}
-  force: 8

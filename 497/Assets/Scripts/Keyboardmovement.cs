@@ -39,19 +39,19 @@ public class Keyboardmovement : MonoBehaviour
         if (Input.GetKey("w") || Input.GetKey("up"))
         {
             //Debug.Log("Hi");
-            gameObject.transform.Translate(playerSpeed,0,0);
+            gameObject.transform.Translate(playerSpeed,0,0, Space.World);
         }
         if (Input.GetKey("a") || Input.GetKey("left"))
         {
-            gameObject.transform.Translate(0, 0, playerSpeed);
+            gameObject.transform.Translate(0, 0, playerSpeed, Space.World);
         }
         if (Input.GetKey("s") || Input.GetKey("down"))
         {
-            gameObject.transform.Translate(-playerSpeed, 0, 0);
+            gameObject.transform.Translate(-playerSpeed, 0, 0, Space.World);
         }
         if (Input.GetKey("d") || Input.GetKey("right"))
         {
-            gameObject.transform.Translate(0, 0, -playerSpeed);
+            gameObject.transform.Translate(0, 0, -playerSpeed, Space.World);
         }
         if (Input.GetKey("r"))
         {

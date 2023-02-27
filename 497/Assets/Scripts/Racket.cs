@@ -25,6 +25,7 @@ public class Racket : MonoBehaviour
         }
         //transform.rotation = Input.gyro.attitude;
         // idk if this clamp does shit
+
         float rotx = Mathf.Clamp(Input.acceleration.x, -45, 0);
         float roty = Mathf.Clamp(Input.acceleration.y, -45, 0);
         float rotz = Mathf.Clamp(Input.acceleration.z, -20, 20);
@@ -48,7 +49,7 @@ public class Racket : MonoBehaviour
         }
         if (bh.GetSwing())
         {
-            transform.Rotate(0,-7.2f,0);
+            //transform.Rotate(0,-7.2f,0);
         }
         else if(Input.gyro.userAcceleration.y > 0.3 && GameManager.Instance.state == GameState.Serve) // need to make this take multiple frames to detect
         {

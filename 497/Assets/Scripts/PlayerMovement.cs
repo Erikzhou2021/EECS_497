@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
         else if (currPlayer.playerTeam != BallBoundary.Instance.playerTurn)
         {
             Vector3 center = new Vector3(8.5f * (currPlayer.playerTeam * 2 - 1), 1, 0); // move toward the center while waiting for opponent to hit the ball
-            //transform.position = Vector3.MoveTowards(transform.position, center, movementSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, center, movementSpeed * Time.deltaTime);
             // should consider moving at different speeds based on how far you have to move?
         }
         else
@@ -62,25 +62,40 @@ public class PlayerMovement : MonoBehaviour
             //Vector3 targetPosition = new Vector3(transform.position.x, transform.position.y, ballPosition.z + (racketOffset * -Mathf.Sign(transform.position.x)));
             //transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
 
-            // figure out where the ball is going to be at the same height as the racketHeight
+            bool canReachBeforeBounce = true;
+            // figure out when the ball is going to be at the same height as the racketHeight
             // racketHeight = 0.5 * g * t^2 + v0 * t + x0
-            float v0 = gm.ball.GetComponent<Rigidbody>().velocity.y;
-            float t1 = (float) (-v0 + Math.Sqrt(v0*v0 - 4 * Physics.gravity.y * (ballPosition.y - racketHeight))) / Physics.gravity.y;
-            float t2 = (float) (-v0 - Math.Sqrt(v0 * v0 - 4 * Physics.gravity.y * (ballPosition.y - racketHeight))) / Physics.gravity.y;
+            Vector3 ballVelocity = gm.ball.GetComponent<Rigidbody>().velocity;
+            float v0 = ballVelocity.y;
+            float t1 = (float) (-v0 + Math.Sqrt(v0*v0 - 2 * Physics.gravity.y * (ballPosition.y - racketHeight))) / Physics.gravity.y;
+            float t2 = (float) (-v0 - Math.Sqrt(v0 * v0 - 2 * Physics.gravity.y * (ballPosition.y - racketHeight))) / Physics.gravity.y;
             float t = Math.Max(t1, t2);
-            Debug.Log("time =" + t);
-            if (float.IsNaN(t)))
+            //Debug.Log("time =" + t);
+            if (t != t) // same as isNan() but i can't get that to work
             { // can't get the ball, give up and cry
-                return;
+                canReachBeforeBounce = false;
             }
-            Vector3 targetPosition = gm.ball.transform.position + gm.ball.GetComponent<Rigidbody>().velocity * t;
+            Vector3 targetPosition = gm.ball.transform.position + ballVelocity * t;
             targetPosition.y = transform.position.y;
             targetPosition.z += racketOffset * -Mathf.Sign(transform.position.x); // might break if the opponent is left handed
-            if (Vector3.Distance(transform.position, targetPosition) > movementSpeed * t)
-            { // can't make it to the ball, gotta wait till the next bounce
-
+            if (canReachBeforeBounce && Vector3.Distance(transform.position, targetPosition) > movementSpeed * t && !BallBoundary.Instance.bouncedInOpponentCourtOnce) 
+            {
+                canReachBeforeBounce = false;
             }
-            Debug.Log(targetPosition);
+            if (!canReachBeforeBounce)
+            {   // can't make it to the ball, gotta wait till the next bounce
+                float energy = 0.5f * ballVelocity.y * ballVelocity.y + Math.Abs(Physics.gravity.y * ballPosition.y);
+                float bounciness = gm.ball.GetComponent<SphereCollider>().material.bounciness;
+                // racketHeight = 0.5 * g * t^2 + 0.5 * sqrt(2*energy)
+                float v1 = (float) Math.Sqrt(2 * energy * bounciness);
+                float t3 = (float)(-v1 + Math.Sqrt(v1 * v1 - 2 * Physics.gravity.y * (-racketHeight))) / Physics.gravity.y;
+                float t4 = (float)(-v1 - Math.Sqrt(v1 * v1 - 2 * Physics.gravity.y * (-racketHeight))) / Physics.gravity.y;
+                t += Math.Max(t3, t4); //finds when the ball is about to bounce the second time
+            }
+            targetPosition = gm.ball.transform.position + ballVelocity * t;
+            targetPosition.y = transform.position.y;
+            targetPosition.z += racketOffset * -Mathf.Sign(transform.position.x); // might break if the opponent is left handed
+            //Debug.Log(targetPosition);
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
         }
 
