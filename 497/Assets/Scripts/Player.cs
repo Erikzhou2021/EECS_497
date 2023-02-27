@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     {
         Instance = GameManager.Instance;
         otherPlayer = otherPlayerObject.GetComponent<Player>();
-        playerBoundary = GetComponent<PlayerBoundary>().playerBoundary; 
+        playerBoundary = GetComponent<PlayerMovement>().playerBoundary; 
     }
     private void FixedUpdate() //confusing bc idk if we are doing ai opponent or multiplayer yet 
         //dont put this in update cus bad, announcement whenever score changes 

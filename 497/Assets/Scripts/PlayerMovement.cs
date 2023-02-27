@@ -11,6 +11,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float racketOffset;
     [SerializeField] private float playerOffset;
     [SerializeField] private float movementSpeed;
+    public Boundary playerBoundary;
+    public float fieldX = 10;
+    public float fieldY = 12;
 
     private void Start()
     {
@@ -21,11 +24,21 @@ public class PlayerMovement : MonoBehaviour
         {
             servingPositions.Add(new Vector3(-10.5f, 1, -2.5f));
             servingPositions.Add(new Vector3(-10.5f, 1, 2.5f));
+
+            playerBoundary.top = 0;
+            playerBoundary.bottom = -fieldY;
+            playerBoundary.left = -fieldX;
+            playerBoundary.right = fieldX;
         }
         else
         {
             servingPositions.Add(new Vector3(10.5f, 1, 2.5f)); 
             servingPositions.Add(new Vector3(10.5f, 1, -2.5f));
+
+            playerBoundary.top = fieldY;
+            playerBoundary.bottom = 0;
+            playerBoundary.left = -fieldX;
+            playerBoundary.right = fieldX;
         }
     }
     private void FixedUpdate()  
@@ -55,5 +68,22 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 targetPosition = new Vector3(transform.position.x, transform.position.y, ballPosition.z + (racketOffset * -Mathf.Sign(transform.position.x)));
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
+
+        if (transform.position.z < playerBoundary.left)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, playerBoundary.left);
+        }
+        if (transform.position.z > playerBoundary.right)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, playerBoundary.right);
+        }
+        if (transform.position.x < playerBoundary.bottom)
+        {
+            transform.position = new Vector3(playerBoundary.bottom, transform.position.y, transform.position.z);
+        }
+        if (transform.position.x > playerBoundary.top)
+        {
+            transform.position = new Vector3(playerBoundary.top, transform.position.y, transform.position.z);
+        }
     } 
 }

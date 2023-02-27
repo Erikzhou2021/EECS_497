@@ -454,7 +454,6 @@ GameObject:
   - component: {fileID: 225042756}
   - component: {fileID: 225042755}
   - component: {fileID: 225042760}
-  - component: {fileID: 225042761}
   - component: {fileID: 225042762}
   m_Layer: 0
   m_Name: Player
@@ -580,25 +579,6 @@ MonoBehaviour:
   points: 0
   score: 0
   otherPlayerObject: {fileID: 2013708412}
---- !u!114 &225042761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 225042754}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d58ee1218218a84c9d3e3529e18a043, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerBoundary:
-    left: 0
-    right: 0
-    top: 0
-    bottom: 0
-  fieldX: 10
-  fieldY: 12
 --- !u!114 &225042762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,6 +594,13 @@ MonoBehaviour:
   racketOffset: 1.5
   playerOffset: 3
   movementSpeed: 4
+  playerBoundary:
+    left: 0
+    right: 0
+    top: 0
+    bottom: 0
+  fieldX: 10
+  fieldY: 12
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2026,7 +2013,6 @@ GameObject:
   - component: {fileID: 2013708416}
   - component: {fileID: 2013708415}
   - component: {fileID: 2013708414}
-  - component: {fileID: 2013708413}
   - component: {fileID: 2013708421}
   m_Layer: 0
   m_Name: OtherPlayer
@@ -2035,25 +2021,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2013708413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013708412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d58ee1218218a84c9d3e3529e18a043, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerBoundary:
-    left: 0
-    right: 0
-    top: 0
-    bottom: 0
-  fieldX: 10
-  fieldY: 12
 --- !u!54 &2013708414
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2085,6 +2052,13 @@ MonoBehaviour:
   racketOffset: 1.5
   playerOffset: 3
   movementSpeed: 4
+  playerBoundary:
+    left: 0
+    right: 0
+    top: 0
+    bottom: 0
+  fieldX: 10
+  fieldY: 12
 --- !u!114 &2013708416
 MonoBehaviour:
   m_ObjectHideFlags: 0
