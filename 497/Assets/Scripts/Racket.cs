@@ -10,6 +10,8 @@ public class Racket : MonoBehaviour
     public bool isPlayer = false;
     private Rigidbody ballPhysics;
 
+    public float rotationSpeed = 450f;
+
     void Start()
     {
         bh = gameObject.GetComponent<BallHandler>();
@@ -50,6 +52,7 @@ public class Racket : MonoBehaviour
         if (bh.GetSwing())
         {
             //transform.Rotate(0,-7.2f,0);
+            transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), rotationSpeed * Mathf.Sign(transform.parent.position.x) * Time.deltaTime);
         }
         else if(Input.gyro.userAcceleration.y > 0.3 && GameManager.Instance.state == GameState.Serve) // need to make this take multiple frames to detect
         {

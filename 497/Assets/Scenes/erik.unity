@@ -1348,6 +1348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugText: {fileID: 43507075}
   isPlayer: 1
+  rotationSpeed: 450
 --- !u!114 &872604457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1363,6 +1364,7 @@ MonoBehaviour:
   ball: {fileID: 1304041738}
   swingForce: 12
   aimStrength: 1
+  rotationSpeed: 300
 --- !u!1 &1304041738
 GameObject:
   m_ObjectHideFlags: 0
@@ -1554,6 +1556,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugText: {fileID: 43507075}
   isPlayer: 0
+  rotationSpeed: 450
 --- !u!114 &1556717609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1569,6 +1572,7 @@ MonoBehaviour:
   ball: {fileID: 1304041738}
   swingForce: 12
   aimStrength: 1
+  rotationSpeed: 300
 --- !u!65 &1556717610
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -14,6 +14,8 @@ public class BallHandler : MonoBehaviour
     private Rigidbody ballPhysics;
     public float aimStrength = 1;
 
+    public float rotationSpeed = 300f;
+
     void Start()
     {
         lastSwing = 0;
@@ -27,6 +29,9 @@ public class BallHandler : MonoBehaviour
         {
             isSwinging = false;
             hit = false;
+
+            //reset rotation and position to idle
+            StartCoroutine(RotateBack());
         }
         if (isSwinging && !hit)
         {
@@ -38,6 +43,15 @@ public class BallHandler : MonoBehaviour
                 Debug.Log(swingForce);
                 HitBall(swingForce);
             }
+        }
+    }
+    IEnumerator RotateBack()
+    {
+        while ((transform.localPosition.z > (-1.49) && transform.parent.position.x < 0)
+            || (transform.localPosition.z < (1.49) && transform.parent.position.x > 0)) //for forehand 
+        {
+            transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), rotationSpeed * Time.deltaTime);
+            yield return null;
         }
     }
 
