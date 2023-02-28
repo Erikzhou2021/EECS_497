@@ -62,6 +62,7 @@ namespace Mirror
                     force += 5;
                     force = Mathf.Clamp(force, 5, 18);
                     debugText.text = force.ToString();
+                    Debug.Log("startswing");
                     bh.StartSwing(force);
                 }
                 if (bh.GetSwing())
