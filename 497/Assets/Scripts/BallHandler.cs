@@ -41,7 +41,6 @@ public class BallHandler : MonoBehaviour
         }
         if (isSwinging && !hit)
         {
-            Debug.Log("isswinging and not hit");
             bool isInFront = ballPhysics.position.x >= transform.position.x;
             bool isCloseEnough = Vector3.Distance(transform.position, ballPhysics.position) < 1;
             if (isInFront && isCloseEnough)
@@ -67,7 +66,6 @@ public class BallHandler : MonoBehaviour
 
     void HitBall(float force)
     {
-        Debug.Log("Hitballfunctio start");
         BallBoundary.Instance.SwitchTurn();
         if (GameManager.Instance.state == GameState.Serve)
         {
@@ -110,8 +108,6 @@ public class BallHandler : MonoBehaviour
         //ballPhysics.velocity = (ballPhysics.velocity + aim)/(2); // take the average of the two
         //Debug.Log(ballPhysics.velocity);
         ballPhysics.AddForce(aim, ForceMode.VelocityChange);
-        Debug.Log("hitball functio nend");
-
     }
     private Vector3 aimBot(float force)
     {

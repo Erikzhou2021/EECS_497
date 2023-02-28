@@ -275,6 +275,7 @@ MonoBehaviour:
   fieldX: 10
   fieldY: 12
   racketOffset: 1.5
+  racketHeight: 0
   playerOffset: 3
   movementSpeed: 4
 --- !u!1 &406901298219322832
@@ -288,9 +289,9 @@ GameObject:
   - component: {fileID: 406901298219322839}
   - component: {fileID: 406901298219322836}
   - component: {fileID: 406901298219322837}
-  - component: {fileID: 406901298219322838}
   - component: {fileID: 406901298219322843}
   - component: {fileID: 3747878815002943346}
+  - component: {fileID: 1853465814520617676}
   m_Layer: 0
   m_Name: '"racket"'
   m_TagString: Racket
@@ -305,14 +306,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 406901298219322832}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: -1.5}
-  m_LocalScale: {x: 0.1, y: 1.2, z: 0.8}
+  m_LocalRotation: {x: 0.64085644, y: 0.29883623, z: 0.64085644, w: 0.29883623}
+  m_LocalPosition: {x: 0, y: 1, z: -1.5}
+  m_LocalScale: {x: 50, y: 50, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 406901297806643124}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 130}
 --- !u!33 &406901298219322836
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -320,7 +321,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 406901298219322832}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2124705421725058983, guid: 49bf5628959c4c247baa17739240dff8, type: 3}
 --- !u!23 &406901298219322837
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -363,19 +364,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &406901298219322838
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 406901298219322832}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &406901298219322843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,8 +377,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
-  force: 12
+  swingForce: 12
   rotationSpeed: 250
+  aimStrength: 1
 --- !u!96 &3747878815002943346
 TrailRenderer:
   serializedVersion: 2
@@ -499,3 +488,16 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!65 &1853465814520617676
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406901298219322832}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.02219994, y: 0.04030739, z: 0.0022976347}
+  m_Center: {x: 0, y: 0.011103665, z: 0.0008572354}

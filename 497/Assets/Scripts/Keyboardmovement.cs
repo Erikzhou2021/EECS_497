@@ -37,7 +37,6 @@ namespace Mirror
                     BallBoundary.Instance.scoreStop = false;
                     BallBoundary.Instance.bouncedInOpponentCourtOnce = false;
                     BallBoundary.Instance.playerTurn = 0;
-                    ballPhysics.GetComponent<Rigidbody>().useGravity = true;
                     bh.Serve();
                     resetCounter = 0;
                 }

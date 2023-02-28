@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
         if(!BallBoundary.Instance.scoreStop){
             points += 1;
             score = GetScore();
-            Announce();
+            //Announce();
         }
     }
     public void Announce()
