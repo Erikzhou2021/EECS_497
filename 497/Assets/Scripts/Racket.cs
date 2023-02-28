@@ -21,11 +21,12 @@ namespace Mirror
         private Rigidbody ballPhysics;
         GameObject racket;
 
+        public float rotationSpeed = 300f;
+
         void Start()
         {
             StartCoroutine(ballPhys());
-           
-            
+
             racket = transform.GetChild(0).gameObject;
         }
 
@@ -35,6 +36,7 @@ namespace Mirror
             bh = racket.GetComponent<BallHandler>();
             ballPhysics = bh.ball.GetComponent<Rigidbody>();
             Input.gyro.enabled = true;
+            racket.GetComponent<TrailRenderer>().emitting = false;
         }
 
         void FixedUpdate()
@@ -72,7 +74,9 @@ namespace Mirror
                 }
                 if (bh.GetSwing())
                 {
-                    racket.transform.Rotate(0, -7.2f, 0);
+                    //racket.transform.Rotate(0, -7.2f, 0);
+                    StartCoroutine(EnableTrail());
+                    racket.transform.RotateAround(transform.position, new Vector3(0, 1, 0), rotationSpeed * Mathf.Sign(transform.position.x) * Time.deltaTime);
                 }
                 else if (Input.gyro.userAcceleration.y > 0.3 && GameManager.Instance.state == GameState.Serve) // need to make this take multiple frames to detect
                 {
@@ -86,6 +90,11 @@ namespace Mirror
                     bh.Serve();
                 }
             }
+        }
+        IEnumerator EnableTrail()
+        {
+            yield return new WaitForEndOfFrame();
+            racket.GetComponent<TrailRenderer>().emitting = true;
         }
     }
 
