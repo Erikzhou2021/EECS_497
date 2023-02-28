@@ -101,6 +101,10 @@ public class BallBoundary : MonoBehaviour
             SwitchTurn();
             return;
         }*/
+
+        GameObject.Find("GameObject").SetActive(true);
+        GameObject.Find("GameObject").transform.position = new Vector3(transform.position.x, 0.0002f, transform.position.z);
+
         if (collision.gameObject.tag != "Ground")
         {
             return;
