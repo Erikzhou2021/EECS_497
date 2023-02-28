@@ -19,6 +19,10 @@ public class ScoreDisplay : MonoBehaviour
     }
     public void DisplayScore()
     {
+        if (GameManager.Instance.players.Count < 2)
+        {
+            return;
+        }
         scoreDisplay.text = GameManager.Instance.players[0].GetComponent<Player>().GetScore().ToString() + "-" +
             GameManager.Instance.players[1].GetComponent<Player>().GetScore().ToString();
     }

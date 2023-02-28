@@ -12,14 +12,21 @@ public class BallHandler : MonoBehaviour
     float lastSwing;
     float lastServe = 0;
     private Rigidbody ballPhysics;
-    public float aimStrength = 1;
 
-    public float rotationSpeed = 300f;
+    public float rotationSpeed = 200f;
+    public float aimStrength = 1;
 
     void Start()
     {
         lastSwing = 0;
         lastServe = 0;
+        StartCoroutine(setVars()); // have to use coroutine bc everything instantiated
+    }
+
+    IEnumerator setVars()
+    {
+        yield return new WaitForSeconds(1);
+        ball = GameObject.Find("Ball(Clone)");
         ballPhysics = ball.GetComponent<Rigidbody>();
     }
 
@@ -30,7 +37,6 @@ public class BallHandler : MonoBehaviour
             isSwinging = false;
             hit = false;
 
-            //reset rotation and position to idle
             StartCoroutine(RotateBack());
         }
         if (isSwinging && !hit)
@@ -47,6 +53,9 @@ public class BallHandler : MonoBehaviour
     }
     IEnumerator RotateBack()
     {
+        GetComponent<TrailRenderer>().emitting = false;
+        yield return new WaitForEndOfFrame();
+
         while ((transform.localPosition.z > (-1.49) && transform.parent.position.x < 0)
             || (transform.localPosition.z < (1.49) && transform.parent.position.x > 0)) //for forehand 
         {

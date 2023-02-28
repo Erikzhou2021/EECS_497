@@ -9,6 +9,11 @@ public class PlayerMovement : MonoBehaviour
     GameManager gm;
     Player currPlayer;
     List<Vector3> servingPositions;
+
+    public Boundary playerBoundary;
+    public float fieldX = 10;
+    public float fieldY = 12;
+
     [SerializeField] private float racketOffset;
     [SerializeField] private float racketHeight;
     [SerializeField] private float playerOffset;
@@ -46,7 +51,6 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()  
     {
         Vector3 ballPosition = gm.ball.transform.position;
-
         if (gm.state == GameState.Serve)
         {
             transform.position = servingPositions[gm.serveCount % servingPositions.Count];
@@ -55,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 center = new Vector3(8.5f * (currPlayer.playerTeam * 2 - 1), 1, 0); // move toward the center while waiting for opponent to hit the ball
             transform.position = Vector3.MoveTowards(transform.position, center, movementSpeed * Time.deltaTime);
+            Debug.Log("does not equal");
             // should consider moving at different speeds based on how far you have to move?
         }
         else
