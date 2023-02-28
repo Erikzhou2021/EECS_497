@@ -57,8 +57,8 @@ public class BallHandler : MonoBehaviour
         GetComponent<TrailRenderer>().emitting = false;
         yield return new WaitForEndOfFrame();
 
-        while ((transform.localPosition.z > (-1.49) && transform.parent.position.x < 0)
-            || (transform.localPosition.z < (1.49) && transform.parent.position.x > 0)) //for forehand 
+        while (transform.parent.position.x < 0 && (transform.localPosition.z > (-1.49))
+            || (transform.parent.position.x > 0 && (transform.localPosition.z < (1.49)))) //for forehand 
         {
             transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), rotationSpeed * Time.deltaTime);
             yield return null;

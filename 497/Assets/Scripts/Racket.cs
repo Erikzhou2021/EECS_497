@@ -69,7 +69,7 @@ namespace Mirror
                 {
                     //racket.transform.Rotate(0, -7.2f, 0);
                     StartCoroutine(EnableTrail());
-                    racket.transform.RotateAround(transform.position, new Vector3(0, 1, 0), rotationSpeed * Mathf.Sign(transform.position.x) * Time.deltaTime);
+                    racket.transform.RotateAround(transform.position, new Vector3(0, 1, 0), -rotationSpeed * Time.deltaTime);
                 }
                 else if (Input.gyro.userAcceleration.y > 0.3 && GameManager.Instance.state == GameState.Serve) // need to make this take multiple frames to detect
                 {
