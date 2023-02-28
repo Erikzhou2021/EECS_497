@@ -15,6 +15,57 @@ namespace Mirror
         float resetCounter;
         // Start is called before the first frame update
         void Start()
+        
+        resetCounter = Time.time;
+        ballPhysics = ball.GetComponent<Rigidbody>();
+        bh = racket.GetComponent<BallHandler>();
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (resetCounter > 0)
+        {
+            resetCounter++;
+        }
+        if (resetCounter > 5)
+        {
+            // lmao dont look, resetting all variables 
+            BallBoundary.Instance.touchedGroundOnceOut = false;
+            BallBoundary.Instance.scoreStop = false;
+            BallBoundary.Instance.bouncedInOpponentCourtOnce = false;
+            BallBoundary.Instance.playerTurn = 0;
+            ballPhysics.GetComponent<Rigidbody>().useGravity = true;
+            bh.Serve();
+            resetCounter = 0;
+        }
+        if (Input.GetKey("w") || Input.GetKey("up"))
+        {
+            //Debug.Log("Hi");
+            gameObject.transform.Translate(playerSpeed,0,0, Space.World);
+        }
+        if (Input.GetKey("a") || Input.GetKey("left"))
+        {
+            gameObject.transform.Translate(0, 0, playerSpeed, Space.World);
+        }
+        if (Input.GetKey("s") || Input.GetKey("down"))
+        {
+            gameObject.transform.Translate(-playerSpeed, 0, 0, Space.World);
+        }
+        if (Input.GetKey("d") || Input.GetKey("right"))
+        {
+            gameObject.transform.Translate(0, 0, -playerSpeed, Space.World);
+        }
+        if (Input.GetKey("r"))
+        {
+            resetCounter = 1; // just delaying the serve for a few frames so the other code can run
+            GameManager.Instance.state = GameState.Serve;
+        }
+        if (Input.GetKey("q"))
+        {
+            gameObject.transform.Rotate(0, -0.5f, 0);
+        }
+        if (Input.GetKey("e"))
         {
             resetCounter = Time.time;
             ballPhysics = ball.GetComponent<Rigidbody>();

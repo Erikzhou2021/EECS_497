@@ -8,12 +8,13 @@ public class BallHandler : MonoBehaviour
     bool isSwinging = false;
     bool hit = false;
     public GameObject ball;
-    public float force = 12;
+    public float swingForce = 12;
     float lastSwing;
     float lastServe = 0;
     private Rigidbody ballPhysics;
 
     public float rotationSpeed = 200f;
+    public float aimStrength = 1;
 
     void Start()
     {
@@ -35,6 +36,7 @@ public class BallHandler : MonoBehaviour
         {
             isSwinging = false;
             hit = false;
+
             StartCoroutine(RotateBack());
         }
         if (isSwinging && !hit)
@@ -44,7 +46,8 @@ public class BallHandler : MonoBehaviour
             if (isInFront && isCloseEnough)
             {
                 hit = true;
-                HitBall();
+                Debug.Log(swingForce);
+                HitBall(swingForce);
             }
         }
     }
@@ -61,25 +64,56 @@ public class BallHandler : MonoBehaviour
         }
     }
 
-    void HitBall()
+    void HitBall(float force)
     {
-        Debug.Log("Hit");
         BallBoundary.Instance.SwitchTurn();
+        if (GameManager.Instance.state == GameState.Serve)
+        {
+            force += 7;
+            GameManager.Instance.serveCount++;
+            Vector3 serveVect = Vector3.zero;
+            if (transform.position.x < 0)
+            {
+                serveVect.x = 4 - ballPhysics.position.x;
+            }
+            else
+            {
+                serveVect.x = -4 - ballPhysics.position.x;
+            }
+            if (transform.position.z < 0)
+            {
+                serveVect.z = 2.5f - ballPhysics.position.z;
+            }
+            else
+            {
+                serveVect.z = -2.5f - ballPhysics.position.z;
+            }
+            serveVect.Normalize();
+            serveVect *= force;
+            serveVect.y = 5;
+            GameManager.Instance.state = GameState.Rally; // could break if they hit the ball right after it goes out
+            ballPhysics.AddForce(serveVect, ForceMode.VelocityChange);
+            return;
+        }
         Vector3 currVelocity = ballPhysics.velocity;
         Vector3 normalVector = transform.rotation * Vector3.right; // will probably have to change later
         // Bounce the ball off the racket first
         ballPhysics.velocity = Vector3.Reflect(ballPhysics.velocity, normalVector);
-        ballPhysics.velocity *= 0.7f;
-        
-        Vector3 aim;
+        ballPhysics.velocity *= 0.64f;
 
-        // then apply aimBot force
-        aim = aimBot();
+        // combine aimbot force
+        Vector3 aim = aimBot(force);
+        //aim *= aimStrength;
+        //Debug.Log((ballPhysics.velocity.magnitude + aimStrength));
+        //ballPhysics.velocity = (ballPhysics.velocity + aim)/(2); // take the average of the two
+        //Debug.Log(ballPhysics.velocity);
         ballPhysics.AddForce(aim, ForceMode.VelocityChange);
+
     }
-    private Vector3 aimBot()
+    private Vector3 aimBot(float force)
     {
-        Transform otherPlayer = gameObject.GetComponentInParent<Transform>();
+        int otherTeam = (gameObject.GetComponentInParent<Player>().playerTeam == 0) ? 1 : 0;
+        Transform otherPlayer = GameManager.Instance.players[otherTeam].GetComponent<Transform>();
         Vector3 otherPos = otherPlayer.position;
         // aimbot toward center is default
         Vector3 aim = Vector3.Normalize(Vector3.MoveTowards(-ballPhysics.position, Vector3.zero, 1));
@@ -88,26 +122,22 @@ public class BallHandler : MonoBehaviour
         {
             if (otherPos.z <= -2) // opponent is far right
             {
-                Debug.Log("Mid Left");
-                // aim toward the mid left
+                //Debug.Log("Mid Left"); // aim toward the mid left
                 aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z + 1.5f));
             }
             else if (otherPos.z >= 2) // opponent is far left
             {
-                Debug.Log("Mid Right");
-                // aim toward the mid right
+                //Debug.Log("Mid Right") // aim toward the mid right
                 aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z - 1.5f));
             }
             else if (otherPos.z < 0) // oponent is mid right
             {
-                Debug.Log("Far Left");
-                // aim toward the far left
+                //Debug.Log("Far Left"); // aim toward the far left
                 aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z + 3));
             }
             else if (otherPos.z > 0)
             {
-                Debug.Log("Far Right");
-                // aim toward the far right
+                //Debug.Log("Far Right"); // aim toward the far right
                 aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z - 3));
             }
         }
@@ -126,8 +156,6 @@ public class BallHandler : MonoBehaviour
     }
     public void Serve()
     {
-        GameManager.Instance.state = GameState.Rally;
-        GameManager.Instance.serveCount++;
         lastServe = Time.time;
         ballPhysics.position = transform.position + new Vector3(0.3f, 1.5f, 0);
         ballPhysics.velocity = new Vector3(0, 0.2f, 0);
@@ -136,13 +164,9 @@ public class BallHandler : MonoBehaviour
     {
         return isSwinging;
     }
-    public void StartSwing(float swingForce)
+    public void StartSwing(float force)
     {
-        force = swingForce;
-        if (Time.time - lastServe < 0.5) // Get more power on the serve because there is no momentum from a bounce
-        {
-            force += 5;
-        }
+        swingForce = force;
         isSwinging = true;
         lastSwing = Time.time;
     }

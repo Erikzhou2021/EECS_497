@@ -7,14 +7,6 @@ namespace Mirror
     public class Racket : NetworkBehaviour
     {
 
-        //public override void OnStartAuthority()
-        //{
-        //    base.OnStartAuthority();
-
-        //    UnityEngine.InputSystem.PlayerInput playerInput = GetComponent<UnityEngine.InputSystem.PlayerInput>();
-        //    playerInput.enabled = true;
-        //}
-
         BallHandler bh;
         public TextMeshProUGUI debugText;
         public bool isPlayer = false;
@@ -95,6 +87,23 @@ namespace Mirror
         {
             yield return new WaitForEndOfFrame();
             racket.GetComponent<TrailRenderer>().emitting = true;
+        }
+
+        if (bh.GetSwing())
+        {
+            //transform.Rotate(0,-7.2f,0);
+            transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), rotationSpeed * Mathf.Sign(transform.parent.position.x) * Time.deltaTime);
+        }
+        else if(Input.gyro.userAcceleration.y > 0.3 && GameManager.Instance.state == GameState.Serve) // need to make this take multiple frames to detect
+        {
+            // lmao dont look, resetting all variables 
+            BallBoundary.Instance.touchedGroundOnceOut = false;
+            BallBoundary.Instance.scoreStop = false;
+            BallBoundary.Instance.bouncedInOpponentCourtOnce = false;
+            BallBoundary.Instance.playerTurn = 0;
+            ballPhysics.GetComponent<Rigidbody>().useGravity = true;
+
+            bh.Serve();
         }
     }
 
