@@ -69,9 +69,7 @@ namespace Mirror
                 }
                 if (Input.GetKey("e"))
                 {
-                    resetCounter = Time.time;
-                    ballPhysics = ball.GetComponent<Rigidbody>();
-                    bh = racket.GetComponent<BallHandler>();
+                    gameObject.transform.Rotate(0, 0.5f, 0);
                 }
             }
         }
