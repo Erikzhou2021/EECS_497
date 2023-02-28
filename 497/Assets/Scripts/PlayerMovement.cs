@@ -18,9 +18,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float racketHeight;
     [SerializeField] private float playerOffset;
     [SerializeField] private float movementSpeed;
-    public Boundary playerBoundary;
-    public float fieldX = 10;
-    public float fieldY = 12;
 
     private void Start()
     {
