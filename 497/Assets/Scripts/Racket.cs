@@ -42,17 +42,25 @@ namespace Mirror
 
             if (isLocalPlayer)
             {
+                
                 //Debug.Log("It is local player");
                 // idk if this clamp does shit
                 float rotx = Mathf.Clamp(Input.acceleration.x, -45, 0);
                 float roty = Mathf.Clamp(Input.acceleration.y, -45, 0);
                 float rotz = Mathf.Clamp(Input.acceleration.z, -20, 20);
-                Quaternion newRot = new Quaternion(-rotz, roty, -rotx, 0);        //transform.rotation = newRot;
 
 
-                newRot = new Quaternion(-rotz, -roty, -rotx, 0);
+                Quaternion newRot = new Quaternion(-rotx, -rotz, -roty, 0);
+                newRot = Input.gyro.attitude;
+                float temp = newRot.y;
+                newRot.x *= -1;
+                newRot.y = -newRot.z;
+                newRot.z = -temp;
+                newRot *= Quaternion.Euler(-90,180,90);
                 //Debug.Log(racket.name);
-                racket.transform.rotation = Quaternion.Slerp(racket.transform.rotation, newRot, 2f * Time.deltaTime);
+                racket.transform.localRotation = Quaternion.Slerp(racket.transform.rotation, newRot, 2f * Time.deltaTime);
+                
+                
 
                 //debugText.text = Input.gyro.userAcceleration.y.ToString();
                 if (Input.gyro.userAcceleration.magnitude > 2)
@@ -61,7 +69,7 @@ namespace Mirror
                     force *= 4;
                     force += 5;
                     force = Mathf.Clamp(force, 5, 18);
-                    debugText.text = force.ToString();
+                    //debugText.text = force.ToString();
                     Debug.Log("startswing");
                     bh.StartSwing(force);
                 }
