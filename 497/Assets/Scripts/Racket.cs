@@ -8,7 +8,7 @@ namespace Mirror
     {
 
         BallHandler bh;
-        public TextMeshProUGUI debugText;
+        public TextMeshPro debugText;
         public bool isPlayer = false;
         private Rigidbody ballPhysics;
         GameObject racket;
@@ -33,44 +33,45 @@ namespace Mirror
 
         void FixedUpdate()
         {
-            //if (!isPlayer)
-            //{
-            //    Debug.Log("yoyoyo");
-            //    return;
-            //}
-            //transform.rotation = Input.gyro.attitude;
+            //GameObject serve = transform.Find("Serve").gameObject;
+            //debugText = serve.GetComponent<TextMeshPro>();
+            //debugText.text = Input.gyro.userAcceleration.ToString();
+
 
             if (isLocalPlayer)
             {
                 
                 //Debug.Log("It is local player");
                 // idk if this clamp does shit
+                /*
                 float rotx = Mathf.Clamp(Input.acceleration.x, -45, 0);
                 float roty = Mathf.Clamp(Input.acceleration.y, -45, 0);
-                float rotz = Mathf.Clamp(Input.acceleration.z, -20, 20);
-
+                float rotz = Mathf.Clamp(Input.acceleration.z, -20, 20)
 
                 Quaternion newRot = new Quaternion(-rotx, -rotz, -roty, 0);
-                newRot = Input.gyro.attitude;
+                */
+
+                Quaternion newRot = Input.gyro.attitude;
+                // change from a right handed coordinate system to left handed
                 float temp = newRot.y;
                 newRot.x *= -1;
                 newRot.y = -newRot.z;
                 newRot.z = -temp;
-                newRot *= Quaternion.Euler(-90,180,90);
-                //Debug.Log(racket.name);
-                racket.transform.localRotation = Quaternion.Slerp(racket.transform.rotation, newRot, 2f * Time.deltaTime);
+
+                newRot *= Quaternion.Euler(-90,180,90); // offset to make the racket start in the correct spot
+                racket.transform.localRotation = Quaternion.Slerp(racket.transform.rotation, newRot, 5f * Time.deltaTime);
                 
                 
 
                 //debugText.text = Input.gyro.userAcceleration.y.ToString();
-                if (Input.gyro.userAcceleration.magnitude > 2)
+                if (Input.gyro.userAcceleration.magnitude > 2 && !bh.GetSwing())
                 {
-                    float force = Input.gyro.userAcceleration.magnitude - 2;
+                    float force = Input.acceleration.magnitude - 2;
                     force *= 4;
                     force += 5;
                     force = Mathf.Clamp(force, 5, 18);
                     //debugText.text = force.ToString();
-                    Debug.Log("startswing");
+                    //Debug.Log("startswing");
                     bh.StartSwing(force);
                 }
                 if (bh.GetSwing())
@@ -79,13 +80,13 @@ namespace Mirror
                     StartCoroutine(EnableTrail());
                     racket.transform.RotateAround(transform.position, new Vector3(0, 1, 0), -rotationSpeed * Time.deltaTime);
                 }
-                else if (Input.gyro.userAcceleration.y > 0.3 && GameManager.Instance.state == GameState.Serve) // need to make this take multiple frames to detect
+                else if (Input.gyro.userAcceleration.z > 0.3 && GameManager.Instance.state == GameState.Serve) // need to make this take multiple frames to detect
                 {
                     // lmao dont look, resetting all variables 
                     BallBoundary.Instance.touchedGroundOnceOut = false;
                     BallBoundary.Instance.scoreStop = false;
                     BallBoundary.Instance.bouncedInOpponentCourtOnce = false;
-                    BallBoundary.Instance.playerTurn = 0;
+                    BallBoundary.Instance.playerTurn = GetComponent<Player>().playerTeam;
                     ballPhysics.GetComponent<Rigidbody>().useGravity = true;
 
                     bh.Serve();
