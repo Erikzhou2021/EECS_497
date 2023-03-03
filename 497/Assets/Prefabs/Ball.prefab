@@ -131,10 +131,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boundary:
-    left: 5
-    right: -5
-    top: 7.5
-    bottom: -7.5
+    left: 4
+    right: -4
+    top: 10
+    bottom: -10
   timeTillReset: 2.5
   touchedGroundOnceOut: 0
   bouncedInOpponentCourtOnce: 0

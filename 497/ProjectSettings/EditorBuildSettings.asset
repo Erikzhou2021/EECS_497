@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/multiplayer.unity
     guid: 056cc16deeb9845dca11b35ebd8f418c
+  - enabled: 1
+    path: Assets/Scenes/cringer.unity
+    guid: e429d3b14df549c4e812d16822c6a7e3
   m_configObjects: {}

@@ -471,7 +471,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   players:
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 5139142552357678618}
   ball: {fileID: 0}
   state: 1
   serveCount: 0
