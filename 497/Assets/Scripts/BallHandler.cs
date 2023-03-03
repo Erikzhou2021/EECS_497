@@ -32,6 +32,12 @@ public class BallHandler : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!ball)
+        {
+            Debug.Log("single player test");
+            ball = GameManager.Instance.ball;
+            ballPhysics = ball.GetComponent<Rigidbody>();
+        }
         if (Time.time - lastSwing >= 0.5)
         {
             isSwinging = false;

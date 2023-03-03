@@ -54,8 +54,6 @@ public class BallBoundary : MonoBehaviour
     }
     public IEnumerator ResetBall()
     {
-        Debug.Log("reset");
-        //outText.SetActive(false);
         scoreStop = false;
         bouncedInOpponentCourtOnce = false;
         transform.position = new Vector3(0, 2, 0); // temporary placement

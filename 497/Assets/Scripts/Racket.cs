@@ -33,6 +33,13 @@ namespace Mirror
 
         void FixedUpdate()
         {
+            if (!bh)
+            {
+                Debug.Log("single player test");
+                bh = racket.GetComponent<BallHandler>();
+                ballPhysics = bh.ball.GetComponent<Rigidbody>();
+            }
+
             //GameObject serve = transform.Find("Serve").gameObject;
             //debugText = serve.GetComponent<TextMeshPro>();
             //debugText.text = Input.gyro.userAcceleration.ToString();

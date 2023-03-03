@@ -20,6 +20,12 @@ public class OpponentBot : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!ball)
+        {
+            Debug.Log("single player test");
+            ball = GameManager.Instance.ball;
+            ballPhysics = ball.GetComponent<Rigidbody>();
+        }
         if (Time.time - lastSwing <= 1)
         {
             return;
@@ -28,6 +34,7 @@ public class OpponentBot : MonoBehaviour
         bool isInFront = ballPhysics.position.x <= transform.position.x;
         bool isCloseEnough = Vector3.Distance(transform.position, ballPhysics.position) < 1;
         //Debug.Log(Vector3.Distance(transform.position, ballPhysics.position).ToString());
+
         if (isInFront && isCloseEnough)
         {
             lastSwing = Time.time;

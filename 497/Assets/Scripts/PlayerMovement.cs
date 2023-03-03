@@ -56,7 +56,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 center = new Vector3(8.5f * (currPlayer.playerTeam * 2 - 1), 1, 0); // move toward the center while waiting for opponent to hit the ball
             transform.position = Vector3.MoveTowards(transform.position, center, movementSpeed * Time.deltaTime);
-            Debug.Log("does not equal");
             // should consider moving at different speeds based on how far you have to move?
         }
         else
