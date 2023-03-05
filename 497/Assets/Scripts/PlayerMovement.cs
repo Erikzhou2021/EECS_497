@@ -60,10 +60,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            //Vector3 targetPosition = new Vector3(transform.position.x, transform.position.y, ballPosition.z + (racketOffset * -Mathf.Sign(transform.position.x)));
-            //transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
-
-            bool canReachBeforeBounce = true;
+            float v1, t3 = 0, t4 = 0;
             // figure out when the ball is going to be at the same height as the racketHeight
             // racketHeight = 0.5 * g * t^2 + v0 * t + x0
             Vector3 ballVelocity = gm.ball.GetComponent<Rigidbody>().velocity;
@@ -71,40 +68,35 @@ public class PlayerMovement : MonoBehaviour
             float t1 = (float) (-v0 + Math.Sqrt(v0*v0 - 2 * Physics.gravity.y * (ballPosition.y - racketHeight))) / Physics.gravity.y;
             float t2 = (float) (-v0 - Math.Sqrt(v0 * v0 - 2 * Physics.gravity.y * (ballPosition.y - racketHeight))) / Physics.gravity.y;
             float t = Math.Max(t1, t2);
-            //Debug.Log("time =" + t);
-            if (float.IsNaN(t))
-            { // can't get the ball, give up and cry
-                canReachBeforeBounce = false;
-            }
-            Vector3 targetPosition = gm.ball.transform.position + ballVelocity * t;
-            targetPosition.y = transform.position.y;
-            targetPosition.z += racketOffset * -Mathf.Sign(transform.position.x); // might break if the opponent is left handed
-            if (canReachBeforeBounce && Vector3.Distance(transform.position, targetPosition) > movementSpeed * t && !BallBoundary.Instance.bouncedInOpponentCourtOnce) 
-            {
-                canReachBeforeBounce = false;
-            }
-            if (!canReachBeforeBounce)
-            {   // can't make it to the ball, gotta wait till the next bounce
+
+            Vector3 targetPos = calculateTargetPos(t, ballVelocity);
+            if (float.IsNaN(t) || (!float.IsNaN(t) && Vector3.Distance(transform.position, targetPos) > movementSpeed * t && !BallBoundary.Instance.bouncedInOpponentCourtOnce))
+            {   // can't make it to the ball, gotta wait till after the bounce
                 float energy = 0.5f * ballVelocity.y * ballVelocity.y + Math.Abs(Physics.gravity.y * ballPosition.y);
                 float bounciness = gm.ball.GetComponent<SphereCollider>().material.bounciness;
                 // racketHeight = 0.5 * g * t^2 + 0.5 * sqrt(2*energy)
-                float v1 = (float) Math.Sqrt(2 * energy * bounciness);
-                float t3 = (float)(-v1 + Math.Sqrt(v1 * v1 - 2 * Physics.gravity.y * (-racketHeight))) / Physics.gravity.y;
-                float t4 = (float)(-v1 - Math.Sqrt(v1 * v1 - 2 * Physics.gravity.y * (-racketHeight))) / Physics.gravity.y;
-                t += Math.Max(t3, t4); //finds when the ball is about to bounce the second time
+                v1 = (float)Math.Sqrt(2 * energy * bounciness);
+                t3 = (float)(-v1 + Math.Sqrt(v1 * v1 - 2 * Physics.gravity.y * (-racketHeight))) / Physics.gravity.y;
+                t4 = (float)(-v1 - Math.Sqrt(v1 * v1 - 2 * Physics.gravity.y * (-racketHeight))) / Physics.gravity.y;
+                t += Math.Min(t3, t4); // finds the time just after the ball bounces
+
+                targetPos = calculateTargetPos(t, ballVelocity);
+
+                if (Vector3.Distance(transform.position, targetPos) > movementSpeed * t) // still can't reach the ball
+                { // wait until the ball is about to bounce for the second time
+                    t = Math.Max(t1, t2) + Math.Max(t3, t4);
+                    targetPos = calculateTargetPos(t, ballVelocity);
+                }
             }
-            targetPosition = gm.ball.transform.position + ballVelocity * t;
-            targetPosition.x = Math.Max(targetPosition.x, playerBoundary.bottom);
-            targetPosition.x = Math.Min(targetPosition.x, playerBoundary.top);
-            targetPosition.y = transform.position.y;
-            targetPosition.z += Math.Max(playerBoundary.left, racketOffset * -Mathf.Sign(transform.position.x)); // might break if the opponent is left handed
-            targetPosition.z = Math.Min(targetPosition.z, playerBoundary.right);
-            //Debug.Log(targetPosition);
-            if (float.IsNaN(t) || !float.IsNaN(t) && Vector3.Distance(transform.position, targetPosition) > movementSpeed * t) // still can't find a solution
+            targetPos.x = Math.Clamp(targetPos.x, playerBoundary.bottom, playerBoundary.top);
+            targetPos.z = Math.Clamp(targetPos.z, playerBoundary.left, playerBoundary.right);
+            Debug.Log(targetPos);
+            if (float.IsNaN(t) || (!float.IsNaN(t) && Vector3.Distance(transform.position, targetPos) > movementSpeed * t)) // still can't find a solution
             { // just chase the ball and hope you hit
-                targetPosition = new Vector3(transform.position.x, transform.position.y, ballPosition.z + (racketOffset * -Mathf.Sign(transform.position.x)));
+                Debug.Log("ballchase");
+                targetPos = new Vector3(transform.position.x, transform.position.y, ballPosition.z + (racketOffset * -Mathf.Sign(transform.position.x)));
             }
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, movementSpeed * Time.deltaTime);
         }
 
         if (transform.position.z < playerBoundary.left)
@@ -123,5 +115,12 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position = new Vector3(playerBoundary.top, transform.position.y, transform.position.z);
         }
-    } 
+    }
+    private Vector3 calculateTargetPos(float t, Vector3 ballVelocity)
+    {
+        Vector3 targetPos = gm.ball.transform.position + ballVelocity * t;
+        targetPos.y = transform.position.y;
+        targetPos.z += racketOffset * -Mathf.Sign(transform.position.x); // might break if the opponent is left handed
+        return targetPos;
+    }
 }

@@ -66,7 +66,7 @@ public class OpponentBot : MonoBehaviour
         Vector3 aim = Vector3.Normalize(Vector3.MoveTowards(-ballPhysics.position, Vector3.zero, 1));
         aim = Vector3.ProjectOnPlane(aim, Vector3.up);
         aim *= force;
-        aim += Vector3.up * 3;
+        aim += Vector3.up * 2.5f;
         if (Math.Abs(gameObject.GetComponentInParent<Transform>().position.x) > 4)
         {
             aim += Vector3.up * 3;

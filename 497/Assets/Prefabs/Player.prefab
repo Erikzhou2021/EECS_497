@@ -273,8 +273,8 @@ MonoBehaviour:
     right: 0
     top: 0
     bottom: 0
-  fieldX: 10
-  fieldY: 12
+  fieldX: 12
+  fieldY: 16
   racketOffset: 1.5
   racketHeight: 0
   playerOffset: 3
