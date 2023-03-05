@@ -90,10 +90,8 @@ public class PlayerMovement : MonoBehaviour
             }
             targetPos.x = Math.Clamp(targetPos.x, playerBoundary.bottom, playerBoundary.top);
             targetPos.z = Math.Clamp(targetPos.z, playerBoundary.left, playerBoundary.right);
-            Debug.Log(targetPos);
             if (float.IsNaN(t) || (!float.IsNaN(t) && Vector3.Distance(transform.position, targetPos) > movementSpeed * t)) // still can't find a solution
             { // just chase the ball and hope you hit
-                Debug.Log("ballchase");
                 targetPos = new Vector3(transform.position.x, transform.position.y, ballPosition.z + (racketOffset * -Mathf.Sign(transform.position.x)));
             }
             transform.position = Vector3.MoveTowards(transform.position, targetPos, movementSpeed * Time.deltaTime);

@@ -1926,7 +1926,7 @@ MonoBehaviour:
   racketOffset: 1.5
   racketHeight: 1
   playerOffset: 3
-  movementSpeed: 4
+  movementSpeed: 8
 --- !u!114 &3172242356850133925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2355,7 +2355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3edfe384f76041f4d9478999e27babd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 12
+  force: 10
 --- !u!114 &5593835558808792399
 MonoBehaviour:
   m_ObjectHideFlags: 0

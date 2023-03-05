@@ -276,7 +276,7 @@ MonoBehaviour:
   fieldX: 12
   fieldY: 16
   racketOffset: 1.5
-  racketHeight: 0
+  racketHeight: 1
   playerOffset: 3
   movementSpeed: 4
 --- !u!1 &406901298219322832

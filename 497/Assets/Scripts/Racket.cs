@@ -66,7 +66,7 @@ namespace Mirror
                 newRot.z = -temp;
 
                 newRot *= Quaternion.Euler(-90,180,90); // offset to make the racket start in the correct spot
-                racket.transform.localRotation = Quaternion.Slerp(racket.transform.rotation, newRot, 5f * Time.deltaTime);
+                //racket.transform.localRotation = Quaternion.Slerp(racket.transform.rotation, newRot, 5f * Time.deltaTime);
                 
                 
 
