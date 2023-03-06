@@ -16,6 +16,9 @@ public class BallHandler : MonoBehaviour
     public float rotationSpeed = 200f;
     public float aimStrength = 1;
 
+    public float bounceHeight;
+    public float bounceSpeed;
+
     void Start()
     {
         lastSwing = 0;
@@ -55,14 +58,22 @@ public class BallHandler : MonoBehaviour
                 HitBall(swingForce);
             }
         }
+        //windup
+        if (ballPhysics.position.x >= transform.position.x && Vector3.Distance(transform.position, ballPhysics.position) < 1.5 && Vector3.Distance(transform.position, ballPhysics.position) < 1)
+        {
+            Debug.Log("Windup");
+            transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), rotationSpeed * Time.deltaTime);
+        }
+
+        transform.position = new Vector3(transform.position.x, transform.position.y + (Mathf.Sin(Time.time * bounceSpeed) * bounceHeight), transform.position.z);
     }
     IEnumerator RotateBack()
     {
         GetComponent<TrailRenderer>().emitting = false;
         yield return new WaitForEndOfFrame();
 
-        while (transform.parent.position.x < 0 && (transform.localPosition.z > (-1.49))
-            || (transform.parent.position.x > 0 && (transform.localPosition.z < (1.49)))) //for forehand 
+        while (transform.parent.position.x < 0 && (transform.localPosition.z > (-1.4))
+            || (transform.parent.position.x > 0 && (transform.localPosition.z < (1.4)))) //for forehand 
         {
             transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), rotationSpeed * Time.deltaTime);
             yield return null;
