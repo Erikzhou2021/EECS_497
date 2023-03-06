@@ -19,6 +19,8 @@ public class BallHandler : MonoBehaviour
     public float bounceHeight;
     public float bounceSpeed;
 
+    public bool doWindUp = true;
+
     void Start()
     {
         lastSwing = 0;
@@ -47,7 +49,10 @@ public class BallHandler : MonoBehaviour
             hit = false;
 
             //StartCoroutine(RotateBack());
-            WindUp();
+            if (doWindUp)
+            {
+                WindUp();
+            }
         }
         if (isSwinging && !hit)
         {
@@ -151,22 +156,22 @@ public class BallHandler : MonoBehaviour
         {
             if (otherPos.z <= -2) // opponent is far right
             {
-                Debug.Log("Mid Left"); // aim toward the mid left
+                //Debug.Log("Mid Left"); // aim toward the mid left
                 aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z + 1.5f));
             }
             else if (otherPos.z >= 2) // opponent is far left
             {
-                Debug.Log("Mid Right"); // aim toward the mid right
+                //Debug.Log("Mid Right"); // aim toward the mid right
                 aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z - 1.5f));
             }
             else if (otherPos.z < 0) // oponent is mid right
             {
-                Debug.Log("Far Left"); // aim toward the far left
+                //Debug.Log("Far Left"); // aim toward the far left
                 aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z + 3));
             }
             else if (otherPos.z > 0)
             {
-                Debug.Log("Far Right"); // aim toward the far right
+                //Debug.Log("Far Right"); // aim toward the far right
                 aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z - 3));
             }
         }
@@ -180,7 +185,6 @@ public class BallHandler : MonoBehaviour
                 aim += Vector3.up * 2;
             }
         }
-        
         return aim;
     }
     public void Serve()

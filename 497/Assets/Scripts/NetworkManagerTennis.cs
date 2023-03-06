@@ -20,6 +20,10 @@ namespace Mirror
         GameObject ball;
         public GameObject[] cameras;
         GameObject player;
+
+        public bool debug = false;
+
+
         public override void OnServerAddPlayer(NetworkConnectionToClient conn)
         {
             // add player at correct spawn position
@@ -50,6 +54,12 @@ namespace Mirror
             if (GameObject.Find("Ball(Clone)"))
             {
                 Debug.Log("balle exisgs!");
+            }
+            // for debuging only
+            if (debug)
+            {
+                GameObject player2 = GameObject.Find("Player2");
+                GameManager.Instance.players.Add(player2);
             }
         }
 
