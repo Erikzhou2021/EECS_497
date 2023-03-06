@@ -46,7 +46,8 @@ public class BallHandler : MonoBehaviour
             isSwinging = false;
             hit = false;
 
-            StartCoroutine(RotateBack());
+            //StartCoroutine(RotateBack());
+            WindUp();
         }
         if (isSwinging && !hit)
         {
@@ -59,11 +60,11 @@ public class BallHandler : MonoBehaviour
             }
         }
         //windup
-        if (ballPhysics.position.x >= transform.position.x && Vector3.Distance(transform.position, ballPhysics.position) < 1.5 && Vector3.Distance(transform.position, ballPhysics.position) < 1)
-        {
-            Debug.Log("Windup");
-            transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), rotationSpeed * Time.deltaTime);
-        }
+        //if (ballPhysics.position.x >= transform.position.x && Vector3.Distance(transform.position, ballPhysics.position) < 1.5 && Vector3.Distance(transform.position, ballPhysics.position) < 1)
+        //{
+            //Debug.Log("Windup");
+            //transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), rotationSpeed * Time.deltaTime);
+        //}
 
         transform.position = new Vector3(transform.position.x, transform.position.y + (Mathf.Sin(Time.time * bounceSpeed) * bounceHeight), transform.position.z);
     }
@@ -77,6 +78,19 @@ public class BallHandler : MonoBehaviour
         {
             transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), rotationSpeed * Time.deltaTime);
             yield return null;
+        }
+    }
+    void WindUp()
+    {
+        GetComponent<TrailRenderer>().emitting = false;
+        float angle = Mathf.Atan2(-transform.localPosition.x, -transform.localPosition.z) * Mathf.Rad2Deg;
+        //Debug.Log(angle);
+
+        if(angle < 25 || angle > 35) // forehand only
+        {
+            float rotateAmount = 30 - angle;
+            rotateAmount = Mathf.Min(Math.Abs(rotationSpeed * Time.deltaTime), rotateAmount);
+            transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), rotateAmount);
         }
     }
 
