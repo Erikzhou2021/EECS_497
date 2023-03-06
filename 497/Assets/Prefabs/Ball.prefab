@@ -131,8 +131,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boundary:
-    left: 4
-    right: -4
+    left: 4.69
+    right: -4.69
     top: 10
     bottom: -10
   timeTillReset: 2.5

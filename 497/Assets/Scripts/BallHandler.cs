@@ -18,6 +18,8 @@ public class BallHandler : MonoBehaviour
 
     public float bounceHeight;
     public float bounceSpeed;
+    public float speedCap = 20;
+    public float targetHeight = 1.5f;
 
     public bool doWindUp = true;
 
@@ -126,7 +128,7 @@ public class BallHandler : MonoBehaviour
             serveVect.Normalize();
             serveVect *= force;
             serveVect.y = 5;
-            GameManager.Instance.state = GameState.Rally; // could break if they hit the ball right after it goes out
+            GameManager.Instance.state = GameState.Rally;
             ballPhysics.AddForce(serveVect, ForceMode.VelocityChange);
             return;
         }
@@ -136,12 +138,9 @@ public class BallHandler : MonoBehaviour
         ballPhysics.velocity = Vector3.Reflect(ballPhysics.velocity, normalVector);
         ballPhysics.velocity *= 0.64f;
 
-        // combine aimbot force
         Vector3 aim = aimBot(force);
+        aim *= aimStrength;
 
-        //aim *= aimStrength;
-        //Debug.Log((ballPhysics.velocity.magnitude + aimStrength));
-        //ballPhysics.velocity = (ballPhysics.velocity + aim)/(2); // take the average of the two
         ballPhysics.AddForce(aim, ForceMode.VelocityChange);
     }
     private Vector3 aimBot(float force)
@@ -152,40 +151,36 @@ public class BallHandler : MonoBehaviour
         // aimbot toward center is default
         Vector3 aim = Vector3.Normalize(Vector3.MoveTowards(-ballPhysics.position, Vector3.zero, 1));
         aim = Vector3.ProjectOnPlane(aim, Vector3.up);
-        if (Math.Abs(gameObject.GetComponentInParent<Transform>().position.x) > 6) // not too close to aim
+
+        if (otherPos.z <= -2) // opponent is far right
         {
-            if (otherPos.z <= -2) // opponent is far right
-            {
-                //Debug.Log("Mid Left"); // aim toward the mid left
-                aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z + 1.5f));
-            }
-            else if (otherPos.z >= 2) // opponent is far left
-            {
-                //Debug.Log("Mid Right"); // aim toward the mid right
-                aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z - 1.5f));
-            }
-            else if (otherPos.z < 0) // oponent is mid right
-            {
-                //Debug.Log("Far Left"); // aim toward the far left
-                aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z + 3));
-            }
-            else if (otherPos.z > 0)
-            {
-                //Debug.Log("Far Right"); // aim toward the far right
-                aim = Vector3.Normalize(new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z - 3));
-            }
+            Debug.Log("Mid Left"); // aim toward the mid left
+            aim = new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z + 1.5f);
         }
-        aim *= force;
-        aim += Vector3.up * 3;
-        if (Math.Abs(gameObject.GetComponentInParent<Transform>().position.x) > 4) 
+        else if (otherPos.z >= 2) // opponent is far left
         {
-            aim += Vector3.up * 3;
-            if (force < 10)
-            {
-                aim += Vector3.up * 2;
-            }
+            Debug.Log("Mid Right"); // aim toward the mid right
+            aim = new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z - 1.5f);
         }
-        return aim;
+        else if (otherPos.z < 0) // oponent is mid right
+        {
+            Debug.Log("Far Left"); // aim toward the far left
+            aim = new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z + 3);
+        }
+        else if (otherPos.z > 0)
+        {
+            Debug.Log("Far Right"); // aim toward the far right
+            aim = new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z - 3);
+        }
+        aim = Vector3.Normalize(aim);
+        aim *= ballPhysics.velocity.magnitude + (Math.Max(speedCap - ballPhysics.velocity.magnitude, 0)) * force / speedCap; // enforces the horizontal speed cap (kinda)
+
+        // mgh = 1/2 m v^2 + mgh
+        aim.y = Mathf.Sqrt((2 * targetHeight - ballPhysics.position.y) * Math.Abs(Physics.gravity.y));
+
+        Vector3 correction = aim - ballPhysics.velocity;
+
+        return correction;
     }
     public void Serve()
     {

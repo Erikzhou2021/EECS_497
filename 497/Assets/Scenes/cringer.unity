@@ -2138,6 +2138,8 @@ MonoBehaviour:
   aimStrength: 1
   bounceHeight: 0
   bounceSpeed: 0
+  speedCap: 20
+  targetHeight: 1.5
   doWindUp: 0
 --- !u!1 &5139142553009171579
 GameObject:
