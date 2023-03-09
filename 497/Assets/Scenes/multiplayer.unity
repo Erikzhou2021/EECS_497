@@ -1273,9 +1273,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1023734734}
-  - component: {fileID: 1023734733}
   - component: {fileID: 1023734732}
-  - component: {fileID: 1023734735}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -1307,42 +1305,6 @@ MonoBehaviour:
   clientMaxReceivesPerTick: 1000
   clientSendQueueLimit: 10000
   clientReceiveQueueLimit: 10000
---- !u!114 &1023734733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1023734731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ea179cfa911149929a72be1c5ba65d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dontDestroyOnLoad: 1
-  runInBackground: 1
-  autoStartServerBuild: 1
-  autoConnectClientBuild: 0
-  sendRate: 30
-  offlineScene: 
-  onlineScene: 
-  transport: {fileID: 1023734732}
-  networkAddress: 192.168.1.17
-  maxConnections: 100
-  authenticator: {fileID: 0}
-  playerPrefab: {fileID: 1598797573174675663, guid: 0f201fcce09404c35a0a7ed9f2481e5f, type: 3}
-  autoCreatePlayer: 1
-  playerSpawnMethod: 0
-  spawnPrefabs:
-  - {fileID: 8838975029230025784, guid: bba15352c8a8642c5baf864de6f235d0, type: 3}
-  - {fileID: 406901297806643121, guid: deb4744f802704530a8149d3b8d07758, type: 3}
-  - {fileID: 406901297806643121, guid: f8a4e615897e94b1cac822070ff64a45, type: 3}
-  timeInterpolationGui: 0
-  leftPlayerSpawn: {fileID: 580985609}
-  rightPlayerSpawn: {fileID: 838943240}
-  cameras:
-  - {fileID: 547691459}
-  - {fileID: 179668418}
 --- !u!4 &1023734734
 Transform:
   m_ObjectHideFlags: 0
@@ -1358,20 +1320,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1023734735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1023734731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offsetX: 0
-  offsetY: 0
 --- !u!1 &1053187295
 GameObject:
   m_ObjectHideFlags: 0
