@@ -78,13 +78,11 @@ namespace Mirror
                     force *= 4;
                     force += 5;
                     force = Mathf.Clamp(force, 5, 18);
-                    //debugText.text = force.ToString();
-                    //Debug.Log("startswing");
+
                     bh.StartSwing(force);
                 }
                 if (bh.GetSwing())
                 {
-                    //racket.transform.Rotate(0, -7.2f, 0);
                     StartCoroutine(EnableTrail());
                     racket.transform.RotateAround(transform.position, new Vector3(0, 1, 0), -rotationSpeed * Time.deltaTime);
                 }

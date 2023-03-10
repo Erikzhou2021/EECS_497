@@ -20,6 +20,7 @@ public class BallHandler : MonoBehaviour
     public float bounceSpeed;
     public float speedCap = 20;
     public float targetHeight = 1.5f;
+    public float swingTime = 0.25f;
 
     public bool doWindUp = true;
 
@@ -45,16 +46,12 @@ public class BallHandler : MonoBehaviour
             ball = GameManager.Instance.ball;
             ballPhysics = ball.GetComponent<Rigidbody>();
         }
-        if (Time.time - lastSwing >= 0.5)
+        if (Time.time - lastSwing >= swingTime)
         {
             isSwinging = false;
             hit = false;
 
-            //StartCoroutine(RotateBack());
-            if (doWindUp)
-            {
-                WindUp();
-            }
+            StartCoroutine(RotateBack());
         }
         if (isSwinging && !hit)
         {
@@ -197,5 +194,7 @@ public class BallHandler : MonoBehaviour
         swingForce = force;
         isSwinging = true;
         lastSwing = Time.time;
+        // teleport racket into wound up position
+        transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), 30);
     }
 }

@@ -379,12 +379,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
   swingForce: 12
-  rotationSpeed: 250
+  rotationSpeed: 300
   aimStrength: 1
   bounceHeight: 0
   bounceSpeed: 0
   speedCap: 20
   targetHeight: 1.5
+  swingTime: 0.25
   doWindUp: 1
 --- !u!96 &3747878815002943346
 TrailRenderer:
