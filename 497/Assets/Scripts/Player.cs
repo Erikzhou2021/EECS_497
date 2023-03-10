@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Boundary playerBoundary;
     public int points = 0; //1, 2, 3, ...
     public int score = 0; //15, 30, 40, ...
-
+    public bool forehand = true;
     public GameObject otherPlayerObject;
     Player otherPlayer;
 

@@ -11,7 +11,10 @@ namespace Mirror
         public TextMeshPro debugText;
         public bool isPlayer = false;
         private Rigidbody ballPhysics;
+        public float threshold = 0.25f;
         GameObject racket;
+        Transform reference;
+        float lastSwitch = 0;
 
         public float rotationSpeed = 300f;
 
@@ -20,6 +23,8 @@ namespace Mirror
             StartCoroutine(ballPhys());
 
             racket = transform.GetChild(0).gameObject;
+            reference = racket.transform.GetChild(0);
+            lastSwitch = Time.time;
         }
 
         IEnumerator ballPhys() // have to use coroutine bc everything instantiated
@@ -33,6 +38,7 @@ namespace Mirror
 
         void FixedUpdate()
         {
+            Player p = GetComponent<Player>();
             if (!bh)
             {
                 Debug.Log("single player test");
@@ -40,23 +46,8 @@ namespace Mirror
                 ballPhysics = bh.ball.GetComponent<Rigidbody>();
             }
 
-            //GameObject serve = transform.Find("Serve").gameObject;
-            //debugText = serve.GetComponent<TextMeshPro>();
-            //debugText.text = Input.gyro.userAcceleration.ToString();
-
-
             if (isLocalPlayer)
             {
-                
-                //Debug.Log("It is local player");
-                // idk if this clamp does shit
-                /*
-                float rotx = Mathf.Clamp(Input.acceleration.x, -45, 0);
-                float roty = Mathf.Clamp(Input.acceleration.y, -45, 0);
-                float rotz = Mathf.Clamp(Input.acceleration.z, -20, 20)
-
-                Quaternion newRot = new Quaternion(-rotx, -rotz, -roty, 0);
-                */
 
                 Quaternion newRot = Input.gyro.attitude;
                 // change from a right handed coordinate system to left handed
@@ -67,10 +58,8 @@ namespace Mirror
 
                 newRot *= Quaternion.Euler(-90,180,90); // offset to make the racket start in the correct spot
                 racket.transform.localRotation = Quaternion.Slerp(racket.transform.rotation, newRot, 5f * Time.deltaTime);
-                
-                
 
-                debugText.text = racket.transform.position.ToString();
+                debugText.text = Input.gyro.attitude.eulerAngles.ToString();
                 float upForce = Vector3.Dot(Input.gyro.userAcceleration, Vector3.Normalize(Input.gyro.gravity));
                 if (Input.gyro.userAcceleration.magnitude > 2 && !bh.GetSwing())
                 {
@@ -97,7 +86,25 @@ namespace Mirror
 
                     bh.Serve();
                 }
+                else if (p.forehand && Time.time - lastSwitch > 0.25 && reference.position.z - racket.transform.position.z > -threshold)
+                {
+                    Debug.Log("forehand to backhand");
+                    p.forehand = false;
+                    DoSwing();
+                }
+                else if (!p.forehand && Time.time - lastSwitch > 0.25 && reference.position.z - racket.transform.position.z > threshold)
+                {
+                    Debug.Log("backhand to forehand");
+                    p.forehand = true;
+                    DoSwing();
+                }
             }
+        }
+        void DoSwing()
+        {
+            Vector3 t = racket.transform.localPosition;
+            racket.transform.localPosition = new Vector3(t.x, t.y, -t.z);
+            lastSwitch = Time.time;
         }
         IEnumerator EnableTrail()
         {

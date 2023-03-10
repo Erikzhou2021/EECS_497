@@ -47,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()  
     {
+        racketHeight = transform.GetChild(0).position.y;
+        racketOffset = transform.GetChild(0).position.z;
         Vector3 ballPosition = gm.ball.transform.position;
         if (gm.state == GameState.Serve)
         {
