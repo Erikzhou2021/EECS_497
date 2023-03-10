@@ -70,7 +70,7 @@ namespace Mirror
                 
                 
 
-                debugText.text = Input.gyro.attitude.ToString();
+                debugText.text = racket.transform.position.ToString();
                 float upForce = Vector3.Dot(Input.gyro.userAcceleration, Vector3.Normalize(Input.gyro.gravity));
                 if (Input.gyro.userAcceleration.magnitude > 2 && !bh.GetSwing())
                 {

@@ -10,6 +10,9 @@ public class OpponentBot : MonoBehaviour
     GameObject ball;
     public float force = 8;
     private Rigidbody ballPhysics;
+    public float aimStrength = 1;
+    public float speedCap = 20;
+    public float targetHeight = 1.5f;
 
     void Start()
     {
@@ -54,29 +57,26 @@ public class OpponentBot : MonoBehaviour
         Vector3 aim;
        
         aim = aimBot();
+
+        aim *= aimStrength;
+
         ballPhysics.AddForce(aim, ForceMode.VelocityChange);
 
         BallBoundary.Instance.SwitchTurn();
     }
     private Vector3 aimBot()
     {
-        Transform otherPlayer = gameObject.GetComponentInParent<Transform>();
-        Vector3 otherPos = otherPlayer.position;
-        // aimbot toward center is default
-        Vector3 aim = Vector3.Normalize(Vector3.MoveTowards(-ballPhysics.position, Vector3.zero, 1));
+        Vector3 aim = Vector3.Normalize(Vector3.MoveTowards(-ballPhysics.position, new Vector3(-8, 0, 0), 1));
         aim = Vector3.ProjectOnPlane(aim, Vector3.up);
-        aim *= force;
-        aim += Vector3.up * 3f;
-        if (Math.Abs(gameObject.GetComponentInParent<Transform>().position.x) > 4)
-        {
-            aim += Vector3.up * 3;
-            if (force < 10)
-            {
-                aim += Vector3.up * 2;
-            }
-        }
+        aim = Vector3.Normalize(aim);
+        aim *= ballPhysics.velocity.magnitude + (Math.Max(speedCap - ballPhysics.velocity.magnitude, 0)) * force / speedCap; // enforces the horizontal speed cap (kinda)
 
-        return aim;
+        // mgh = 1/2 m v^2 + mgh
+        aim.y = Mathf.Sqrt((2 * targetHeight - ballPhysics.position.y) * Math.Abs(Physics.gravity.y));
+
+        Vector3 correction = aim - ballPhysics.velocity;
+
+        return correction;
     }
     public bool getSwing()
     {
