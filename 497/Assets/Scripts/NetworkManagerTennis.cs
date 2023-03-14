@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
+using System.Linq;
+using Mirror;
 
 /*
 	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
@@ -35,9 +38,67 @@ namespace Mirror
 
         }
 
+        [Scene] [SerializeField] private string menuScene = string.Empty;
 
-        //public override void OnServerAddPlayer(NetworkConnectionToClient conn)
-        //{
+        [Header("Room")]
+        [SerializeField] private NetworkRoomPlayerTennis roomPlayerPrefab = null;
+
+        public static event Action OnClientConnected;
+        public static event Action OnClientDisconnected;
+
+        public override void OnStartServer() => spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList();
+
+        public override void OnStartClient()
+        {
+            var spawnablePrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs");
+
+            foreach (var prefab in spawnablePrefabs)
+            {
+                NetworkClient.RegisterPrefab(prefab);
+            }
+        }
+
+        // FIX: Figure out why a base function wasn't found (might have something to do with deprecations
+        public override void OnClientConnect(NetworkConnection conn)
+        {
+            base.OnClientConnect(conn);
+
+            OnClientConnected?.Invoke();
+        }
+
+        // FIX: Figure out why base function isn't found (might have something to do with deprecations
+        public override void OnClientDisconnect(NetworkConnection conn)
+        {
+            base.OnClientDisconnect(conn);
+
+            OnClientDisconnected?.Invoke();
+        }
+
+        public override void OnServerConnect(NetworkConnectionToClient conn)
+        {
+            if (numPlayers >= maxConnections)
+            {
+                conn.Disconnect();
+                return;
+            }
+
+            if (SceneManager.GetActiveScene().name != menuScene)
+            {
+                conn.Disconnect();
+                return;
+            }
+        }
+
+
+
+        public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+        {
+            if (SceneManager.GetActiveScene().name == menuScene)
+            {
+                NetworkRoomPlayerTennis roomPlayerInstance = Instantiate(roomPlayerPrefab);
+
+                NetworkServer.AddPlayerForConnection(conn, roomPlayerInstance.gameObject);
+            }
         //    // add player at correct spawn position
         //    Transform start = numPlayers == 0 ? leftPlayerSpawn : rightPlayerSpawn;
         //    if(numPlayers == 0)
@@ -67,7 +128,7 @@ namespace Mirror
         //    {
         //        Debug.Log("balle exisgs!");
         //    }
-        //}
+        }
 
         public override void OnServerDisconnect(NetworkConnectionToClient conn)
         {
