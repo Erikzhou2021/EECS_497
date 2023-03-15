@@ -68,14 +68,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("deuce");
             StartCoroutine(AnnounceState("DEUCE"));
-            if (p1points - p2points == 1)
-            {
-                players[0].GetComponent<Player>().score = "Advantage";
-            }
-            if (p2points - p1points == 1)
-            {
-                players[1].GetComponent<Player>().score = "Advantage";
-            }
         }
         //not deuce, match point 
         if (p1points >= 3 && p2points >= 3 && (p1points - p2points == 1 || p2points - p1points == 1))
@@ -91,7 +83,7 @@ public class GameManager : MonoBehaviour
         // maybe display something on mobile too idk 
         // announce which team wins 
         Debug.Log("player " + (player.GetComponent<Player>().playerTeam + 1) + " wins this round");
-        GetComponent<ScoreDisplay>().stateDisplay.text = "player " + player.GetComponent<Player>().playerTeam + " wins this round";
+        GetComponent<ScoreDisplay>().stateDisplay.text = "player " + (player.GetComponent<Player>().playerTeam+1) + " wins this round";
         GetComponent<ScoreDisplay>().DisplayState();
         players[0].GetComponent<Player>().points = 0;
         players[1].GetComponent<Player>().points = 0;

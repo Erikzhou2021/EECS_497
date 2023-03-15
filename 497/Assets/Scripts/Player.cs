@@ -73,6 +73,11 @@ public class Player : MonoBehaviour
                 break;
             case (> 3):
                 score = "40";
+                int otherTeam = (playerTeam == 0) ? 1 : 0;
+                if (points - Instance.players[otherTeam].GetComponent<Player>().points == 1)
+                {
+                    score = "Advantage";
+                }
                 break;
             default:
                 break;
