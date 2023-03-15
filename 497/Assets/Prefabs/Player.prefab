@@ -227,7 +227,8 @@ MonoBehaviour:
   syncInterval: 0.1
   debugText: {fileID: 2211955648262698536}
   isPlayer: 0
-  rotationSpeed: 300
+  threshold: 0.25
+  rotationSpeed: 250
 --- !u!114 &1738184536380383982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,7 +389,6 @@ MonoBehaviour:
   speedCap: 20
   targetHeight: 1.5
   swingTime: 0.25
-  doWindUp: 1
 --- !u!96 &3747878815002943346
 TrailRenderer:
   serializedVersion: 2

@@ -5,11 +5,10 @@ using System;
 
 public class BallHandler : MonoBehaviour
 {
-    bool isSwinging = false;
     bool hit = false;
     public GameObject ball;
     public float swingForce = 12;
-    float lastSwing;
+    
     float lastServe = 0;
     private Rigidbody ballPhysics;
 
@@ -20,16 +19,15 @@ public class BallHandler : MonoBehaviour
     public float bounceSpeed;
     public float speedCap = 20;
     public float targetHeight = 1.5f;
-    public float swingTime = 0.25f;
 
-    bool isSwingingBack = false;
     Player p;
+    Mirror.Racket r;
 
     void Start()
     {
-        lastSwing = 0;
         lastServe = 0;
         p = transform.parent.GetComponent<Player>();
+        r = transform.parent.GetComponent<Mirror.Racket>(); // might be broken cause network is cringe
         StartCoroutine(setVars()); // have to use coroutine bc everything instantiated
     }
 
@@ -48,14 +46,7 @@ public class BallHandler : MonoBehaviour
             ball = GameManager.Instance.ball;
             ballPhysics = ball.GetComponent<Rigidbody>();
         }
-        if (Time.time - lastSwing >= swingTime)
-        {
-            isSwinging = false;
-            hit = false;
-
-            StartCoroutine(RotateBack());
-        }
-        if (isSwinging && !hit)
+        if (r.GetSwing() && !hit)
         {
             bool isInFront = ballPhysics.position.x >= transform.position.x;
             bool isCloseEnough = Vector3.Distance(transform.position, ballPhysics.position) < 1;
@@ -64,6 +55,10 @@ public class BallHandler : MonoBehaviour
                 hit = true;
                 HitBall(swingForce);
             }
+        }
+        else if (!r.GetSwing())
+        {
+            hit = false;
         }
         //windup
         //if (ballPhysics.position.x >= transform.position.x && Vector3.Distance(transform.position, ballPhysics.position) < 1.5 && Vector3.Distance(transform.position, ballPhysics.position) < 1)
@@ -74,22 +69,7 @@ public class BallHandler : MonoBehaviour
 
         transform.position = new Vector3(transform.position.x, transform.position.y + (Mathf.Sin(Time.time * bounceSpeed) * bounceHeight), transform.position.z);
     }
-    IEnumerator RotateBack()
-    {
-        GetComponent<TrailRenderer>().emitting = false;
-        yield return new WaitForEndOfFrame();
-
-        isSwingingBack = false;
-
-        while (p.forehand && (transform.localPosition.z > (-1.49))
-            || (!p.forehand && (transform.localPosition.z < (1.49)))) 
-        {
-            isSwingingBack = true;
-            transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), rotationSpeed * Time.deltaTime);
-            yield return null;
-        }
-        transform.localPosition = new Vector3(0, 0, 1.5f * Mathf.Sign(transform.parent.position.x));
-    }
+    
 
     /*
     void WindUp()
@@ -194,20 +174,9 @@ public class BallHandler : MonoBehaviour
         ballPhysics.position = transform.position + new Vector3(0.3f, 1.5f, 0);
         ballPhysics.velocity = new Vector3(0, 0.2f, 0);
     }
-    public bool GetSwing()
-    {
-        return isSwinging;
-    }
-    public bool GetSwingBack()
-    {
-        return isSwingingBack;
-    }
     public void StartSwing(float force)
     {
         swingForce = force;
-        isSwinging = true;
-        lastSwing = Time.time;
-        // teleport racket into wound up position
-        transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), 30);
+        r.SetSwing();
     }
 }

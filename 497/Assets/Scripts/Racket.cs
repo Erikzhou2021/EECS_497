@@ -6,7 +6,6 @@ namespace Mirror
 {
     public class Racket : NetworkBehaviour
     {
-
         BallHandler bh;
         public TextMeshPro debugText;
         public bool isPlayer = false;
@@ -15,13 +14,21 @@ namespace Mirror
         GameObject racket;
         Transform reference;
         float lastSwitch = 0;
+        float lastSwing;
+        Player p;
+        bool isSwinging = false;
+        bool isSwingingBack = false;
+        public float swingTime = 0.25f;
 
-        public float rotationSpeed = 300f;
+
+        public float rotationSpeed = 250f;
 
         void Start()
         {
+            lastSwing = 0;
+            p = GetComponent<Player>();
             StartCoroutine(ballPhys());
-
+            
             racket = transform.GetChild(0).gameObject;
             reference = racket.transform.GetChild(0);
             lastSwitch = Time.time;
@@ -38,7 +45,6 @@ namespace Mirror
 
         void FixedUpdate()
         {
-            Player p = GetComponent<Player>();
             if (!bh)
             {
                 Debug.Log("single player test");
@@ -48,7 +54,6 @@ namespace Mirror
 
             if (isLocalPlayer)
             {
-
                 Quaternion newRot = Input.gyro.attitude;
                 // change from a right handed coordinate system to left handed
                 float temp = newRot.y;
@@ -57,14 +62,39 @@ namespace Mirror
                 newRot.z = -temp;
 
                 newRot *= Quaternion.Euler(-90,180,90); // offset to make the racket start in the correct spot
-                racket.transform.localRotation = Quaternion.Slerp(racket.transform.rotation, newRot, 5f * Time.deltaTime);
-
+                //racket.transform.localRotation = Quaternion.Slerp(racket.transform.rotation, newRot, 5f * Time.deltaTime);
+                racket.transform.rotation = newRot;
                 //debugText.text = Input.gyro.attitude.eulerAngles.ToString();
                 float upForce = Vector3.Dot(Input.gyro.userAcceleration, Vector3.Normalize(Input.gyro.gravity));
-                if (bh.GetSwing())
+
+                if (Time.time - lastSwing >= swingTime)
+                {
+                    isSwinging = false;
+                }
+
+                if (isSwinging)
                 {
                     StartCoroutine(EnableTrail());
                     racket.transform.RotateAround(transform.position, new Vector3(0, 1, 0), -rotationSpeed * Time.deltaTime);
+                }
+                else if (isSwingingBack)
+                {
+                    racket.GetComponent<TrailRenderer>().emitting = false;
+                    isSwingingBack = false;
+                    float rotateAmount = Mathf.Abs(Mathf.Cos(rotationSpeed * Time.deltaTime * Mathf.Deg2Rad));
+                    if (p.forehand && Mathf.Abs(racket.transform.localPosition.z + 1.5f) <= rotateAmount)
+                    {
+                        racket.transform.localPosition = new Vector3(0, 0, -1.5f);
+                    }
+                    else if (!p.forehand && Mathf.Abs(racket.transform.localPosition.z - 1.5f) <= rotateAmount)
+                    {
+                        racket.transform.localPosition = new Vector3(0, 0, 1.5f);
+                    }
+                    else
+                    {
+                        isSwingingBack = true;
+                        racket.transform.RotateAround(transform.position, new Vector3(0, 1, 0), rotationSpeed * Time.deltaTime);
+                    }
                 }
                 else if (upForce > 0.3f && GameManager.Instance.state == GameState.Serve) // need to make this take multiple frames to detect
                 {
@@ -77,7 +107,7 @@ namespace Mirror
 
                     bh.Serve();
                 }
-                else if (!bh.GetSwingBack() && Input.gyro.userAcceleration.magnitude > 2) // need to test if this stops you from spamming swing
+                else if (!isSwingingBack && Input.gyro.userAcceleration.magnitude > 2) // need to test if this stops you from spamming swing
                 {
                     float force = Input.acceleration.magnitude - 2;
                     force *= 4;
@@ -86,7 +116,7 @@ namespace Mirror
 
                     bh.StartSwing(force);
                 }
-                else if (!bh.GetSwingBack() && GameManager.Instance.state != GameState.Serve && Time.time - lastSwitch > 0.25)
+                else if (!isSwingingBack && /*GameManager.Instance.state != GameState.Serve &&*/ Time.time - lastSwitch > 0.25)
                 {
                     if (p.forehand && reference.position.z - racket.transform.position.z > threshold)
                     {
@@ -100,17 +130,35 @@ namespace Mirror
                         Debug.Log("backhand to forehand");
                         Debug.Log(reference.position.z - racket.transform.position.z);
                         p.forehand = true;
-                        Switch();
+                        //Switch();
                     }
                 }
                 
             }
         }
+        public bool GetSwing()
+        {
+            return isSwinging;
+        }
+        public bool GetSwingBack()
+        {
+            return isSwingingBack;
+        }
+        public void SetSwing()
+        {
+            lastSwing = Time.time;
+            isSwinging = true;
+            isSwingingBack = true;
+            // teleport racket into wound up position
+            racket.transform.RotateAround(transform.position, new Vector3(0, 1, 0), 5f* rotationSpeed * Time.fixedDeltaTime);
+        }
+
         void Switch()
         {
             Vector3 t = racket.transform.localPosition;
             racket.transform.localPosition = new Vector3(t.x, t.y, -t.z);
             lastSwitch = Time.time;
+            rotationSpeed *= -1;
         }
         IEnumerator EnableTrail()
         {

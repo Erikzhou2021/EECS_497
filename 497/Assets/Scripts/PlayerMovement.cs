@@ -48,7 +48,8 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()  
     {
         racketHeight = transform.GetChild(0).position.y;
-        racketOffset = transform.GetChild(0).position.z;
+        racketOffset = transform.position.z - transform.GetChild(0).position.z;
+
         Vector3 ballPosition = gm.ball.transform.position;
         if (gm.state == GameState.Serve)
         {
@@ -94,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
             targetPos.z = Math.Clamp(targetPos.z, playerBoundary.left, playerBoundary.right);
             if (float.IsNaN(t) || (!float.IsNaN(t) && Vector3.Distance(transform.position, targetPos) > movementSpeed * t)) // still can't find a solution
             { // just chase the ball and hope you hit
-                targetPos = new Vector3(transform.position.x, transform.position.y, ballPosition.z + (racketOffset * -Mathf.Sign(transform.position.x)));
+                targetPos = new Vector3(transform.position.x, transform.position.y, ballPosition.z + racketOffset);
             }
             transform.position = Vector3.MoveTowards(transform.position, targetPos, movementSpeed * Time.deltaTime);
         }
@@ -120,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 targetPos = gm.ball.transform.position + ballVelocity * t;
         targetPos.y = transform.position.y;
-        targetPos.z += racketOffset * -Mathf.Sign(transform.position.x); // might break if the opponent is left handed
+        targetPos.z += racketOffset; // might break if the opponent is left handed
         return targetPos;
     }
 }
