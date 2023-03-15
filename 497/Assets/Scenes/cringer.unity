@@ -1327,7 +1327,7 @@ MonoBehaviour:
   offlineScene: 
   onlineScene: 
   transport: {fileID: 1023734732}
-  networkAddress: 192.168.1.17
+  networkAddress: 35.3.230.134
   maxConnections: 100
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 1598797573174675663, guid: 0f201fcce09404c35a0a7ed9f2481e5f, type: 3}
@@ -1977,6 +1977,7 @@ MonoBehaviour:
     bottom: 0
   points: 0
   score: 0
+  forehand: 1
   otherPlayerObject: {fileID: 0}
 --- !u!54 &5139142552357678609
 Rigidbody:
@@ -2140,8 +2141,6 @@ MonoBehaviour:
   bounceSpeed: 0
   speedCap: 20
   targetHeight: 1.5
-  swingTime: 0.25
-  doWindUp: 0
 --- !u!1 &5139142553009171579
 GameObject:
   m_ObjectHideFlags: 0
@@ -2363,6 +2362,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: 10
+  aimStrength: 1
+  speedCap: 20
+  targetHeight: 1.5
 --- !u!114 &5593835558808792399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2472,7 +2474,9 @@ MonoBehaviour:
   syncInterval: 0.1
   debugText: {fileID: 0}
   isPlayer: 0
-  rotationSpeed: 300
+  threshold: 0.25
+  swingTime: 0.25
+  rotationSpeed: 150
 --- !u!114 &6551393713890853701
 MonoBehaviour:
   m_ObjectHideFlags: 0

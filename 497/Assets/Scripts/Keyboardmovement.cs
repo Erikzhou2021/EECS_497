@@ -13,9 +13,11 @@ namespace Mirror
         public GameObject racket;
         public float playerSpeed;
         float resetCounter;
+        Mirror.Racket r;
         // Start is called before the first frame update
         void Start()
-        { 
+        {
+            r = GetComponent<Mirror.Racket>();
             resetCounter = Time.time;
             ballPhysics = ball.GetComponent<Rigidbody>();
             bh = racket.GetComponent<BallHandler>();
@@ -77,7 +79,7 @@ namespace Mirror
                     force = force * 10;
                     ballPhysics.AddForce(force);
                 }
-                if (Input.GetMouseButton(0) && !bh.GetSwing())
+                if (Input.GetMouseButton(0) && !r.GetSwing() && !r.GetSwingBack())
                 {
                     bh.StartSwing(8);
                 }
