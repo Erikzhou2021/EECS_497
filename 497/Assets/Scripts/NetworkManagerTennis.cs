@@ -38,6 +38,7 @@ namespace Mirror
 
         }
 
+        [SerializeField] private int minPlayers = 2;
         [Scene] [SerializeField] private string menuScene = string.Empty;
 
         [Header("Room")]
@@ -45,6 +46,8 @@ namespace Mirror
 
         public static event Action OnClientConnected;
         public static event Action OnClientDisconnected;
+
+        public List<NetworkRoomPlayerTennis> RoomPlayers { get; } = new List<NetworkRoomPlayerTennis>();
 
         public override void OnStartServer() => spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList();
 
@@ -58,18 +61,16 @@ namespace Mirror
             }
         }
 
-        // FIX: Figure out why a base function wasn't found (might have something to do with deprecations
-        public override void OnClientConnect(NetworkConnection conn)
+        public override void OnClientConnect()
         {
-            base.OnClientConnect(conn);
+            base.OnClientConnect();
 
             OnClientConnected?.Invoke();
         }
 
-        // FIX: Figure out why base function isn't found (might have something to do with deprecations
-        public override void OnClientDisconnect(NetworkConnection conn)
+        public override void OnClientDisconnect()
         {
-            base.OnClientDisconnect(conn);
+            base.OnClientDisconnect();
 
             OnClientDisconnected?.Invoke();
         }
@@ -95,7 +96,11 @@ namespace Mirror
         {
             if (SceneManager.GetActiveScene().name == menuScene)
             {
+                bool isLeader = RoomPlayers.Count == 0;
+
                 NetworkRoomPlayerTennis roomPlayerInstance = Instantiate(roomPlayerPrefab);
+
+                roomPlayerInstance.IsLeader = isLeader;
 
                 NetworkServer.AddPlayerForConnection(conn, roomPlayerInstance.gameObject);
             }
@@ -136,8 +141,42 @@ namespace Mirror
             if (ball != null)
                 NetworkServer.Destroy(ball);
 
+            if (conn.identity != null)
+            {
+                var player = conn.identity.GetComponent<NetworkRoomPlayerTennis>();
+
+                RoomPlayers.Remove(player);
+
+                NotifyPlayersOfReadyState();
+            }
+
             // call base functionality (actually destroys the player)
             base.OnServerDisconnect(conn);
+        }
+
+        public override void OnStopServer()
+        {
+            RoomPlayers.Clear();
+        }
+
+        public void NotifyPlayersOfReadyState()
+        {
+            foreach (var player in RoomPlayers)
+            {
+                player.HandleReadyToStart(IsReadyToStart());
+            }
+        }
+
+        private bool IsReadyToStart()
+        {
+            if (numPlayers < minPlayers) { return false; }
+
+            foreach (var player in RoomPlayers)
+            {
+                if (!player.IsReady) { return false; }
+            }
+
+            return true;
         }
 
         public override void ServerChangeScene(string newSceneName)
