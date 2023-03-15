@@ -41,14 +41,62 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         GetComponent<ScoreDisplay>().stateDisplayObj.SetActive(false);
     }
-    public IEnumerator WinMatch() 
+    public void Announce()
+    {
+        int p1points = players[0].GetComponent<Player>().points;
+        int p2points = players[1].GetComponent<Player>().points;
+        //win game (no deuce)
+        if (p1points >= 4 && p2points <= 2) //if you are up 40-30, 40-15 or 40-love, and win one more point, you win the game.
+        {
+            StartCoroutine(WinMatch(players[0])); //player 1 win
+        }
+        if (p2points >= 4 && p1points <= 2) //if you are up 40-30, 40-15 or 40-love, and win one more point, you win the game.
+        {
+            StartCoroutine(WinMatch(players[1])); //player 2 win
+        }
+        //win game (deuce)
+        if (p1points >= 4 && p2points >= 3 && p1points - p2points >= 2)
+        {
+            StartCoroutine(WinMatch(players[0])); // player 1 win
+        }
+        if (p2points >= 4 && p1points >= 3 && p2points - p1points >= 2)
+        {
+            StartCoroutine(WinMatch(players[1])); // player 1 win
+        }
+        //deuce 
+        if (p1points >= 3 && p1points == p2points)
+        {
+            Debug.Log("deuce");
+            StartCoroutine(AnnounceState("DEUCE"));
+            if (p1points - p2points == 1)
+            {
+                players[0].GetComponent<Player>().score = "Advantage";
+            }
+            if (p2points - p1points == 1)
+            {
+                players[1].GetComponent<Player>().score = "Advantage";
+            }
+        }
+        //not deuce, match point 
+        if (p1points >= 3 && p2points >= 3 && (p1points - p2points == 1 || p2points - p1points == 1))
+        {
+            Debug.Log("match point");
+            StartCoroutine(AnnounceState("MATCH POINT"));
+        }
+    }
+    public IEnumerator WinMatch(GameObject player) 
     {
         // play audio 
         // display text "YOU WIN" on player's side of split screen
         // maybe display something on mobile too idk 
         // announce which team wins 
+        Debug.Log("player " + (player.GetComponent<Player>().playerTeam + 1) + " wins this round");
+        GetComponent<ScoreDisplay>().stateDisplay.text = "player " + player.GetComponent<Player>().playerTeam + " wins this round";
+        GetComponent<ScoreDisplay>().DisplayState();
+        players[0].GetComponent<Player>().points = 0;
+        players[1].GetComponent<Player>().points = 0;
         yield return new WaitForSeconds(2f);
+        GetComponent<ScoreDisplay>().HideState();
         // next match , if last match - win total game 
-        // every other match flip court ( i dont think this is necessary but just in case pro tennis people are tight) 
     }
 }

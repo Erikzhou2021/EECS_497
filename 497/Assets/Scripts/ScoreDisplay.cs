@@ -23,11 +23,15 @@ public class ScoreDisplay : MonoBehaviour
         {
             return;
         }
-        scoreDisplay.text = GameManager.Instance.players[0].GetComponent<Player>().GetScore().ToString() + "-" +
-            GameManager.Instance.players[1].GetComponent<Player>().GetScore().ToString();
+        scoreDisplay.text = GameManager.Instance.players[0].GetComponent<Player>().GetScore() + "-" +
+            GameManager.Instance.players[1].GetComponent<Player>().GetScore();
     }
     public void DisplayState()
     {
         stateDisplayObj.SetActive(true);
+    }
+    public void HideState()
+    {
+        stateDisplayObj.SetActive(false);
     }
 }
