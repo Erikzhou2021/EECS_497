@@ -59,17 +59,8 @@ namespace Mirror
                 newRot *= Quaternion.Euler(-90,180,90); // offset to make the racket start in the correct spot
                 racket.transform.localRotation = Quaternion.Slerp(racket.transform.rotation, newRot, 5f * Time.deltaTime);
 
-                debugText.text = Input.gyro.attitude.eulerAngles.ToString();
+                //debugText.text = Input.gyro.attitude.eulerAngles.ToString();
                 float upForce = Vector3.Dot(Input.gyro.userAcceleration, Vector3.Normalize(Input.gyro.gravity));
-                if (Input.gyro.userAcceleration.magnitude > 2 && !bh.GetSwing())
-                {
-                    float force = Input.acceleration.magnitude - 2;
-                    force *= 4;
-                    force += 5;
-                    force = Mathf.Clamp(force, 5, 18);
-
-                    bh.StartSwing(force);
-                }
                 if (bh.GetSwing())
                 {
                     StartCoroutine(EnableTrail());
@@ -86,21 +77,36 @@ namespace Mirror
 
                     bh.Serve();
                 }
-                else if (p.forehand && Time.time - lastSwitch > 0.25 && reference.position.z - racket.transform.position.z > -threshold)
+                else if (!bh.GetSwingBack() && Input.gyro.userAcceleration.magnitude > 2) // need to test if this stops you from spamming swing
                 {
-                    Debug.Log("forehand to backhand");
-                    p.forehand = false;
-                    DoSwing();
+                    float force = Input.acceleration.magnitude - 2;
+                    force *= 4;
+                    force += 5;
+                    force = Mathf.Clamp(force, 5, 18);
+
+                    bh.StartSwing(force);
                 }
-                else if (!p.forehand && Time.time - lastSwitch > 0.25 && reference.position.z - racket.transform.position.z > threshold)
+                else if (!bh.GetSwingBack() && GameManager.Instance.state != GameState.Serve && Time.time - lastSwitch > 0.25)
                 {
-                    Debug.Log("backhand to forehand");
-                    p.forehand = true;
-                    DoSwing();
+                    if (p.forehand && reference.position.z - racket.transform.position.z > threshold)
+                    {
+                        Debug.Log("forehand to backhand");
+                        Debug.Log(reference.position.z - racket.transform.position.z);
+                        p.forehand = false;
+                        Switch();
+                    }
+                    else if (!p.forehand && reference.position.z - racket.transform.position.z < -threshold)
+                    {
+                        Debug.Log("backhand to forehand");
+                        Debug.Log(reference.position.z - racket.transform.position.z);
+                        p.forehand = true;
+                        Switch();
+                    }
                 }
+                
             }
         }
-        void DoSwing()
+        void Switch()
         {
             Vector3 t = racket.transform.localPosition;
             racket.transform.localPosition = new Vector3(t.x, t.y, -t.z);

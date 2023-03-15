@@ -22,12 +22,14 @@ public class BallHandler : MonoBehaviour
     public float targetHeight = 1.5f;
     public float swingTime = 0.25f;
 
-    public bool doWindUp = true;
+    bool isSwingingBack = false;
+    Player p;
 
     void Start()
     {
         lastSwing = 0;
         lastServe = 0;
+        p = transform.parent.GetComponent<Player>();
         StartCoroutine(setVars()); // have to use coroutine bc everything instantiated
     }
 
@@ -77,14 +79,19 @@ public class BallHandler : MonoBehaviour
         GetComponent<TrailRenderer>().emitting = false;
         yield return new WaitForEndOfFrame();
 
-        while (transform.parent.position.x < 0 && (transform.localPosition.z > (-1.49))
-            || (transform.parent.position.x > 0 && (transform.localPosition.z < (1.49)))) //for forehand 
+        isSwingingBack = false;
+
+        while (p.forehand && (transform.localPosition.z > (-1.49))
+            || (!p.forehand && (transform.localPosition.z < (1.49)))) 
         {
+            isSwingingBack = true;
             transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), rotationSpeed * Time.deltaTime);
             yield return null;
         }
         transform.localPosition = new Vector3(0, 0, 1.5f * Mathf.Sign(transform.parent.position.x));
     }
+
+    /*
     void WindUp()
     {
         GetComponent<TrailRenderer>().emitting = false;
@@ -98,6 +105,7 @@ public class BallHandler : MonoBehaviour
             transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), rotateAmount);
         }
     }
+    */
 
     void HitBall(float force)
     {
@@ -189,6 +197,10 @@ public class BallHandler : MonoBehaviour
     public bool GetSwing()
     {
         return isSwinging;
+    }
+    public bool GetSwingBack()
+    {
+        return isSwingingBack;
     }
     public void StartSwing(float force)
     {
