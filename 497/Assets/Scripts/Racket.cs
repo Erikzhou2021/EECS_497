@@ -20,6 +20,7 @@ namespace Mirror
         bool isSwingingBack = false;
         public float swingTime = 0.25f;
 
+        public GameObject hitEffect; 
 
         public float rotationSpeed = 250f;
 
@@ -152,6 +153,8 @@ namespace Mirror
             isSwingingBack = true;
             // teleport racket into wound up position
             racket.transform.RotateAround(transform.position, new Vector3(0, 1, 0), 5f* rotationSpeed * Time.fixedDeltaTime);
+            GameObject effect = Instantiate(hitEffect, racket.transform.position, Quaternion.identity);
+            effect.transform.SetParent(GameObject.Find("WorldCanvas").transform);
         }
 
         void Switch()

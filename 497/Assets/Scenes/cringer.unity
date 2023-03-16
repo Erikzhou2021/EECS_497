@@ -4141,6 +4141,7 @@ MonoBehaviour:
   isPlayer: 0
   threshold: 0.25
   swingTime: 0.25
+  hitEffect: {fileID: 0}
   rotationSpeed: 150
 --- !u!114 &6551393713890853701
 MonoBehaviour:

@@ -396,6 +396,7 @@ MonoBehaviour:
   isPlayer: 0
   threshold: 0.25
   swingTime: 0.25
+  hitEffect: {fileID: 4370832546948994735, guid: ffaac9a2f5b577447b05b5b0fc2d68bc, type: 3}
   rotationSpeed: 250
 --- !u!114 &1738184536380383982
 MonoBehaviour:
