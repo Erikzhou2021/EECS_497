@@ -81,7 +81,8 @@ namespace Mirror
                 }
                 if (Input.GetMouseButton(0) && !r.GetSwing() && !r.GetSwingBack())
                 {
-                    bh.StartSwing(8);
+                    if(!GameManager.Instance.pauseGame)
+                        bh.StartSwing(8);
                 }
             }
         }

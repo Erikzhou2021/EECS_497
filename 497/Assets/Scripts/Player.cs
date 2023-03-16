@@ -52,6 +52,7 @@ public class Player : MonoBehaviour
             points += 1;
             score = GetScore();
             Instance.Announce();
+            Instance.DisplayScore();
         }
     }
 

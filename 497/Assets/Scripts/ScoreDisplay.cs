@@ -12,6 +12,7 @@ public class ScoreDisplay : MonoBehaviour
     public GameObject bannerDisplayObj;
 
     private float t = 0;
+    private float w = 0;
 
     private void Start()
     {
@@ -20,7 +21,8 @@ public class ScoreDisplay : MonoBehaviour
     private void Update()
     {
         t += Time.deltaTime / 1f;
-        DisplayScore();
+        w += Time.deltaTime;
+        //DisplayScore();
     }
     public void DisplayScore()
     {
@@ -30,6 +32,29 @@ public class ScoreDisplay : MonoBehaviour
         }
         scoreDisplay.text = GameManager.Instance.players[0].GetComponent<Player>().GetScore() + "-" +
             GameManager.Instance.players[1].GetComponent<Player>().GetScore();
+
+        StartCoroutine(fuckmylife());
+    }
+    IEnumerator fuckmylife() // should pause gameplay / dont let player swing 
+    {
+        GameManager.Instance.pauseGame = true;
+        w = 0;
+        while (w < 1)
+        {
+            //scoreDisplay.transform.position = Vector3.Lerp(scoreDisplay.transform.position, new Vector3(scoreDisplay.transform.position.x, scoreDisplay.transform.position.y - 2, scoreDisplay.transform.position.z), t/.5f);
+            scoreDisplay.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, Mathf.Lerp(60f,0f, w)-40f);
+            yield return null;
+        }
+        yield return new WaitForSeconds(1.5f);
+        w = 0;
+        while (w < 1)
+        {
+            //scoreDisplay.transform.position = Vector3.Lerp(scoreDisplay.transform.position, new Vector3(scoreDisplay.transform.position.x, scoreDisplay.transform.position.y + 2, scoreDisplay.transform.position.z), t/.5f);
+            scoreDisplay.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, Mathf.Lerp(0, 60f, w)-40f);
+            yield return null;
+        }
+        yield return new WaitForSeconds(1f);
+        GameManager.Instance.pauseGame = false;
     }
     public void DisplayState()
     {

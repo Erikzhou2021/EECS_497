@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public GameState state = GameState.Serve; // skipping prematch because idk what that is gonna be used for yet
     public int serveCount = 0;
 
+    public bool pauseGame = false;
+
     private void Awake()
     {
         if (Instance == null)
@@ -61,7 +63,7 @@ public class GameManager : MonoBehaviour
         }
         if (p2points >= 4 && p1points >= 3 && p2points - p1points >= 2)
         {
-            StartCoroutine(WinMatch(players[1])); // player 1 win
+            StartCoroutine(WinMatch(players[1])); // player 2 win
         }
         //deuce 
         if (p1points >= 3 && p1points == p2points)
@@ -69,7 +71,13 @@ public class GameManager : MonoBehaviour
             Debug.Log("deuce");
             StartCoroutine(AnnounceState("DEUCE"));
         }
-        //not deuce, match point 
+        //before deuce, match point 
+        if((p1points == 3 && p2points <= 2) || (p2points == 3 && p1points <= 2))
+        {
+            Debug.Log("match point");
+            StartCoroutine(AnnounceState("MATCH POINT"));
+        }
+        //after deuce, match point 
         if (p1points >= 3 && p2points >= 3 && (p1points - p2points == 1 || p2points - p1points == 1))
         {
             Debug.Log("match point");
@@ -82,12 +90,11 @@ public class GameManager : MonoBehaviour
         // display text "YOU WIN" on player's side of split screen
         // maybe display something on mobile too idk 
         // announce which team wins 
-        Debug.Log("player " + (player.GetComponent<Player>().playerTeam + 1) + " wins this round");
         GetComponent<ScoreDisplay>().stateDisplay.text = "player " + (player.GetComponent<Player>().playerTeam+1) + " wins this round";
         GetComponent<ScoreDisplay>().DisplayState();
+        yield return new WaitForSeconds(2f);
         players[0].GetComponent<Player>().points = 0;
         players[1].GetComponent<Player>().points = 0;
-        yield return new WaitForSeconds(2f);
         GetComponent<ScoreDisplay>().HideState();
         // next match , if last match - win total game 
     }
@@ -95,5 +102,10 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         StartCoroutine(GetComponent<ScoreDisplay>().DisplayBanner("start"));
+    }
+
+    public void DisplayScore()
+    {
+        GetComponent<ScoreDisplay>().DisplayScore();
     }
 }
