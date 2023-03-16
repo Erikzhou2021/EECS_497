@@ -2845,12 +2845,12 @@ MonoBehaviour:
   autoConnectClientBuild: 0
   sendRate: 30
   offlineScene: 
-  onlineScene: Assets/Mirror/Examples/Basic/Scenes/Example.unity
+  onlineScene: 
   transport: {fileID: 1961160809}
   networkAddress: localhost
   maxConnections: 2
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 7723149289028699547, guid: 28e557fdcb6c5124f89c61ad9b5922f0, type: 3}
+  playerPrefab: {fileID: 5350302845549206703, guid: b90a5006c1480f74cbb94241bc544f1c, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
