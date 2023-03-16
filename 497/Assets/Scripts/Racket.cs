@@ -114,7 +114,7 @@ namespace Mirror
                     force += 5;
                     force = Mathf.Clamp(force, 5, 18);
 
-                    if (!GameManager.Instance.pauseGame)
+                    //if (!GameManager.Instance.pauseGame)
                         bh.StartSwing(force);
                 }
                 else if (!isSwingingBack && /*GameManager.Instance.state != GameState.Serve &&*/ Time.time - lastSwitch > 0.25)

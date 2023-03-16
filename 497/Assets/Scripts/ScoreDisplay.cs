@@ -13,6 +13,7 @@ public class ScoreDisplay : MonoBehaviour
 
     private float t = 0;
     private float w = 0;
+    private float u = 0;
 
     private void Start()
     {
@@ -22,6 +23,7 @@ public class ScoreDisplay : MonoBehaviour
     {
         t += Time.deltaTime / 1f;
         w += Time.deltaTime;
+        u += Time.deltaTime;
         //DisplayScore();
     }
     public void DisplayScore()
@@ -33,15 +35,15 @@ public class ScoreDisplay : MonoBehaviour
         scoreDisplay.text = GameManager.Instance.players[0].GetComponent<Player>().GetScore() + "-" +
             GameManager.Instance.players[1].GetComponent<Player>().GetScore();
 
-        StartCoroutine(fuckmylife());
+        scoreDisplay.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -40); //comment later
+        //StartCoroutine(ScoreAnimation()); //uncomment later
     }
-    IEnumerator fuckmylife() // should pause gameplay / dont let player swing 
+    IEnumerator ScoreAnimation() // should pause gameplay / dont let player swing 
     {
         GameManager.Instance.pauseGame = true;
         w = 0;
         while (w < 1)
         {
-            //scoreDisplay.transform.position = Vector3.Lerp(scoreDisplay.transform.position, new Vector3(scoreDisplay.transform.position.x, scoreDisplay.transform.position.y - 2, scoreDisplay.transform.position.z), t/.5f);
             scoreDisplay.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, Mathf.Lerp(60f,0f, w)-40f);
             yield return null;
         }
@@ -49,21 +51,36 @@ public class ScoreDisplay : MonoBehaviour
         w = 0;
         while (w < 1)
         {
-            //scoreDisplay.transform.position = Vector3.Lerp(scoreDisplay.transform.position, new Vector3(scoreDisplay.transform.position.x, scoreDisplay.transform.position.y + 2, scoreDisplay.transform.position.z), t/.5f);
             scoreDisplay.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, Mathf.Lerp(0, 60f, w)-40f);
             yield return null;
         }
         yield return new WaitForSeconds(1f);
         GameManager.Instance.pauseGame = false;
     }
-    public void DisplayState()
+    public IEnumerator DisplayState()
     {
+        u = 0;
         stateDisplayObj.SetActive(true);
-    }
-    public void HideState()
-    {
+        while(u < 1)
+        {
+            stateDisplayObj.transform.localPosition = new Vector3(Mathf.Lerp(1000, 0, u), stateDisplayObj.transform.localPosition.y, 0);
+            yield return null;
+        }
+        yield return new WaitForSeconds(1.5f);
+
+        u = 0;
+        while (u < 1)
+        {
+            //scoreDisplay.transform.position = Vector3.Lerp(scoreDisplay.transform.position, new Vector3(scoreDisplay.transform.position.x, scoreDisplay.transform.position.y + 2, scoreDisplay.transform.position.z), t/.5f);
+            stateDisplayObj.transform.localPosition = new Vector3(Mathf.Lerp(1000, 0, u)-1000f, stateDisplayObj.transform.localPosition.y, 0);
+            yield return null;
+        }
         stateDisplayObj.SetActive(false);
     }
+    //public void HideState()
+    //{
+    //    stateDisplayObj.SetActive(false);
+    //}
 
     public IEnumerator DisplayBanner(string bannerText)
     {

@@ -70,7 +70,7 @@ public class BallBoundary : MonoBehaviour
         scoreStop = false;
         touchedGroundOnceOut = false;
         bouncedInOpponentCourtOnce = false;
-        transform.position = new Vector3(0, 2, 0); // temporary placement
+        transform.position = new Vector3(0, -2, 0); // temporary placement
         //GetComponent<Rigidbody>().useGravity = false;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GameManager.Instance.state = GameState.Serve;
