@@ -496,7 +496,7 @@ MonoBehaviour:
       - m_Target: {fileID: 913406147}
         m_TargetAssemblyTypeName: Mirror.PlayerNameInput, Assembly-CSharp
         m_MethodName: SetPlayerName
-        m_Mode: 5
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -714,7 +714,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter IP Address
+  m_text: "\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1131,6 +1131,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: -8, y: -5, z: -8, w: -5}
   m_Softness: {x: 0, y: 0}
+--- !u!1001 &693003464
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3876147280178986325, guid: 28e557fdcb6c5124f89c61ad9b5922f0, type: 3}
+      propertyPath: sceneId
+      value: 1123432421
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042795420342820150, guid: 28e557fdcb6c5124f89c61ad9b5922f0, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042795420342820150, guid: 28e557fdcb6c5124f89c61ad9b5922f0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -11.217265
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042795420342820150, guid: 28e557fdcb6c5124f89c61ad9b5922f0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6832442
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042795420342820150, guid: 28e557fdcb6c5124f89c61ad9b5922f0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.5609093
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042795420342820150, guid: 28e557fdcb6c5124f89c61ad9b5922f0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042795420342820150, guid: 28e557fdcb6c5124f89c61ad9b5922f0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042795420342820150, guid: 28e557fdcb6c5124f89c61ad9b5922f0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042795420342820150, guid: 28e557fdcb6c5124f89c61ad9b5922f0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042795420342820150, guid: 28e557fdcb6c5124f89c61ad9b5922f0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042795420342820150, guid: 28e557fdcb6c5124f89c61ad9b5922f0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042795420342820150, guid: 28e557fdcb6c5124f89c61ad9b5922f0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7723149289028699547, guid: 28e557fdcb6c5124f89c61ad9b5922f0, type: 3}
+      propertyPath: m_Name
+      value: RoomPlayer
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 28e557fdcb6c5124f89c61ad9b5922f0, type: 3}
 --- !u!1 &703742186
 GameObject:
   m_ObjectHideFlags: 0
@@ -1438,7 +1499,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &913406146
 Transform:
   m_ObjectHideFlags: 0
@@ -1869,7 +1930,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 913406145}
+      - m_Target: {fileID: 2013880665}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -1879,7 +1940,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1061751874
 MonoBehaviour:
@@ -2758,6 +2819,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1961160808}
   - component: {fileID: 1961160807}
+  - component: {fileID: 1961160809}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -2784,16 +2846,17 @@ MonoBehaviour:
   sendRate: 30
   offlineScene: 
   onlineScene: Assets/Mirror/Examples/Basic/Scenes/Example.unity
-  transport: {fileID: 0}
+  transport: {fileID: 1961160809}
   networkAddress: localhost
   maxConnections: 2
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 0}
+  playerPrefab: {fileID: 7723149289028699547, guid: 28e557fdcb6c5124f89c61ad9b5922f0, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
   timeInterpolationGui: 0
   cameras: []
+  minPlayers: 2
   menuScene: 
   roomPlayerPrefab: {fileID: 0}
 --- !u!4 &1961160808
@@ -2811,6 +2874,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1961160809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961160806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7424c1070fad4ba2a7a96b02fbeb4bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  port: 7777
+  NoDelay: 1
+  SendTimeout: 5000
+  ReceiveTimeout: 30000
+  serverMaxMessageSize: 16384
+  serverMaxReceivesPerTick: 10000
+  serverSendQueueLimitPerConnection: 10000
+  serverReceiveQueueLimitPerConnection: 10000
+  clientMaxMessageSize: 16384
+  clientMaxReceivesPerTick: 1000
+  clientSendQueueLimit: 10000
+  clientReceiveQueueLimit: 10000
 --- !u!1 &1986336590
 GameObject:
   m_ObjectHideFlags: 0
@@ -2827,7 +2914,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1986336591
 Transform:
   m_ObjectHideFlags: 0
