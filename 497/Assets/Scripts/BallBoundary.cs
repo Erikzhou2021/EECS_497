@@ -45,18 +45,30 @@ public class BallBoundary : MonoBehaviour
 
     IEnumerator OutBounds(int playerTurn)
     {
-        outText = GameObject.Find("WorldCanvas").transform.Find("Out").gameObject;
-        Vector3 ballOutPosition = transform.position;
-        outText.SetActive(true);
-        outText.transform.position = new Vector3(ballOutPosition.x, ballOutPosition.y + textOffset, ballOutPosition.z);
-        scoreStop = true;
-        yield return new WaitForSeconds(timeTillReset);
-        outText.SetActive(false);
-        ScorePoint(playerTurn);
+        if (!touchedGroundOnceOut)
+        {
+            if (!scoreStop)
+            {
+                outText = GameObject.Find("WorldCanvas").transform.Find("Out").gameObject;
+                Vector3 ballOutPosition = transform.position;
+                outText.SetActive(true);
+                outText.transform.position = new Vector3(ballOutPosition.x, ballOutPosition.y + textOffset, ballOutPosition.z);
+            }
+            gm.players[playerTurn].GetComponent<Player>().AddScore();
+
+            scoreStop = true;
+            yield return new WaitForSeconds(timeTillReset);
+            outText.SetActive(false);
+            StartCoroutine(ResetBall());
+            //ScorePoint(playerTurn);
+
+            touchedGroundOnceOut = true;
+        }
     }
     public IEnumerator ResetBall()
     {
         scoreStop = false;
+        touchedGroundOnceOut = false;
         bouncedInOpponentCourtOnce = false;
         transform.position = new Vector3(0, 2, 0); // temporary placement
         //GetComponent<Rigidbody>().useGravity = false;
@@ -100,8 +112,11 @@ public class BallBoundary : MonoBehaviour
             return;
         }*/
 
-        GameObject.Find("GameObject").SetActive(true);
-        GameObject.Find("GameObject").transform.position = new Vector3(transform.position.x, 0.0002f, transform.position.z);
+        if(transform.position.x != 0)
+        {
+            GameObject.Find("Imprint").SetActive(true);
+            GameObject.Find("Imprint").transform.position = new Vector3(transform.position.x, 0.0002f, transform.position.z);
+        }
 
         if (collision.gameObject.tag != "Ground")
         {
@@ -134,4 +149,4 @@ public class BallBoundary : MonoBehaviour
         // good job you didn't fucc up
         bouncedInOpponentCourtOnce = true;
         }
-    }
+}

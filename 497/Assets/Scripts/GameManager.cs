@@ -91,4 +91,9 @@ public class GameManager : MonoBehaviour
         GetComponent<ScoreDisplay>().HideState();
         // next match , if last match - win total game 
     }
+
+    public void StartGame()
+    {
+        StartCoroutine(GetComponent<ScoreDisplay>().DisplayBanner("start"));
+    }
 }

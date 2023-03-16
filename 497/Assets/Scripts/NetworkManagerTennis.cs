@@ -49,6 +49,9 @@ namespace Mirror
                 ball = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "Ball"));
                 NetworkServer.Spawn(ball);
                 GameManager.Instance.ball = ball;
+
+                GameManager.Instance.StartGame();
+
             }
 
             if (GameObject.Find("Ball(Clone)"))

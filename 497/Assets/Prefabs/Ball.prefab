@@ -142,7 +142,7 @@ MonoBehaviour:
   servingTeam: 0
   playerTurn: 0
   outText: {fileID: 0}
-  textOffset: 1
+  textOffset: 0.5
 --- !u!114 &2574764429951683075
 MonoBehaviour:
   m_ObjectHideFlags: 0
