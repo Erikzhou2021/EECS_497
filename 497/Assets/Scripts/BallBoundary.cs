@@ -43,14 +43,16 @@ public class BallBoundary : MonoBehaviour
         }
     }
 
-    IEnumerator OutBounds()
+    IEnumerator OutBounds(int playerTurn)
     {
+        outText = GameObject.Find("WorldCanvas").transform.Find("Out").gameObject;
         Vector3 ballOutPosition = transform.position;
         outText.SetActive(true);
         outText.transform.position = new Vector3(ballOutPosition.x, ballOutPosition.y + textOffset, ballOutPosition.z);
         scoreStop = true;
         yield return new WaitForSeconds(timeTillReset);
-        StartCoroutine(ResetBall());
+        outText.SetActive(false);
+        ScorePoint(playerTurn);
     }
     public IEnumerator ResetBall()
     {
@@ -119,7 +121,8 @@ public class BallBoundary : MonoBehaviour
         if (OutofBounds())
         {
             Debug.Log("you hit the ball out of bounds bogo");
-            ScorePoint(playerTurn);
+            StartCoroutine(OutBounds(playerTurn));
+            //ScorePoint(playerTurn);
             return;
         }
         if (BallInWhichCourt() != playerTurn)

@@ -25,10 +25,10 @@ public class Player : MonoBehaviour
     {
         if (Instance.state == GameState.Serve && playerTeam == Instance.ball.GetComponent<BallBoundary>().playerTurn)
         {
-            transform.Find("Serve").gameObject.SetActive(true);
+            transform.GetChild(1).Find("Serve").gameObject.SetActive(true);
         }
         else{
-            transform.Find("Serve").gameObject.SetActive(false);
+            transform.GetChild(1).Find("Serve").gameObject.SetActive(false);
         }
 
         //research how to win a tiebreak game 

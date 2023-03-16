@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public IEnumerator AnnounceState(string state) // my code is so ugly i apologise
+    public IEnumerator AnnounceState(string state) 
     {
         // play audio 
         // display text "DEUCE" or "MATCH POINT" or current scores
