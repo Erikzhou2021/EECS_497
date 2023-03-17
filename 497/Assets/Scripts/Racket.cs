@@ -62,7 +62,10 @@ namespace Mirror
 
                 newRot *= Quaternion.Euler(-90,180,90); // offset to make the racket start in the correct spot
                 //racket.transform.localRotation = Quaternion.Slerp(racket.transform.rotation, newRot, 5f * Time.deltaTime);
-                racket.transform.rotation = newRot;
+                if (Quaternion.Angle(racket.transform.rotation, newRot) > 3f)
+                {
+                    racket.transform.rotation = newRot;
+                }
                 //debugText.text = Input.gyro.attitude.eulerAngles.ToString();
                 float upForce = Vector3.Dot(Input.gyro.userAcceleration, Vector3.Normalize(Input.gyro.gravity));
 
@@ -130,7 +133,7 @@ namespace Mirror
                         Debug.Log("backhand to forehand");
                         Debug.Log(Vector3.Dot(transform.right, racket.transform.forward));
                         p.forehand = true;
-                        //Switch();
+                        Switch();
                     }
                 }
                 
