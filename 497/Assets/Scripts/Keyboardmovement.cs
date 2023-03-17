@@ -18,7 +18,7 @@ namespace Mirror
         void Start()
         {
             r = GetComponent<Mirror.Racket>();
-            resetCounter = Time.time;
+            resetCounter = 0;
             ballPhysics = ball.GetComponent<Rigidbody>();
             bh = racket.GetComponent<BallHandler>();
         }
@@ -39,8 +39,8 @@ namespace Mirror
                     BallBoundary.Instance.scoreStop = false;
                     BallBoundary.Instance.bouncedInOpponentCourtOnce = false;
                     BallBoundary.Instance.playerTurn = 0;
-                    bh.Serve();
                     resetCounter = 0;
+                    bh.Serve();
                 }
                 if (Input.GetKey("w") || Input.GetKey("up"))
                 {

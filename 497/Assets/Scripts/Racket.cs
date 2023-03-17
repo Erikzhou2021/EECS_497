@@ -12,7 +12,6 @@ namespace Mirror
         private Rigidbody ballPhysics;
         public float threshold = 0.25f;
         GameObject racket;
-        Transform reference;
         float lastSwitch = 0;
         float lastSwing;
         Player p;
@@ -31,7 +30,6 @@ namespace Mirror
             StartCoroutine(ballPhys());
             
             racket = transform.GetChild(0).gameObject;
-            reference = racket.transform.GetChild(0);
             lastSwitch = Time.time;
         }
 
@@ -50,7 +48,7 @@ namespace Mirror
             {
                 Debug.Log("single player test");
                 bh = racket.GetComponent<BallHandler>();
-                ballPhysics = bh.ball.GetComponent<Rigidbody>();
+                ballPhysics = GameManager.Instance.ball.GetComponent<Rigidbody>();
             }
 
             if (isLocalPlayer)
@@ -120,17 +118,17 @@ namespace Mirror
                 }
                 else if (!isSwingingBack && /*GameManager.Instance.state != GameState.Serve &&*/ Time.time - lastSwitch > 0.25)
                 {
-                    if (p.forehand && reference.position.z - racket.transform.position.z > threshold)
+                    if (p.forehand && Vector3.Dot(transform.right, racket.transform.forward) < -0.5) // replace with threshold later
                     {
                         Debug.Log("forehand to backhand");
-                        Debug.Log(reference.position.z - racket.transform.position.z);
+                        Debug.Log(Vector3.Dot(transform.right, racket.transform.forward));
                         p.forehand = false;
                         Switch();
                     }
-                    else if (!p.forehand && reference.position.z - racket.transform.position.z < -threshold)
+                    else if (!p.forehand && Vector3.Dot(transform.right, racket.transform.forward) > 0.5)
                     {
                         Debug.Log("backhand to forehand");
-                        Debug.Log(reference.position.z - racket.transform.position.z);
+                        Debug.Log(Vector3.Dot(transform.right, racket.transform.forward));
                         p.forehand = true;
                         //Switch();
                     }
