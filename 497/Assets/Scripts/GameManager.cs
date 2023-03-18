@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour
 
     public bool pauseGame = false;
 
+    //3 total matches
+    private int match = 0; //0,1,2
+    private int lead = 0; //0,1
     private void Awake()
     {
         if (Instance == null)
@@ -101,8 +104,15 @@ public class GameManager : MonoBehaviour
         StartCoroutine(GetComponent<ScoreDisplay>().DisplayState());
         players[0].GetComponent<Player>().points = 0;
         players[1].GetComponent<Player>().points = 0;
-        //GetComponent<ScoreDisplay>().HideState();
-        // next match , if last match - win total game 
+        match++;
+        lead = player.GetComponent<Player>().playerTeam;
+
+        if(match == 3)
+        {
+            //end game 
+            //GetComponent<ScoreDisplay>().stateDisplay.text = "player " + (lead + 1) + " wins the game";
+
+        }
     }
 
     public void StartGame()

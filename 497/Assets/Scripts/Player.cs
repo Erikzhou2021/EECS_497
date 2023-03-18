@@ -35,23 +35,12 @@ public class Player : MonoBehaviour
 
         //add lose game condition for multiplayer i think
     }
-
-    //how to score a point 
-    // if other player hits ball out of bounds immediately, you receive a point
-    // if other player hits ball and ball bounces in their court or hits net, you receive a point  
-
-    // if other player misses ball and ball hits within bounds, you receive a point 
-    //          ball collides with opponent ground after bouncng once on their side 
-    //  research when to switch serving 
-    //why are there so many rules luigi gah
-
-    //collisions, if racket hits ball 
     public void AddScore()
     {
         if(!BallBoundary.Instance.scoreStop){
             points += 1;
             score = GetScore();
-            //Instance.Announce(); uncomment later
+            Instance.Announce(); //uncomment later
             Instance.DisplayScore();
         }
     }
