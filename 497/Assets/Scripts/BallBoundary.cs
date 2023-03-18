@@ -29,6 +29,8 @@ public class BallBoundary : MonoBehaviour
     public float textOffset;
     GameManager gm;
 
+    public AudioClip bounceGround;
+
     //private Coroutine currentCoroutine;
     private void Awake()
     {
@@ -42,7 +44,6 @@ public class BallBoundary : MonoBehaviour
             Destroy(this);
         }
     }
-
     IEnumerator OutBounds(int playerTurn)
     {
         if (!touchedGroundOnceOut)
@@ -148,5 +149,8 @@ public class BallBoundary : MonoBehaviour
         }
         // good job you didn't fucc up
         bouncedInOpponentCourtOnce = true;
+
+        //audio 
+        AudioManager.Instance.Play(bounceGround);
         }
 }

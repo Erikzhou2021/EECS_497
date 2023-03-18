@@ -143,6 +143,8 @@ MonoBehaviour:
   playerTurn: 0
   outText: {fileID: 0}
   textOffset: 0.5
+  bounceGround: {fileID: 8300000, guid: 1d830b8aed4406d42809114faa46b113, type: 3}
+  bounceRacket: {fileID: 8300000, guid: bc142f83f8b4f5e438ebf72c2332e3f2, type: 3}
 --- !u!114 &2574764429951683075
 MonoBehaviour:
   m_ObjectHideFlags: 0

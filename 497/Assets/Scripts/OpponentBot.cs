@@ -14,6 +14,8 @@ public class OpponentBot : MonoBehaviour
     public float speedCap = 20;
     public float targetHeight = 1.5f;
 
+    public AudioClip racketBounce;
+
     void Start()
     {
         lastSwing = 0;
@@ -41,6 +43,7 @@ public class OpponentBot : MonoBehaviour
         if (isInFront && isCloseEnough)
         {
             lastSwing = Time.time;
+            AudioManager.Instance.Play(racketBounce);
             HitBall();
         }
         
