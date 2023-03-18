@@ -3,7 +3,17 @@ guid: 0185f5264fa1a88499e47351f67e4107
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: a9395b58be925f64b96511c16e6e4334, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tennis_mat
+    second: {fileID: 2100000, guid: a9395b58be925f64b96511c16e6e4334, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
