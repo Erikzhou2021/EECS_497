@@ -24,7 +24,6 @@ public class BallHandler : MonoBehaviour
     Mirror.Racket r;
 
     public AudioClip racketBounce;
-    public AudioClip racketMiss;
     void Start()
     {
         lastServe = 0;
@@ -65,7 +64,6 @@ public class BallHandler : MonoBehaviour
         else if (!r.GetSwing())
         {
             hit = false;
-            AudioManager.Instance.Play(racketMiss);
         }
 
         transform.position = new Vector3(transform.position.x, transform.position.y + (Mathf.Sin(Time.time * bounceSpeed) * bounceHeight), transform.position.z);

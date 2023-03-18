@@ -23,6 +23,8 @@ namespace Mirror
 
         public float rotationSpeed = 250f;
 
+        public AudioClip racketMiss;
+        public AudioClip racketBounce;
         void Start()
         {
             lastSwing = 0;
@@ -78,6 +80,11 @@ namespace Mirror
                 {
                     StartCoroutine(EnableTrail());
                     racket.transform.RotateAround(transform.position, new Vector3(0, 1, 0), -rotationSpeed * Time.deltaTime);
+                    //if (!AudioManager.Instance.EffectsSource.isPlaying)
+                    //{
+                    if(!(AudioManager.Instance.EffectsSource.isPlaying && AudioManager.Instance.EffectsSource.clip == racketBounce))
+                        AudioManager.Instance.Play(racketMiss);
+                    //}
                 }
                 else if (isSwingingBack)
                 {
