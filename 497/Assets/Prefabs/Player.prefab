@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bounceSpeed: 5
-  bounceHeight: 0.01
+  bounceHeight: 0.1
 --- !u!1 &371280031693067622
 GameObject:
   m_ObjectHideFlags: 0
