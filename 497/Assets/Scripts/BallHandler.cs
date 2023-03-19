@@ -22,6 +22,7 @@ public class BallHandler : MonoBehaviour
 
     Player p;
     Mirror.Racket r;
+    Transform reference;
 
     public AudioClip racketBounce;
     void Start()
@@ -29,6 +30,7 @@ public class BallHandler : MonoBehaviour
         lastServe = 0;
         p = transform.parent.GetComponent<Player>();
         r = transform.parent.GetComponent<Mirror.Racket>();
+        reference = transform.Find("reference");
         StartCoroutine(setVars()); // have to use coroutine bc everything instantiated
     }
 
@@ -52,8 +54,8 @@ public class BallHandler : MonoBehaviour
         }
         if (r.GetSwing() && !hit)
         {
-            bool isInFront = ballPhysics.position.x >= transform.position.x;
-            bool isCloseEnough = Vector3.Distance(transform.position, ballPhysics.position) < 1;
+            bool isInFront = Math.Abs(ballPhysics.position.x) <= Math.Abs(transform.position.x);
+            bool isCloseEnough = Vector3.Distance(reference.position, ballPhysics.position) < 1;
             if (isInFront && isCloseEnough)
             {
                 hit = true;
@@ -159,8 +161,8 @@ public class BallHandler : MonoBehaviour
             r = transform.parent.GetComponent<Mirror.Racket>();
         }
         lastServe = Time.time;
-        ballPhysics.position = transform.position + new Vector3(0.3f, 1.5f, 0);
-        ballPhysics.velocity = new Vector3(0, 0.2f, 0);
+        ballPhysics.position = transform.position + new Vector3(0.3f, 1.2f, 0);
+        ballPhysics.velocity = new Vector3(0, 4.2f, 0);
     }
     public void StartSwing(float force)
     {
