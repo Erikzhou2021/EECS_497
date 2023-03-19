@@ -54,7 +54,7 @@ public class BallHandler : MonoBehaviour
         }
         if (r.GetSwing() && !hit)
         {
-            bool isInFront = Math.Abs(ballPhysics.position.x) <= Math.Abs(transform.position.x);
+            bool isInFront = Math.Abs(ballPhysics.position.x) <= Math.Abs(reference.position.x);
             bool isCloseEnough = Vector3.Distance(reference.position, ballPhysics.position) < 1;
             if (isInFront && isCloseEnough)
             {
@@ -76,6 +76,7 @@ public class BallHandler : MonoBehaviour
         BallBoundary.Instance.SwitchTurn();
         if (GameManager.Instance.state == GameState.Serve)
         {
+            ballPhysics.velocity = new Vector3(ballPhysics.velocity.x, 0, ballPhysics.velocity.z);
             force += 7;
             GameManager.Instance.serveCount++;
             Vector3 serveVect = Vector3.zero;
@@ -97,7 +98,8 @@ public class BallHandler : MonoBehaviour
             }
             serveVect.Normalize();
             serveVect *= force;
-            serveVect.y = 5;
+            serveVect.y = 2f;
+            //serveVect.y = Mathf.Sqrt((2 * targetHeight - ballPhysics.position.y) * Math.Abs(Physics.gravity.y));
             GameManager.Instance.state = GameState.Rally;
             ballPhysics.AddForce(serveVect, ForceMode.VelocityChange);
             return;
@@ -159,6 +161,10 @@ public class BallHandler : MonoBehaviour
             ball = GameManager.Instance.ball;
             ballPhysics = ball.GetComponent<Rigidbody>();
             r = transform.parent.GetComponent<Mirror.Racket>();
+        }
+        if (Time.time - lastServe < 1f)
+        {
+            return;
         }
         lastServe = Time.time;
         ballPhysics.position = transform.position + new Vector3(0.3f, 1.2f, 0);
