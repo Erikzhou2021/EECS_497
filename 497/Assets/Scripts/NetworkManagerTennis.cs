@@ -83,7 +83,7 @@ namespace Mirror
                 return;
             }
 
-            if (SceneManager.GetActiveScene().name != menuScene)
+            if (SceneManager.GetActiveScene().path != menuScene)
             {
                 conn.Disconnect();
                 return;
@@ -94,7 +94,7 @@ namespace Mirror
 
         public override void OnServerAddPlayer(NetworkConnectionToClient conn)
         {
-            if (SceneManager.GetActiveScene().name == menuScene)
+            if (SceneManager.GetActiveScene().path == menuScene)
             {
                 bool isLeader = RoomPlayers.Count == 0;
 

@@ -9,8 +9,8 @@ public class NetworkRoomPlayerTennis : NetworkBehaviour
 {
     [Header("UI")]
     [SerializeField] private GameObject lobbyUI = null;
-    [SerializeField] private TMP_Text[] playerNameTexts = new TMP_Text[4];
-    [SerializeField] private TMP_Text[] playerReadyTexts = new TMP_Text[4];
+    [SerializeField] private TMP_Text[] playerNameTexts = new TMP_Text[2];
+    [SerializeField] private TMP_Text[] playerReadyTexts = new TMP_Text[2];
     [SerializeField] private Button startGameButton = null;
 
     [SyncVar(hook = nameof(HandleDisplayNameChanged))]
