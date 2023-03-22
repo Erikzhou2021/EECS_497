@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.56158954, g: 0.7218083, b: 0.8178571, a: 1}
+  m_IndirectSpecularColor: {r: 0.5615897, g: 0.72180843, b: 0.8178571, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4171,7 +4171,7 @@ MonoBehaviour:
   racketOffset: 1.5
   racketHeight: 1
   playerOffset: 3
-  movementSpeed: 8
+  movementSpeed: 3
 --- !u!114 &3172242356850133925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4605,7 +4605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3edfe384f76041f4d9478999e27babd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
+  force: 6
   aimStrength: 1
   speedCap: 20
   targetHeight: 1.5

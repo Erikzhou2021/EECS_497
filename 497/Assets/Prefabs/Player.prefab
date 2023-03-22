@@ -453,7 +453,7 @@ MonoBehaviour:
   racketOffset: 1.5
   racketHeight: 1
   playerOffset: 3
-  movementSpeed: 4
+  movementSpeed: 3
 --- !u!1 &1230474573676074234
 GameObject:
   m_ObjectHideFlags: 0
@@ -1401,9 +1401,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
-  swingForce: 12
+  swingForce: 6
   rotationSpeed: 300
-  aimStrength: 1
+  aimStrength: 0.8
   bounceHeight: 0
   bounceSpeed: 0
   speedCap: 20

@@ -119,9 +119,9 @@ namespace Mirror
                 else if (!isSwingingBack && Input.gyro.userAcceleration.magnitude > 2) // need to test if this stops you from spamming swing
                 {
                     float force = Input.acceleration.magnitude - 2;
-                    force *= 4;
-                    force += 5;
-                    force = Mathf.Clamp(force, 5, 18);
+                    force *= 3;
+                    force += 3;
+                    force = Mathf.Clamp(force, 3, 16);
 
                     //if (!GameManager.Instance.pauseGame)
                         bh.StartSwing(force);

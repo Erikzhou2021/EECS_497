@@ -7,7 +7,7 @@ public class BallHandler : MonoBehaviour
 {
     bool hit = false;
     public GameObject ball;
-    public float swingForce = 12;
+    public float swingForce = 6;
     
     float lastServe = 0;
     private Rigidbody ballPhysics;
@@ -18,7 +18,7 @@ public class BallHandler : MonoBehaviour
     public float bounceHeight;
     public float bounceSpeed;
     public float speedCap = 20;
-    public float targetHeight = 1.5f;
+    public float targetHeight = 1.35f;
 
     Player p;
     Mirror.Racket r;
@@ -27,6 +27,7 @@ public class BallHandler : MonoBehaviour
     public AudioClip racketBounce;
     void Start()
     {
+        Physics.gravity = new Vector3(0, -7f, 0); // reduce gravity
         lastServe = 0;
         p = transform.parent.GetComponent<Player>();
         r = transform.parent.GetComponent<Mirror.Racket>();
@@ -39,8 +40,6 @@ public class BallHandler : MonoBehaviour
         yield return new WaitForSeconds(1);
         ball = GameObject.Find("Ball(Clone)");
         ballPhysics = ball.GetComponent<Rigidbody>();
-        Debug.Log(!r);
-        Debug.Log(!ball);
     }
 
     void FixedUpdate()
@@ -77,7 +76,7 @@ public class BallHandler : MonoBehaviour
         if (GameManager.Instance.state == GameState.Serve)
         {
             ballPhysics.velocity = new Vector3(ballPhysics.velocity.x, 0, ballPhysics.velocity.z);
-            force += 7;
+            force += 8;
             GameManager.Instance.serveCount++;
             Vector3 serveVect = Vector3.zero;
             if (transform.position.x < 0)
@@ -96,6 +95,7 @@ public class BallHandler : MonoBehaviour
             {
                 serveVect.z = -2.5f - ballPhysics.position.z;
             }
+            Debug.Log(force);
             serveVect.Normalize();
             serveVect *= force;
             serveVect.y = 2f;
@@ -124,22 +124,38 @@ public class BallHandler : MonoBehaviour
         Vector3 aim = Vector3.Normalize(Vector3.MoveTowards(-ballPhysics.position, Vector3.zero, 1));
         aim = Vector3.ProjectOnPlane(aim, Vector3.up);
 
-        if (otherPos.z <= -2) // opponent is far right
+        float zPos = otherPos.z;
+        if (zPos == 0)
+        {
+            if (transform.forward.z > 0)
+            {
+                zPos = -0.1f;
+            } 
+            else if (transform.forward.z < 0)
+            {
+                zPos = 0.1f;
+            }
+            else {
+                zPos += UnityEngine.Random.Range(-0.1f, 0.1f);
+            }
+        }
+
+        if (zPos <= -2) // opponent is far right
         {
             Debug.Log("Mid Left"); // aim toward the mid left
             aim = new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z + 1.5f);
         }
-        else if (otherPos.z >= 2) // opponent is far left
+        else if (zPos >= 2) // opponent is far left
         {
             Debug.Log("Mid Right"); // aim toward the mid right
             aim = new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z - 1.5f);
         }
-        else if (otherPos.z < 0) // oponent is mid right
+        else if (zPos < 0) // oponent is mid right
         {
             Debug.Log("Far Left"); // aim toward the far left
             aim = new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z + 3);
         }
-        else if (otherPos.z > 0)
+        else if (zPos > 0)
         {
             Debug.Log("Far Right"); // aim toward the far right
             aim = new Vector3(7.5f - ballPhysics.position.x, 0, -ballPhysics.position.z - 3);
@@ -162,7 +178,7 @@ public class BallHandler : MonoBehaviour
             ballPhysics = ball.GetComponent<Rigidbody>();
             r = transform.parent.GetComponent<Mirror.Racket>();
         }
-        if (Time.time - lastServe < 1f)
+        if (Time.time - lastServe < 1.5f)
         {
             return;
         }
@@ -174,7 +190,6 @@ public class BallHandler : MonoBehaviour
     {
         if (!r)
         {
-            Debug.Log(!ball);
             r = transform.parent.GetComponent<Mirror.Racket>();
         }
         swingForce = force;
