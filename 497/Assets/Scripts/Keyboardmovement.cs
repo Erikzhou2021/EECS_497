@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
-using Mirror;
 
-namespace Mirror
-{
     public class Keyboardmovement : NetworkBehaviour
     {
         public GameObject ball;
@@ -13,11 +11,11 @@ namespace Mirror
         public GameObject racket;
         public float playerSpeed;
         float resetCounter;
-        Mirror.Racket r;
+        Racket r;
         // Start is called before the first frame update
         void Start()
         {
-            r = GetComponent<Mirror.Racket>();
+            r = GetComponent<Racket>();
             resetCounter = 0;
             ballPhysics = ball.GetComponent<Rigidbody>();
             bh = racket.GetComponent<BallHandler>();
@@ -26,7 +24,7 @@ namespace Mirror
         // Update is called once per frame
         void FixedUpdate()
         {
-            if (isLocalPlayer)
+            if (IsOwner)
             {
                 if (resetCounter > 0)
                 {
@@ -87,4 +85,3 @@ namespace Mirror
             }
         }
     }
-}

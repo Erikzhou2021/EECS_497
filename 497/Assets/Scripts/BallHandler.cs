@@ -21,7 +21,7 @@ public class BallHandler : MonoBehaviour
     public float targetHeight = 1.5f;
 
     Player p;
-    Mirror.Racket r;
+    Racket r;
     Transform reference;
 
     public AudioClip racketBounce;
@@ -29,7 +29,7 @@ public class BallHandler : MonoBehaviour
     {
         lastServe = 0;
         p = transform.parent.GetComponent<Player>();
-        r = transform.parent.GetComponent<Mirror.Racket>();
+        r = transform.parent.GetComponent<Racket>();
         reference = transform.Find("reference");
         StartCoroutine(setVars()); // have to use coroutine bc everything instantiated
     }
@@ -50,7 +50,7 @@ public class BallHandler : MonoBehaviour
             Debug.Log("single player test: ball");
             ball = GameManager.Instance.ball;
             ballPhysics = ball.GetComponent<Rigidbody>();
-            r = transform.parent.GetComponent<Mirror.Racket>();
+            r = transform.parent.GetComponent<Racket>();
         }
         if (r.GetSwing() && !hit)
         {
@@ -160,7 +160,7 @@ public class BallHandler : MonoBehaviour
         {
             ball = GameManager.Instance.ball;
             ballPhysics = ball.GetComponent<Rigidbody>();
-            r = transform.parent.GetComponent<Mirror.Racket>();
+            r = transform.parent.GetComponent<Racket>();
         }
         if (Time.time - lastServe < 1f)
         {
@@ -175,7 +175,7 @@ public class BallHandler : MonoBehaviour
         if (!r)
         {
             Debug.Log(!ball);
-            r = transform.parent.GetComponent<Mirror.Racket>();
+            r = transform.parent.GetComponent<Racket>();
         }
         swingForce = force;
         r.SetSwing();

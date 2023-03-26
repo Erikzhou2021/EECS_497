@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-namespace Mirror
-{
-    public class Racket : NetworkBehaviour
+using Unity.Netcode;
+
+public class Racket : NetworkBehaviour
     {
         BallHandler bh;
         public TextMeshPro debugText;
@@ -53,7 +53,7 @@ namespace Mirror
                 ballPhysics = GameManager.Instance.ball.GetComponent<Rigidbody>();
             }
 
-            if (isLocalPlayer)
+            if (IsOwner)
             {
                 Quaternion newRot = Input.gyro.attitude;
                 // change from a right handed coordinate system to left handed
@@ -178,4 +178,3 @@ namespace Mirror
             racket.GetComponent<TrailRenderer>().emitting = true;
         }
     }
-}
