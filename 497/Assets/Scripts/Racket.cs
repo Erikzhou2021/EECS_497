@@ -25,6 +25,7 @@ namespace Mirror
 
         public AudioClip racketMiss;
         public AudioClip racketBounce;
+
         void Start()
         {
             lastSwing = 0;
@@ -42,6 +43,7 @@ namespace Mirror
             ballPhysics = bh.ball.GetComponent<Rigidbody>();
             Input.gyro.enabled = true;
             racket.GetComponent<TrailRenderer>().emitting = false;
+            //testing 
         }
 
         void FixedUpdate()

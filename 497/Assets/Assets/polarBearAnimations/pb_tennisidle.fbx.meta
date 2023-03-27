@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 52d088b5029fc4c2587936f1af0b558f
+guid: 309a404b656f9aa4d8f5d475491810ff
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: mixamo.com
+    second: Idle
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -22,12 +22,12 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
       copied configuration does not match position in animation file:\n\t'mixamorig:LeftUpLeg'
-      : position error = 5.080537 mm\n\t'mixamorig:LeftLeg' : position error = 4.455713
-      mm\n\t'mixamorig:LeftFoot' : position error = 38.504547 mm\n\t'mixamorig:LeftToeBase'
-      : position error = 11.238365 mm\n\t'mixamorig:RightUpLeg' : position error
-      = 5.070847 mm\n\t'mixamorig:RightLeg' : position error = 4.460135 mm\n\t'mixamorig:RightFoot'
-      : position error = 37.510941 mm\n\t'mixamorig:RightToeBase' : position error
-      = 6.041905 mm\n"
+      : position error = 6.526802 mm\n\t'mixamorig:LeftLeg' : position error = 3.982990
+      mm\n\t'mixamorig:LeftFoot' : position error = 40.482719 mm\n\t'mixamorig:LeftToeBase'
+      : position error = 9.257216 mm\n\t'mixamorig:RightUpLeg' : position error =
+      7.289435 mm\n\t'mixamorig:RightLeg' : position error = 3.954391 mm\n\t'mixamorig:RightFoot'
+      : position error = 42.052540 mm\n\t'mixamorig:RightToeBase' : position error
+      = 19.162710 mm\n"
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -43,11 +43,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: mixamo.com
+      name: Idle
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 25
+      lastFrame: 57
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -56,8 +56,8 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 1
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
       keepOriginalPositionY: 1
