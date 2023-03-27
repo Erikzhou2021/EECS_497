@@ -26,10 +26,12 @@ public class CharacterSelectDisplay : NetworkBehaviour
     {
         players = new NetworkList<CharacterSelectState>();
     }
+
     public override void OnNetworkSpawn()
     {
         if (IsClient)
         {
+            Debug.Log("player spaweed");
             Character[] allCharacters = characterDatabase.GetAllCharacters();
 
             foreach (var character in allCharacters)
@@ -45,7 +47,7 @@ public class CharacterSelectDisplay : NetworkBehaviour
         if (IsServer)
         {
             NetworkManager.Singleton.OnClientConnectedCallback += HandleClientConnected;
-            NetworkManager.Singleton.OnClientConnectedCallback += HandleClientDisconnected;
+            NetworkManager.Singleton.OnClientDisconnectCallback += HandleClientDisconnected;
             foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
             {
                 HandleClientConnected(client.ClientId);
@@ -63,7 +65,7 @@ public class CharacterSelectDisplay : NetworkBehaviour
         if (IsServer)
         {
             NetworkManager.Singleton.OnClientConnectedCallback -= HandleClientConnected;
-            NetworkManager.Singleton.OnClientConnectedCallback -= HandleClientDisconnected;
+            NetworkManager.Singleton.OnClientDisconnectCallback -= HandleClientDisconnected;
 
 
         }
@@ -78,7 +80,7 @@ public class CharacterSelectDisplay : NetworkBehaviour
     {
         for (int i = 0; i < players.Count; i++)
         {
-            if (players[i].ClientId == clientId)
+            if (players[i].ClientId != clientId)
             {
                 players.RemoveAt(i);
                 break;
@@ -159,11 +161,15 @@ public class CharacterSelectDisplay : NetworkBehaviour
 
     private void HandlePlayersStateChanged(NetworkListEvent<CharacterSelectState> changeEvent)
     {
+        Debug.Log("entereed handle statechange");
         for (int i = 0; i < playerCards.Length; i++)
         {
             if (players.Count > i)
             {
                 playerCards[i].UpdateDisplay(players[i]);
+                Debug.Log("update display");
+                Debug.Log("playercount: " + players.Count.ToString());
+                Debug.Log(i);
             }
             else
             {

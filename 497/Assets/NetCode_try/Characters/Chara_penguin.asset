@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb0f98ba0b064baaa92a8bf72e5b0be, type: 3}
   m_Name: Chara_penguin
   m_EditorClassIdentifier: 
-  id: 2
+  id: 1
   displayName: Penguin
   icon: {fileID: 21300000, guid: 372e7b39fc8f34549ac25d8757965a2c, type: 3}
   introPrefab: {fileID: 406901297806643121, guid: 1935a74cf0e274ed3b47ba20d67a9216, type: 3}

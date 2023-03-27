@@ -27,7 +27,7 @@ public class OpponentBot : MonoBehaviour
     {
         if (!ball)
         {
-            Debug.Log("single player test");
+            //Debug.Log("single player test");
             ball = GameManager.Instance.ball;
             ballPhysics = ball.GetComponent<Rigidbody>();
         }
