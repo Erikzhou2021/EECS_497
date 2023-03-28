@@ -4271,12 +4271,8 @@ MonoBehaviour:
   racketOffset: 1.5
   racketHeight: 1
   playerOffset: 3
-<<<<<<< HEAD
-  movementSpeed: 8
-  animator: {fileID: 0}
-=======
   movementSpeed: 3
->>>>>>> bc44123baae232a498cbef07361d3a6360397bba
+  animator: {fileID: 0}
 --- !u!114 &3172242356850133925
 MonoBehaviour:
   m_ObjectHideFlags: 0
