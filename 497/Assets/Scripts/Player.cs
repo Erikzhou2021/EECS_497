@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate() //confusing bc idk if we are doing ai opponent or multiplayer yet 
         //dont put this in update cus bad, announcement whenever score changes 
     {
-        if (Instance.state == GameState.Serve && playerTeam == Instance.ball.GetComponent<BallBoundary>().playerTurn)
+        if (Instance.state == GameState.Serve && playerTeam == Instance.ball.GetComponent<BallBoundary>().playerTurn && !Instance.pauseGame)
         {
             transform.GetChild(1).Find("Serve").gameObject.SetActive(true);
         }

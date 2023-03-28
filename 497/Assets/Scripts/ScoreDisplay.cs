@@ -36,11 +36,25 @@ public class ScoreDisplay : MonoBehaviour
             GameManager.Instance.players[1].GetComponent<Player>().GetScore();
 
         scoreDisplay.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -40); //comment later
-        //StartCoroutine(ScoreAnimation()); //uncomment later
+        StartCoroutine(ScoreAnimation()); //uncomment later
     }
     IEnumerator ScoreAnimation() // should pause gameplay / dont let player swing 
     {
         GameManager.Instance.pauseGame = true;
+        int p1points = GameManager.Instance.players[0].GetComponent<Player>().points;
+        int p2points = GameManager.Instance.players[1].GetComponent<Player>().points;
+
+        if(p1points > p2points)
+        {
+            GameManager.Instance.players[0].transform.Find("Canvas").Find("happy").gameObject.SetActive(true);
+            GameManager.Instance.players[1].transform.Find("Canvas").Find("sadge").gameObject.SetActive(true);
+        }
+        else
+        {
+            GameManager.Instance.players[1].transform.Find("Canvas").Find("happy").gameObject.SetActive(true);
+            GameManager.Instance.players[0].transform.Find("Canvas").Find("sadge").gameObject.SetActive(true);
+        }
+
         w = 0;
         while (w < 1)
         {
@@ -56,6 +70,16 @@ public class ScoreDisplay : MonoBehaviour
         }
         yield return new WaitForSeconds(1f);
         GameManager.Instance.pauseGame = false;
+        if (p1points > p2points)
+        {
+            GameManager.Instance.players[0].transform.Find("Canvas").Find("happy").gameObject.SetActive(false);
+            GameManager.Instance.players[1].transform.Find("Canvas").Find("sadge").gameObject.SetActive(false);
+        }
+        else
+        {
+            GameManager.Instance.players[1].transform.Find("Canvas").Find("happy").gameObject.SetActive(false);
+            GameManager.Instance.players[0].transform.Find("Canvas").Find("sadge").gameObject.SetActive(false);
+        }
     }
     public IEnumerator DisplayState()
     {
@@ -76,6 +100,15 @@ public class ScoreDisplay : MonoBehaviour
             yield return null;
         }
         stateDisplayObj.SetActive(false);
+        if (GameManager.Instance.newMatch)
+        {
+            yield return new WaitForSeconds(2f);
+            GameManager.Instance.newMatch = false;
+            GameManager.Instance.animator1.SetBool("Win", false);
+            GameManager.Instance.animator1.SetBool("Lose", false);
+            //GameManager.Instance.animator2.SetBool("Win", false); //uncomment
+            //GameManager.Instance.animator2.SetBool("Lose", false); //uncomment
+        }
     }
     //public void HideState()
     //{

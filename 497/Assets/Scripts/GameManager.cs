@@ -20,10 +20,17 @@ public class GameManager : MonoBehaviour
     public int serveCount = 0;
 
     public bool pauseGame = false;
+    public bool newMatch = false;
 
     //3 total matches
     private int match = 0; //0,1,2
+    private int gamePoint1 = 0;
+    private int gamePoint2 = 0;
     private int lead = 0; //0,1
+
+    public Animator animator1;
+    public Animator animator2;
+
     private void Awake()
     {
         if (Instance == null)
@@ -36,7 +43,6 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
     }
-
     public void AnnounceState(string state) 
     {
         // play audio 
@@ -100,24 +106,56 @@ public class GameManager : MonoBehaviour
         // display text "YOU WIN" on player's side of split screen
         // maybe display something on mobile too idk 
         // announce which team wins 
+
         GetComponent<ScoreDisplay>().stateDisplay.text = "player " + (player.GetComponent<Player>().playerTeam+1) + " wins this round";
-        StartCoroutine(GetComponent<ScoreDisplay>().DisplayState());
+        newMatch = true;
+        if (players[0].GetComponent<Player>().points > players[1].GetComponent<Player>().points)
+        {
+            Debug.Log("win true");
+            animator1.SetBool("Win", true);
+            //animator2.SetBool("Lose", true); //uncomment
+        }
+        else
+        {
+            animator1.SetBool("Lose", true);
+            //animator2.SetBool("Win", true); //uncomment
+
+        }
         players[0].GetComponent<Player>().points = 0;
         players[1].GetComponent<Player>().points = 0;
+        StartCoroutine(GetComponent<ScoreDisplay>().DisplayState());
         match++;
-        lead = player.GetComponent<Player>().playerTeam;
+        if(player.GetComponent<Player>().playerTeam == 0)
+        {
+            gamePoint1++;
+        }
+        else
+        {
+            gamePoint2++;
+        }
 
+        // win game 
         if(match == 3)
         {
             //end game 
-            //GetComponent<ScoreDisplay>().stateDisplay.text = "player " + (lead + 1) + " wins the game";
-
+            if(gamePoint1 > gamePoint2)
+            {
+                lead = 0;
+            }
+            else
+            {
+                lead = 1;
+            }
+            GetComponent<ScoreDisplay>().stateDisplay.text = "player " + (lead + 1) + " wins the game";
+            StartCoroutine(GetComponent<ScoreDisplay>().DisplayState());
         }
     }
 
     public void StartGame()
     {
         StartCoroutine(GetComponent<ScoreDisplay>().DisplayBanner("start"));
+        animator1 = players[0].transform.GetComponentInChildren<Animator>();
+        //animator2 = players[1].transform.GetComponentInChildren<Animator>(); //uncomment
     }
 
     public void DisplayScore()

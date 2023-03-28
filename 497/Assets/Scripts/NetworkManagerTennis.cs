@@ -34,7 +34,7 @@ namespace Mirror
 
             } else
             {
-               player = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "Player2"), start.position, start.rotation);
+               player = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "Player2"), start.position, start.rotation); 
             }
             
             NetworkServer.AddPlayerForConnection(conn, player);
@@ -61,7 +61,7 @@ namespace Mirror
             // for debuging only
             if (debug)
             {
-                GameObject player2 = GameObject.Find("Player2");
+                GameObject player2 = GameObject.Find("Player2"); 
                 GameManager.Instance.players.Add(player2);
             }
         }
