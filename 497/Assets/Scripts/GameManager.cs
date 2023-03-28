@@ -10,7 +10,7 @@ public enum GameState
     Postpoint,
     Postmatch
 }
-
+//sorry bad code all over 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance; // this is what the article i found said to name it don't judge
@@ -21,12 +21,13 @@ public class GameManager : MonoBehaviour
 
     public bool pauseGame = false;
     public bool newMatch = false;
+    public bool endGame = false;
 
     //3 total matches
-    private int match = 0; //0,1,2
+    public int match = 0; //0,1,2
     private int gamePoint1 = 0;
     private int gamePoint2 = 0;
-    private int lead = 0; //0,1
+    public int lead = 0; //0,1
 
     public Animator animator1;
     public Animator animator2;
@@ -113,12 +114,12 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("win true");
             animator1.SetBool("Win", true);
-            //animator2.SetBool("Lose", true); //uncomment
+            animator2.SetBool("Lose", true); //uncomment
         }
         else
         {
             animator1.SetBool("Lose", true);
-            //animator2.SetBool("Win", true); //uncomment
+            animator2.SetBool("Win", true); //uncomment
 
         }
         players[0].GetComponent<Player>().points = 0;
@@ -138,6 +139,7 @@ public class GameManager : MonoBehaviour
         if(match == 3)
         {
             //end game 
+            endGame = true;
             if(gamePoint1 > gamePoint2)
             {
                 lead = 0;
@@ -153,9 +155,9 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        StartCoroutine(GetComponent<ScoreDisplay>().DisplayBanner("start"));
+        StartCoroutine(GetComponent<ScoreDisplay>().DisplayBanner("round 1"));
         animator1 = players[0].transform.GetComponentInChildren<Animator>();
-        //animator2 = players[1].transform.GetComponentInChildren<Animator>(); //uncomment
+        animator2 = players[1].transform.GetComponentInChildren<Animator>(); //uncomment
     }
 
     public void DisplayScore()

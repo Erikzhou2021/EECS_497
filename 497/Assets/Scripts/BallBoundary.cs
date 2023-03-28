@@ -75,6 +75,7 @@ public class BallBoundary : MonoBehaviour
         //GetComponent<Rigidbody>().useGravity = false;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GameManager.Instance.state = GameState.Serve;
+        servingTeam = OtherTeam(servingTeam);
         playerTurn = servingTeam;
         //update score, new round
         yield return null;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ScoreDisplay : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class ScoreDisplay : MonoBehaviour
     public TextMeshProUGUI stateDisplay;
     public GameObject stateDisplayObj;
     public GameObject bannerDisplayObj;
+    public GameObject endPanel;
+
+    public GameObject endCamera;
+    public Transform winTransform;
 
     private float t = 0;
     private float w = 0;
@@ -103,12 +108,41 @@ public class ScoreDisplay : MonoBehaviour
         if (GameManager.Instance.newMatch)
         {
             yield return new WaitForSeconds(2f);
+            yield return DisplayBanner("round" + (GameManager.Instance.match+1));
             GameManager.Instance.newMatch = false;
             GameManager.Instance.animator1.SetBool("Win", false);
             GameManager.Instance.animator1.SetBool("Lose", false);
-            //GameManager.Instance.animator2.SetBool("Win", false); //uncomment
-            //GameManager.Instance.animator2.SetBool("Lose", false); //uncomment
+            GameManager.Instance.animator2.SetBool("Win", false); //uncomment
+            GameManager.Instance.animator2.SetBool("Lose", false); //uncomment
         }
+        if (GameManager.Instance.endGame)
+        {
+            StartCoroutine(EndGame());
+        }
+    }
+
+    public IEnumerator EndGame()
+    {
+        u = 0;
+
+        endPanel.SetActive(true);
+        endCamera.SetActive(true);
+        //set player at 
+        GameObject winPlayer =  GameManager.Instance.players[GameManager.Instance.lead];
+        winPlayer.transform.position = winTransform.position;
+        winPlayer.transform.rotation = winTransform.rotation;
+        //play animation 
+        winPlayer.GetComponentInChildren<Animator>().SetBool("Win", true);
+        winPlayer.transform.GetChild(0).gameObject.SetActive(false);
+
+        GameManager.Instance.pauseGame = true;
+
+        while (u < 1)
+        {
+            endPanel.GetComponent<RectTransform>().anchoredPosition = Vector3.Lerp(new Vector3(763,147, 0), new Vector3(0,0,0), u);
+            yield return null;
+        }
+        yield return new WaitForSeconds(1.5f);
     }
     //public void HideState()
     //{
@@ -136,6 +170,16 @@ public class ScoreDisplay : MonoBehaviour
         }
         yield return new WaitForSeconds(1.2f);
         bannerDisplayObj.SetActive(false);
+    }
+
+
+    public void RematchButton()
+    {
+        // id ont want to do tsi 
+    }
+    public void ReturnMenu()
+    {
+        SceneManager.LoadScene("startScreen");
     }
 }
 

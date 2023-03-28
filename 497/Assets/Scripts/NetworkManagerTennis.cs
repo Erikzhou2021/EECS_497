@@ -43,6 +43,13 @@ namespace Mirror
 
             cameras[numPlayers - 1].GetComponent<CameraFollow>().setTarget(player.transform);
 
+            //for testing 
+            player = GameObject.Find("Player2");
+            GameManager.Instance.players.Add(player);
+            player.GetComponent<Player>().playerTeam = 1;
+            cameras[1].GetComponent<CameraFollow>().setTarget(player.transform);
+            //for testing 
+
             // spawn ball if two players
             if (numPlayers == 1)
             {
