@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class CharacterSelectDisplay : NetworkBehaviour
 {
+    [Header("References")]
     [SerializeField] private CharacterDatabase characterDatabase;
     [SerializeField] private Transform charactersHolder;
     [SerializeField] private CharacterSelectButton selectButtonPrefab;
@@ -82,9 +83,10 @@ public class CharacterSelectDisplay : NetworkBehaviour
         {
             if (players[i].ClientId != clientId)
             {
-                players.RemoveAt(i);
-                break;
+                continue;
             }
+            players.RemoveAt(i); //?
+            break;
         }
     }
 
@@ -156,6 +158,17 @@ public class CharacterSelectDisplay : NetworkBehaviour
                 true
             );
         }
+        foreach (var player in players)
+        {
+            if (!player.IsLockedIn) { return; }
+        }
+
+        foreach (var player in players)
+        {
+            ServerManager.Instance.SetCharacter(player.ClientId, player.CharacterId);
+        }
+
+        ServerManager.Instance.StartGame();
     }
 
 
@@ -227,4 +240,3 @@ public class CharacterSelectDisplay : NetworkBehaviour
         return false;
     }
 }
-

@@ -16,3 +16,4 @@ MonoBehaviour:
   displayName: Polar Bear
   icon: {fileID: 923518313, guid: f65f29ce9ebb42a44ac2f5d9cebb339a, type: 3}
   introPrefab: {fileID: 406901297806643121, guid: 1935a74cf0e274ed3b47ba20d67a9216, type: 3}
+  gameplayPrefab: {fileID: 3149244317999155181, guid: 6f6718c83f287445683a071249757da6, type: 3}

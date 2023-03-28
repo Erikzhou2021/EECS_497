@@ -4,19 +4,23 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuDisplay : MonoBehaviour
 {
-    [Header("Settings")]
-    [SerializeField] private string gameplaySceneName = "Gameplay";
+    //[Header("Settings")]
+    //[SerializeField] private string gameplaySceneName = "Gameplay";
+    //NetworkManager.Singleton.StartHost();
+    //NetworkManager.Singleton.SceneManager.LoadScene(gameplaySceneName, LoadSceneMode.Single);
 
     public void StartHost()
     {
-        NetworkManager.Singleton.StartHost();
-        NetworkManager.Singleton.SceneManager.LoadScene(gameplaySceneName, LoadSceneMode.Single);
+        //NetworkManager.Singleton.StartHost();
+        //NetworkManager.Singleton.SceneManager.LoadScene(gameplaySceneName, LoadSceneMode.Single);
+        ServerManager.Instance.StartHost();
     }
 
     public void StartServer()
     {
-        NetworkManager.Singleton.StartServer();
-        NetworkManager.Singleton.SceneManager.LoadScene(gameplaySceneName, LoadSceneMode.Single);
+        //NetworkManager.Singleton.StartServer();
+        //NetworkManager.Singleton.SceneManager.LoadScene(gameplaySceneName, LoadSceneMode.Single);
+        ServerManager.Instance.StartServer();
     }
 
     public void StartClient()
