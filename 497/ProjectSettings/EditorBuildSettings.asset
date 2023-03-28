@@ -11,4 +11,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/cringer.unity
     guid: e429d3b14df549c4e812d16822c6a7e3
+<<<<<<< Updated upstream
+=======
+  - enabled: 1
+    path: Assets/NetCode_try/MainMenu.unity
+    guid: 45a6a5710c15f47cc84b4af098e117b4
+  - enabled: 1
+    path: Assets/NetCode_try/CharacterSelect.unity
+    guid: 5ae0695913b764896ac5a96517cfff88
+  - enabled: 1
+    path: Assets/NetCode_try/GamePlay.unity
+    guid: bae96b0c38a2e4a228caf3f84c486b63
+>>>>>>> Stashed changes
   m_configObjects: {}

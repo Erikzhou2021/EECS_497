@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb0f98ba0b064baaa92a8bf72e5b0be, type: 3}
+  m_Name: Chara_polar
+  m_EditorClassIdentifier: 
+  id: 0
+  displayName: Polar Bear
+  icon: {fileID: 923518313, guid: f65f29ce9ebb42a44ac2f5d9cebb339a, type: 3}
+  introPrefab: {fileID: 406901297806643121, guid: 1935a74cf0e274ed3b47ba20d67a9216, type: 3}
+  gameplayPrefab: {fileID: 3149244317999155181, guid: 6f6718c83f287445683a071249757da6, type: 3}
