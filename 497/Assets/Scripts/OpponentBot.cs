@@ -8,7 +8,7 @@ public class OpponentBot : MonoBehaviour
     bool isSwinging = false;
     float lastSwing;
     GameObject ball;
-    public float force = 8;
+    public float force = 6;
     private Rigidbody ballPhysics;
     public float aimStrength = 1;
     public float speedCap = 20;
