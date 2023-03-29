@@ -23,6 +23,11 @@ public class CharacterSelectDisplay : NetworkBehaviour
     private List<CharacterSelectButton> characterButtons = new List<CharacterSelectButton>();
     private NetworkList<CharacterSelectState> players;
 
+    //public int getPlayerCount()
+    //{
+    //    return players.Count;
+    //}
+
     private void Awake()
     {
         players = new NetworkList<CharacterSelectState>();
@@ -174,15 +179,15 @@ public class CharacterSelectDisplay : NetworkBehaviour
 
     private void HandlePlayersStateChanged(NetworkListEvent<CharacterSelectState> changeEvent)
     {
-        Debug.Log("entereed handle statechange");
+        //Debug.Log("entereed handle statechange");
         for (int i = 0; i < playerCards.Length; i++)
         {
             if (players.Count > i)
             {
                 playerCards[i].UpdateDisplay(players[i]);
-                Debug.Log("update display");
-                Debug.Log("playercount: " + players.Count.ToString());
-                Debug.Log(i);
+                //Debug.Log("update display");
+                //Debug.Log("playercount: " + players.Count.ToString());
+                //Debug.Log(i);
             }
             else
             {
