@@ -35,6 +35,7 @@ public class ServerManager : MonoBehaviour
     {
         NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
         NetworkManager.Singleton.OnServerStarted += OnNetworkReady;
+        ClientData = new Dictionary<ulong, ClientData>();
         NetworkManager.Singleton.StartServer();
 
     }
