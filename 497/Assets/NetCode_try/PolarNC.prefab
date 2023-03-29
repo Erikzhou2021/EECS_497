@@ -187,10 +187,9 @@ GameObject:
   - component: {fileID: -2984790509089041787}
   - component: {fileID: 3149244317999155181}
   - component: {fileID: 5545387705944500818}
-  - component: {fileID: -1046194891749264397}
   - component: {fileID: 6804050649322528967}
   m_Layer: 0
-  m_Name: PlayerNC
+  m_Name: PolarNC
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -374,6 +373,7 @@ MonoBehaviour:
   racketHeight: 1
   playerOffset: 3
   movementSpeed: 4
+  animator: {fileID: 0}
 --- !u!114 &3149244317999155181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,26 +416,6 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
---- !u!95 &-1046194891749264397
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 406901297806643121}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 11b1bac1e1c7e40efb688e812072af50, type: 3}
-  m_Controller: {fileID: 9100000, guid: a0b3cfb7483cf4ae5a9276b9d0e55d04, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &6804050649322528967
 MonoBehaviour:
   m_ObjectHideFlags: 0
