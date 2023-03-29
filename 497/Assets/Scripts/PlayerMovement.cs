@@ -19,8 +19,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float playerOffset;
     [SerializeField] private float movementSpeed;
 
+    private float oldPosZ = 0;
+    public Animator animator;
+
     private void Start()
     {
+        //testing 
+            animator = transform.GetComponentInChildren<Animator>();
+
         gm = GameManager.Instance;
         currPlayer = GetComponent<Player>();
         servingPositions = new List<Vector3>();
@@ -54,12 +60,14 @@ public class PlayerMovement : MonoBehaviour
         if (gm.state == GameState.Serve)
         {
             transform.position = servingPositions[gm.serveCount % servingPositions.Count];
+                animator.SetBool("Serve", true);
         }
         else if (currPlayer.playerTeam != BallBoundary.Instance.playerTurn)
         {
             Vector3 center = new Vector3(8.5f * (currPlayer.playerTeam * 2 - 1), 1, 0); // move toward the center while waiting for opponent to hit the ball
             transform.position = Vector3.MoveTowards(transform.position, center, movementSpeed * Time.deltaTime);
             // should consider moving at different speeds based on how far you have to move?
+                animator.SetBool("Serve", false);
         }
         else
         {
@@ -98,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
                 targetPos = new Vector3(transform.position.x, transform.position.y, ballPosition.z + racketOffset);
             }
             transform.position = Vector3.MoveTowards(transform.position, targetPos, movementSpeed * Time.deltaTime);
+            animator.SetBool("Serve", false);
         }
 
         if (transform.position.z < playerBoundary.left)
@@ -116,6 +125,26 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position = new Vector3(playerBoundary.top, transform.position.y, transform.position.z);
         }
+
+
+        //if(transform.position.z < oldPosZ)
+        //{
+        //    //go left
+        //    Debug.Log("lefte");
+        //    animator.SetBool("WalkLeft", true);
+        //}
+        //if (transform.position.z > oldPosZ) 
+        //{
+        //    //go right
+        //    animator.SetBool("WalkLeft", false);
+        //}
+            animator.SetFloat("Direction", transform.position.z - oldPosZ);
+            if(transform.position.z == oldPosZ)
+            {
+                animator.SetBool("Serve", true);
+            }
+
+        oldPosZ = transform.position.z;
     }
     private Vector3 calculateTargetPos(float t, Vector3 ballVelocity)
     {

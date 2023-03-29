@@ -16,7 +16,7 @@ public class DrawCircle : MonoBehaviour
     public void DrawCircleImprint()
     {
         var segments = 360;
-        var line = gameObject.AddComponent<LineRenderer>();
+        var line = gameObject.GetComponent<LineRenderer>();
         line.useWorldSpace = false;
         line.startWidth = lineWidth;
         line.endWidth = lineWidth;

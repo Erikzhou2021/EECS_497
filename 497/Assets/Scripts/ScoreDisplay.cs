@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ScoreDisplay : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class ScoreDisplay : MonoBehaviour
     public TextMeshProUGUI stateDisplay;
     public GameObject stateDisplayObj;
     public GameObject bannerDisplayObj;
+    public GameObject endPanel;
+
+    public GameObject endCamera;
+    public Transform winTransform;
 
     private float t = 0;
     private float w = 0;
@@ -36,11 +41,25 @@ public class ScoreDisplay : MonoBehaviour
             GameManager.Instance.players[1].GetComponent<Player>().GetScore();
 
         scoreDisplay.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -40); //comment later
-        //StartCoroutine(ScoreAnimation()); //uncomment later
+        StartCoroutine(ScoreAnimation()); //uncomment later
     }
     IEnumerator ScoreAnimation() // should pause gameplay / dont let player swing 
     {
         GameManager.Instance.pauseGame = true;
+        int p1points = GameManager.Instance.players[0].GetComponent<Player>().points;
+        int p2points = GameManager.Instance.players[1].GetComponent<Player>().points;
+
+        if(p1points > p2points)
+        {
+            GameManager.Instance.players[0].transform.Find("Canvas").Find("happy").gameObject.SetActive(true);
+            GameManager.Instance.players[1].transform.Find("Canvas").Find("sadge").gameObject.SetActive(true);
+        }
+        else
+        {
+            GameManager.Instance.players[1].transform.Find("Canvas").Find("happy").gameObject.SetActive(true);
+            GameManager.Instance.players[0].transform.Find("Canvas").Find("sadge").gameObject.SetActive(true);
+        }
+
         w = 0;
         while (w < 1)
         {
@@ -56,6 +75,16 @@ public class ScoreDisplay : MonoBehaviour
         }
         yield return new WaitForSeconds(1f);
         GameManager.Instance.pauseGame = false;
+        if (p1points > p2points)
+        {
+            GameManager.Instance.players[0].transform.Find("Canvas").Find("happy").gameObject.SetActive(false);
+            GameManager.Instance.players[1].transform.Find("Canvas").Find("sadge").gameObject.SetActive(false);
+        }
+        else
+        {
+            GameManager.Instance.players[1].transform.Find("Canvas").Find("happy").gameObject.SetActive(false);
+            GameManager.Instance.players[0].transform.Find("Canvas").Find("sadge").gameObject.SetActive(false);
+        }
     }
     public IEnumerator DisplayState()
     {
@@ -76,6 +105,44 @@ public class ScoreDisplay : MonoBehaviour
             yield return null;
         }
         stateDisplayObj.SetActive(false);
+        if (GameManager.Instance.newMatch)
+        {
+            yield return new WaitForSeconds(2f);
+            yield return DisplayBanner("round" + (GameManager.Instance.match+1));
+            GameManager.Instance.newMatch = false;
+            GameManager.Instance.animator1.SetBool("Win", false);
+            GameManager.Instance.animator1.SetBool("Lose", false);
+            GameManager.Instance.animator2.SetBool("Win", false); //uncomment
+            GameManager.Instance.animator2.SetBool("Lose", false); //uncomment
+        }
+        if (GameManager.Instance.endGame)
+        {
+            StartCoroutine(EndGame());
+        }
+    }
+
+    public IEnumerator EndGame()
+    {
+        u = 0;
+
+        endPanel.SetActive(true);
+        endCamera.SetActive(true);
+        //set player at 
+        GameObject winPlayer =  GameManager.Instance.players[GameManager.Instance.lead];
+        winPlayer.transform.position = winTransform.position;
+        winPlayer.transform.rotation = winTransform.rotation;
+        //play animation 
+        winPlayer.GetComponentInChildren<Animator>().SetBool("Win", true);
+        winPlayer.transform.GetChild(0).gameObject.SetActive(false);
+
+        GameManager.Instance.pauseGame = true;
+
+        while (u < 1)
+        {
+            endPanel.GetComponent<RectTransform>().anchoredPosition = Vector3.Lerp(new Vector3(763,147, 0), new Vector3(0,0,0), u);
+            yield return null;
+        }
+        yield return new WaitForSeconds(1.5f);
     }
     //public void HideState()
     //{
@@ -103,6 +170,16 @@ public class ScoreDisplay : MonoBehaviour
         }
         yield return new WaitForSeconds(1.2f);
         bannerDisplayObj.SetActive(false);
+    }
+
+
+    public void RematchButton()
+    {
+        // id ont want to do tsi 
+    }
+    public void ReturnMenu()
+    {
+        SceneManager.LoadScene("startScreen");
     }
 }
 
