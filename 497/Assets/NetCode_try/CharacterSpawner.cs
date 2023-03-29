@@ -50,6 +50,11 @@ public class CharacterSpawner : NetworkBehaviour
 
                 }
 
+                if (client.Value.characterId == 2)
+                {
+                    Debug.Log("more than two lcients?");
+                }
+
 
             }
         }
