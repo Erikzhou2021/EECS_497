@@ -13,6 +13,8 @@ public class CharacterSpawner : NetworkBehaviour
     //characterInstance.SpawnAsPlayerObject(client.Value.clientId);
     public Transform firstPlayerSpawn;
     public Transform secondPlayerSpawn;
+    public GameObject ballPrefab;
+    GameObject ball;
     public override void OnNetworkSpawn()
     {
         Debug.Log("!!!on Network spawn called!!!!");
@@ -37,6 +39,15 @@ public class CharacterSpawner : NetworkBehaviour
                     var spaPos = secondPlayerSpawn;
                     var characterInstance = Instantiate(character.GameplayPrefab, spaPos.position, Quaternion.identity);
                     characterInstance.SpawnAsPlayerObject(client.Value.clientId);
+
+                    // spawn ball if two players
+                    spaPos = firstPlayerSpawn;
+                    ball = Instantiate(ballPrefab, spaPos.position, Quaternion.identity);
+                    ball.GetComponent<NetworkObject>().Spawn(true);
+                    GameManager.Instance.ball = ball;
+
+                        GameManager.Instance.StartGame();
+
                 }
 
 

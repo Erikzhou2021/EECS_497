@@ -1014,6 +1014,7 @@ MonoBehaviour:
   characterDatabase: {fileID: 11400000, guid: a5a690249e4a3423ba80a8778afac503, type: 2}
   firstPlayerSpawn: {fileID: 486653181}
   secondPlayerSpawn: {fileID: 462621902}
+  ballPrefab: {fileID: 8838975029230025784, guid: bba15352c8a8642c5baf864de6f235d0, type: 3}
 --- !u!4 &353366963
 Transform:
   m_ObjectHideFlags: 0
