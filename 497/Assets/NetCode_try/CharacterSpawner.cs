@@ -15,6 +15,7 @@ public class CharacterSpawner : NetworkBehaviour
     public Transform secondPlayerSpawn;
     public GameObject ballPrefab;
     GameObject ball;
+    public GameObject[] cameras;
     public override void OnNetworkSpawn()
     {
         Debug.Log("!!!on Network spawn called!!!!");
@@ -33,12 +34,18 @@ public class CharacterSpawner : NetworkBehaviour
                     var spawnPos = firstPlayerSpawn;
                     var characterInstance = Instantiate(character.GameplayPrefab, spawnPos.position, Quaternion.identity);
                     characterInstance.SpawnAsPlayerObject(client.Value.clientId);
+                    GameManager.Instance.players.Add(characterInstance.gameObject);
+                    characterInstance.gameObject.GetComponent<Player>().playerTeam = client.Value.characterId;
+                    cameras[client.Value.characterId].GetComponent<CameraFollow>().setTarget(characterInstance.gameObject.transform);
                 }
                 if (client.Value.characterId == 1)
                 {
                     var spaPos = secondPlayerSpawn;
                     var characterInstance = Instantiate(character.GameplayPrefab, spaPos.position, Quaternion.identity);
                     characterInstance.SpawnAsPlayerObject(client.Value.clientId);
+                    GameManager.Instance.players.Add(characterInstance.gameObject);
+                    characterInstance.gameObject.GetComponent<Player>().playerTeam = client.Value.characterId;
+                    cameras[client.Value.characterId].GetComponent<CameraFollow>().setTarget(characterInstance.gameObject.transform);
 
                     // spawn ball if two players
                     spaPos = firstPlayerSpawn;
@@ -49,13 +56,6 @@ public class CharacterSpawner : NetworkBehaviour
                         GameManager.Instance.StartGame();
 
                 }
-
-                if (client.Value.characterId == 2)
-                {
-                    Debug.Log("more than two lcients?");
-                }
-
-
             }
         }
     }
