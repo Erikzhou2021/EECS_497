@@ -1026,6 +1026,9 @@ MonoBehaviour:
   firstPlayerSpawn: {fileID: 486653181}
   secondPlayerSpawn: {fileID: 462621902}
   ballPrefab: {fileID: 8838975029230025784, guid: bba15352c8a8642c5baf864de6f235d0, type: 3}
+  cameras:
+  - {fileID: 547691459}
+  - {fileID: 179668418}
 --- !u!4 &353366963
 Transform:
   m_ObjectHideFlags: 0
