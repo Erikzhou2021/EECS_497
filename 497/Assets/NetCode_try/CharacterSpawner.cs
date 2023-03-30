@@ -35,6 +35,9 @@ public class CharacterSpawner : NetworkBehaviour
                     var spawnPos = firstPlayerSpawn;
                     var characterInstance = Instantiate(character.GameplayPrefab, spawnPos.position, Quaternion.identity);
                     characterInstance.SpawnAsPlayerObject(client.Value.clientId);
+                    Debug.Log(spawnPos.position);
+                    Debug.Log(characterInstance.transform.position + "client 0 pos");
+
                     GameManager.Instance.players.Add(characterInstance.gameObject);
                     characterInstance.gameObject.GetComponent<Player>().playerTeam = client.Value.characterId;
                     cameras[client.Value.characterId].GetComponent<CameraFollow>().setTarget(characterInstance.gameObject.transform);
@@ -44,6 +47,8 @@ public class CharacterSpawner : NetworkBehaviour
                     var spaPos = secondPlayerSpawn;
                     var characterInstance = Instantiate(character.GameplayPrefab, spaPos.position, Quaternion.identity);
                     characterInstance.SpawnAsPlayerObject(client.Value.clientId);
+                    Debug.Log(spaPos.position);
+                    Debug.Log(characterInstance.transform.position + "client 1 pos");
                     GameManager.Instance.players.Add(characterInstance.gameObject);
                     characterInstance.gameObject.GetComponent<Player>().playerTeam = client.Value.characterId;
                     cameras[client.Value.characterId].GetComponent<CameraFollow>().setTarget(characterInstance.gameObject.transform);
