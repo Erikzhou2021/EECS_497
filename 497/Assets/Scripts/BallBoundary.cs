@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Netcode;
 
 [System.Serializable]
 public class Boundary
@@ -12,7 +13,7 @@ public class Boundary
     public float bottom;
 }
 
-public class BallBoundary : MonoBehaviour
+public class BallBoundary : NetworkBehaviour
 {
     public static BallBoundary Instance;
 

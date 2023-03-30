@@ -53,6 +53,9 @@ public class CharacterSpawner : NetworkBehaviour
                     cameras[(int)client.Value.clientId - 1].GetComponent<CameraFollow>().setTarget(characterInstance.gameObject.transform);
 
                     // spawn ball if two players
+                    var sp = firstPlayerSpawn;
+                    ball = Instantiate(ballPrefab, sp.position, Quaternion.identity);
+                    ball.GetComponent<NetworkObject>().Spawn(true);
                     InstantiateBallClientRpc();
                 }
             }
