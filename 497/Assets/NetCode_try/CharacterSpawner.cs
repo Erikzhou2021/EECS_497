@@ -16,11 +16,12 @@ public class CharacterSpawner : NetworkBehaviour
     public GameObject ballPrefab;
     GameObject ball;
     public GameObject[] cameras;
+
+    //
     public override void OnNetworkSpawn()
     {
         Debug.Log("!!!on Network spawn called!!!!");
         if (!IsServer) { return; }
-        Debug.Log("and is not server!!!!");
 
         foreach (var client in ServerManager.Instance.ClientData)
         {
@@ -48,15 +49,22 @@ public class CharacterSpawner : NetworkBehaviour
                     cameras[client.Value.characterId].GetComponent<CameraFollow>().setTarget(characterInstance.gameObject.transform);
 
                     // spawn ball if two players
-                    spaPos = firstPlayerSpawn;
-                    ball = Instantiate(ballPrefab, spaPos.position, Quaternion.identity);
-                    ball.GetComponent<NetworkObject>().Spawn(true);
-                    GameManager.Instance.ball = ball;
-
-                        GameManager.Instance.StartGame();
-
+                    InstantiateBallClientRpc();
                 }
             }
         }
     }
+
+    [ClientRpc]
+    public void InstantiateBallClientRpc()
+    {
+        var sp = firstPlayerSpawn;
+        ball = Instantiate(ballPrefab, sp.position, Quaternion.identity);
+        ball.GetComponent<NetworkObject>().Spawn(true);
+        GameManager.Instance.ball = ball;
+
+        GameManager.Instance.StartGame();
+
+    }
+
 }
