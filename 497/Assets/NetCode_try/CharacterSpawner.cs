@@ -30,7 +30,7 @@ public class CharacterSpawner : NetworkBehaviour
             {
                 //Debug.Log("entered null");
 
-                if (client.Value.clientId == 0) {
+                if (client.Value.clientId == 1) {
                     var spawnPos = firstPlayerSpawn;
                     var characterInstance = Instantiate(character.GameplayPrefab, spawnPos.position, Quaternion.identity);
                     characterInstance.SpawnAsPlayerObject(client.Value.clientId);
@@ -41,7 +41,7 @@ public class CharacterSpawner : NetworkBehaviour
                     characterInstance.gameObject.GetComponent<Player>().playerTeam = (int)client.Value.clientId - 1;
                     cameras[(int)client.Value.clientId - 1].GetComponent<CameraFollow>().setTarget(characterInstance.gameObject.transform);
                 }
-                if (client.Value.clientId == 1)
+                if (client.Value.clientId == 2)
                 {
                     var spaPos = secondPlayerSpawn;
                     var characterInstance = Instantiate(character.GameplayPrefab, spaPos.position, Quaternion.identity);
