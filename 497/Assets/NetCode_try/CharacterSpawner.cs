@@ -56,8 +56,9 @@ public class CharacterSpawner : NetworkBehaviour
                     var sp = firstPlayerSpawn;
                     ball = Instantiate(ballPrefab, sp.position, Quaternion.identity);
                     ball.GetComponent<NetworkObject>().Spawn(true);
-                    ulong ballId = ball.GetComponent<NetworkObject>().NetworkObjectId;
-                    Debug.Log(ballId);
+                    //ulong ballId = ball.GetComponent<NetworkObject>().NetworkObjectId;
+                    //Debug.Log(ballId);
+                    instantiateClientRpc(ball);
 
                 }
             }
@@ -65,9 +66,9 @@ public class CharacterSpawner : NetworkBehaviour
 
     }
     [ClientRpc]
-    public void instantiateClientRpc()
+    public void instantiateClientRpc(NetworkObjectReference ballRef)
     {
-        GameManager.Instance.ball = ball;
+        GameManager.Instance.ball = ballRef;
         GameManager.Instance.StartGame();
     }
 
