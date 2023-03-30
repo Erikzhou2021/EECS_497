@@ -25,13 +25,12 @@ public class CharacterSpawner : NetworkBehaviour
 
         foreach (var client in ServerManager.Instance.ClientData)
         {
-            Debug.Log("client.Value.characterId : " + client.Value.characterId.ToString());
             var character = characterDatabase.GetCharacterById(client.Value.characterId);
             if (character != null)
             {
                 //Debug.Log("entered null");
 
-                if (client.Value.characterId == 0) {
+                if (client.Value.clientId == 0) {
                     var spawnPos = firstPlayerSpawn;
                     var characterInstance = Instantiate(character.GameplayPrefab, spawnPos.position, Quaternion.identity);
                     characterInstance.SpawnAsPlayerObject(client.Value.clientId);
@@ -39,10 +38,10 @@ public class CharacterSpawner : NetworkBehaviour
                     Debug.Log(characterInstance.transform.position + "client 0 pos");
 
                     GameManager.Instance.players.Add(characterInstance.gameObject);
-                    characterInstance.gameObject.GetComponent<Player>().playerTeam = client.Value.characterId;
-                    cameras[client.Value.characterId].GetComponent<CameraFollow>().setTarget(characterInstance.gameObject.transform);
+                    characterInstance.gameObject.GetComponent<Player>().playerTeam = (int)client.Value.clientId - 1;
+                    cameras[(int)client.Value.clientId - 1].GetComponent<CameraFollow>().setTarget(characterInstance.gameObject.transform);
                 }
-                if (client.Value.characterId == 1)
+                if (client.Value.clientId == 1)
                 {
                     var spaPos = secondPlayerSpawn;
                     var characterInstance = Instantiate(character.GameplayPrefab, spaPos.position, Quaternion.identity);
@@ -50,8 +49,8 @@ public class CharacterSpawner : NetworkBehaviour
                     Debug.Log(spaPos.position);
                     Debug.Log(characterInstance.transform.position + "client 1 pos");
                     GameManager.Instance.players.Add(characterInstance.gameObject);
-                    characterInstance.gameObject.GetComponent<Player>().playerTeam = client.Value.characterId;
-                    cameras[client.Value.characterId].GetComponent<CameraFollow>().setTarget(characterInstance.gameObject.transform);
+                    characterInstance.gameObject.GetComponent<Player>().playerTeam = (int)client.Value.clientId - 1;
+                    cameras[(int)client.Value.clientId - 1].GetComponent<CameraFollow>().setTarget(characterInstance.gameObject.transform);
 
                     // spawn ball if two players
                     InstantiateBallClientRpc();
