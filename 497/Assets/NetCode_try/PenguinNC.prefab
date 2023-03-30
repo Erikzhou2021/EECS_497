@@ -1487,6 +1487,30 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 19f61d01d0336465ab44969b0b505d3f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b47171ed167c47be9f5e2dd411f7eae, type: 3}
+--- !u!95 &1087846271794436104 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 6b47171ed167c47be9f5e2dd411f7eae, type: 3}
+  m_PrefabInstance: {fileID: 6805602877089441177}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5959161792202004680 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b47171ed167c47be9f5e2dd411f7eae, type: 3}
+  m_PrefabInstance: {fileID: 6805602877089441177}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7531246789597719308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5959161792202004680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 1087846271794436104}
 --- !u!4 &6483180974337655410 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6b47171ed167c47be9f5e2dd411f7eae, type: 3}
