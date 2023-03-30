@@ -56,22 +56,15 @@ public class CharacterSpawner : NetworkBehaviour
                     var sp = firstPlayerSpawn;
                     ball = Instantiate(ballPrefab, sp.position, Quaternion.identity);
                     ball.GetComponent<NetworkObject>().Spawn(true);
-                    InstantiateBallClientRpc();
+                    ulong ballId = ball.GetComponent<NetworkObject>().NetworkObjectId;
+                    Debug.Log(ballId);
+
+                    GameManager.Instance.ball = ball;
+                    GameManager.Instance.StartGame();
                 }
             }
         }
     }
 
-    [ClientRpc]
-    public void InstantiateBallClientRpc()
-    {
-        var sp = firstPlayerSpawn;
-        ball = Instantiate(ballPrefab, sp.position, Quaternion.identity);
-        ball.GetComponent<NetworkObject>().Spawn(true);
-        GameManager.Instance.ball = ball;
-
-        GameManager.Instance.StartGame();
-
-    }
 
 }
