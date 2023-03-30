@@ -59,12 +59,18 @@ public class CharacterSpawner : NetworkBehaviour
                     ulong ballId = ball.GetComponent<NetworkObject>().NetworkObjectId;
                     Debug.Log(ballId);
 
-                    GameManager.Instance.ball = ball;
-                    GameManager.Instance.StartGame();
                 }
             }
         }
+
     }
+    [ClientRpc]
+    public void instantiateClientRpc()
+    {
+        GameManager.Instance.ball = ball;
+        GameManager.Instance.StartGame();
+    }
+
 
 
 }
