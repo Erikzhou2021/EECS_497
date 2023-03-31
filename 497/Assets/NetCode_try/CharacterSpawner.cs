@@ -40,6 +40,8 @@ public class CharacterSpawner : NetworkBehaviour
                     GameManager.Instance.players.Add(characterInstance.gameObject);
                     characterInstance.gameObject.GetComponent<Player>().playerTeam = (int)client.Value.clientId - 1;
                     cameras[(int)client.Value.clientId - 1].GetComponent<CameraFollow>().setTarget(characterInstance.gameObject.transform);
+
+                    instantiatePlayerClientRpc(characterInstance, (int)client.Value.clientId - 1);
                 }
                 if (client.Value.clientId == 2)
                 {
@@ -48,9 +50,13 @@ public class CharacterSpawner : NetworkBehaviour
                     characterInstance.SpawnAsPlayerObject(client.Value.clientId);
                     Debug.Log(spaPos.position);
                     Debug.Log(characterInstance.transform.position + "client 1 pos");
+
                     GameManager.Instance.players.Add(characterInstance.gameObject);
                     characterInstance.gameObject.GetComponent<Player>().playerTeam = (int)client.Value.clientId - 1;
                     cameras[(int)client.Value.clientId - 1].GetComponent<CameraFollow>().setTarget(characterInstance.gameObject.transform);
+
+                    instantiatePlayerClientRpc(characterInstance, (int)client.Value.clientId - 1);
+
 
                     // spawn ball if two players
                     var sp = firstPlayerSpawn;
@@ -73,6 +79,13 @@ public class CharacterSpawner : NetworkBehaviour
         GameManager.Instance.StartGame();
     }
 
+    [ClientRpc]
+    public void instantiatePlayerClientRpc(NetworkObjectReference playerRef, int clientid)
+    {
+        GameManager.Instance.players.Add(((GameObject)playerRef));
+        ((GameObject)playerRef).GetComponent<Player>().playerTeam = clientid;
+        cameras[clientid].GetComponent<CameraFollow>().setTarget(((GameObject)playerRef).transform);
+        Debug.Log("clientid" + clientid);
 
-
+    }
 }
