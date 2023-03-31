@@ -59,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 ballPosition = gm.ball.transform.position;
         if (gm.state == GameState.Serve)
         {
+            Debug.Log("game state is server");
             transform.position = servingPositions[gm.serveCount % servingPositions.Count];
                 animator.SetBool("Serve", true);
         }
@@ -106,6 +107,7 @@ public class PlayerMovement : MonoBehaviour
                 targetPos = new Vector3(transform.position.x, transform.position.y, ballPosition.z + racketOffset);
             }
             transform.position = Vector3.MoveTowards(transform.position, targetPos, movementSpeed * Time.deltaTime);
+            Debug.Log(transform.position);
             animator.SetBool("Serve", false);
         }
 
