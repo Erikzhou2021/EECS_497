@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.Netcode;
 
-public class BallHandler : MonoBehaviour
+public class BallHandler : NetworkBehaviour
 {
     bool hit = false;
     public GameObject ball;
@@ -47,7 +48,7 @@ public class BallHandler : MonoBehaviour
         if (!ball)
         {
             Debug.Log("single player test: ball");
-            ball = GameManager.Instance.ball;
+            //ball = GameManager.Instance.ball;
             ballPhysics = ball.GetComponent<Rigidbody>();
             r = transform.parent.GetComponent<Racket>();
         }
@@ -174,7 +175,7 @@ public class BallHandler : MonoBehaviour
     {
         if (!ball)
         {
-            ball = GameManager.Instance.ball;
+            //ball = GameManager.Instance.ball;
             ballPhysics = ball.GetComponent<Rigidbody>();
             r = transform.parent.GetComponent<Racket>();
         }

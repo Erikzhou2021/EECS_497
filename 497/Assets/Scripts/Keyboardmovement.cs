@@ -24,7 +24,7 @@ using UnityEngine;
         // Update is called once per frame
         void FixedUpdate()
         {
-            if (IsOwner)
+            if (IsLocalPlayer)
             {
                 if (resetCounter > 0)
                 {
