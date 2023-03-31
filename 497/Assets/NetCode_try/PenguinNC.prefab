@@ -186,8 +186,8 @@ GameObject:
   - component: {fileID: 876695894958180730}
   - component: {fileID: -2984790509089041787}
   - component: {fileID: 3149244317999155181}
-  - component: {fileID: 1867284267343766450}
-  - component: {fileID: 7812356524055789631}
+  - component: {fileID: -7151956809162873167}
+  - component: {fileID: -3818612016169383723}
   m_Layer: 0
   m_Name: PenguinNC
   m_TagString: Player
@@ -390,7 +390,7 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &1867284267343766450
+--- !u!114 &-7151956809162873167
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -399,7 +399,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 406901297806643121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53d4177f3abe97b4aac01c3fc3862d21, type: 3}
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 1
@@ -416,7 +416,7 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
---- !u!114 &7812356524055789631
+--- !u!114 &-3818612016169383723
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1362,27 +1362,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &6511747454900558020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 99022075770555790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74e88fa879508d64db9b59236c9585e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ball: {fileID: 0}
-  swingForce: 12
-  rotationSpeed: 300
-  aimStrength: 1
-  bounceHeight: 0
-  bounceSpeed: 0
-  speedCap: 20
-  targetHeight: 1.5
-  racketBounce: {fileID: 8300000, guid: bc142f83f8b4f5e438ebf72c2332e3f2, type: 3}
 --- !u!114 &2825344540163396873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1409,6 +1388,27 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
+--- !u!114 &6511747454900558020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99022075770555790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74e88fa879508d64db9b59236c9585e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 0}
+  swingForce: 12
+  rotationSpeed: 300
+  aimStrength: 1
+  bounceHeight: 0
+  bounceSpeed: 0
+  speedCap: 20
+  targetHeight: 1.5
+  racketBounce: {fileID: 8300000, guid: bc142f83f8b4f5e438ebf72c2332e3f2, type: 3}
 --- !u!4 &726236918694123316 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bbc86e9c1b1e58742ba25ae5a2e481eb, type: 3}

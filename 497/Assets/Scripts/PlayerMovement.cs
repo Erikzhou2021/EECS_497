@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.Netcode;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     //public GameObject ball;
     GameManager gm;
@@ -53,6 +54,16 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()  
     {
+        if (IsLocalPlayer)
+        {
+            plmove();
+            plmoveServerRpc();
+        }
+     
+    }
+
+    private void plmove()
+    {
         racketHeight = transform.GetChild(0).position.y;
         racketOffset = transform.position.z - transform.GetChild(0).position.z;
         Debug.Log("entered fix update");
@@ -61,14 +72,14 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("game state is server");
             transform.position = servingPositions[gm.serveCount % servingPositions.Count];
-                animator.SetBool("Serve", true);
+            animator.SetBool("Serve", true);
         }
         else if (currPlayer.playerTeam != BallBoundary.Instance.playerTurn)
         {
             Vector3 center = new Vector3(8.5f * (currPlayer.playerTeam * 2 - 1), 1, 0); // move toward the center while waiting for opponent to hit the ball
             transform.position = Vector3.MoveTowards(transform.position, center, movementSpeed * Time.deltaTime);
             // should consider moving at different speeds based on how far you have to move?
-                animator.SetBool("Serve", false);
+            animator.SetBool("Serve", false);
         }
         else
         {
@@ -77,8 +88,8 @@ public class PlayerMovement : MonoBehaviour
             // racketHeight = 0.5 * g * t^2 + v0 * t + x0
             Vector3 ballVelocity = gm.ball.GetComponent<Rigidbody>().velocity;
             float v0 = ballVelocity.y;
-            float t1 = (float) (-v0 + Math.Sqrt(v0*v0 - 2 * Physics.gravity.y * (ballPosition.y - racketHeight))) / Physics.gravity.y;
-            float t2 = (float) (-v0 - Math.Sqrt(v0 * v0 - 2 * Physics.gravity.y * (ballPosition.y - racketHeight))) / Physics.gravity.y;
+            float t1 = (float)(-v0 + Math.Sqrt(v0 * v0 - 2 * Physics.gravity.y * (ballPosition.y - racketHeight))) / Physics.gravity.y;
+            float t2 = (float)(-v0 - Math.Sqrt(v0 * v0 - 2 * Physics.gravity.y * (ballPosition.y - racketHeight))) / Physics.gravity.y;
             float t = Math.Max(t1, t2);
 
             Vector3 targetPos = calculateTargetPos(t, ballVelocity);
@@ -140,14 +151,15 @@ public class PlayerMovement : MonoBehaviour
         //    //go right
         //    animator.SetBool("WalkLeft", false);
         //}
-            animator.SetFloat("Direction", transform.position.z - oldPosZ);
-            if(transform.position.z == oldPosZ)
-            {
-                animator.SetBool("Serve", true);
-            }
+        animator.SetFloat("Direction", transform.position.z - oldPosZ);
+        if (transform.position.z == oldPosZ)
+        {
+            animator.SetBool("Serve", true);
+        }
 
         oldPosZ = transform.position.z;
     }
+
     private Vector3 calculateTargetPos(float t, Vector3 ballVelocity)
     {
         Vector3 targetPos = gm.ball.transform.position + ballVelocity * t;
@@ -155,4 +167,12 @@ public class PlayerMovement : MonoBehaviour
         targetPos.z += racketOffset; // might break if the opponent is left handed
         return targetPos;
     }
+
+    [ServerRpc]
+    private void plmoveServerRpc()
+    {
+        plmove();
+    }
+
+
 }
