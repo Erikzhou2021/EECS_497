@@ -26,6 +26,8 @@ public class Racket : NetworkBehaviour
         public AudioClip racketMiss;
         public AudioClip racketBounce;
 
+    public GameObject ball;
+
         void Start()
         {
             lastSwing = 0;
@@ -40,7 +42,8 @@ public class Racket : NetworkBehaviour
         {
             yield return new WaitForSeconds(2);
             bh = racket.GetComponent<BallHandler>();
-            ballPhysics = bh.ball.GetComponent<Rigidbody>();
+        ball = GameObject.Find("Ball(Clone)");
+            ballPhysics = ball.GetComponent<Rigidbody>();
             Input.gyro.enabled = true;
             racket.GetComponent<TrailRenderer>().emitting = false;
             //testing 
@@ -55,7 +58,7 @@ public class Racket : NetworkBehaviour
                 ballPhysics = GameManager.Instance.ball.GetComponent<Rigidbody>();
             }
 
-            if (IsOwner)
+            if (IsLocalPlayer)
             {
                 Quaternion newRot = Input.gyro.attitude;
                 // change from a right handed coordinate system to left handed
