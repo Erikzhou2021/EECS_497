@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
     {
         racketHeight = transform.GetChild(0).position.y;
         racketOffset = transform.position.z - transform.GetChild(0).position.z;
-
+        Debug.Log("entered fix update");
         Vector3 ballPosition = gm.ball.transform.position;
         if (gm.state == GameState.Serve)
         {
