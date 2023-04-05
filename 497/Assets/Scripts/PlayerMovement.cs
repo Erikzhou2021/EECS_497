@@ -57,7 +57,7 @@ public class PlayerMovement : NetworkBehaviour
         if (IsLocalPlayer)
         {
             plmove();
-            plmoveServerRpc();
+           // plmoveServerRpc();
         }
      
     }
