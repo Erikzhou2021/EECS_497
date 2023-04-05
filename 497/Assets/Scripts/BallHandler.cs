@@ -172,21 +172,27 @@ public class BallHandler : NetworkBehaviour
 
         return correction;
     }
+
     public void Serve()
     {
-        if (!ball)
+        if(IsLocalPlayer)
         {
-            //ball = GameManager.Instance.ball;
-            ballPhysics = ball.GetComponent<Rigidbody>();
-            r = transform.parent.GetComponent<Racket>();
+            if (!ball)
+            {
+                //ball = GameManager.Instance.ball;
+                ballPhysics = ball.GetComponent<Rigidbody>();
+                r = transform.parent.GetComponent<Racket>();
+            }
+            if (Time.time - lastServe < 1.5f)
+            {
+                return;
+            }
+            Debug.Log("serve was called");
+            lastServe = Time.time;
+            ballPhysics.position = transform.position + new Vector3(0.3f, 1.2f, 0);
+            ballPhysics.velocity = new Vector3(0, 4.2f, 0);
         }
-        if (Time.time - lastServe < 1.5f)
-        {
-            return;
-        }
-        lastServe = Time.time;
-        ballPhysics.position = transform.position + new Vector3(0.3f, 1.2f, 0);
-        ballPhysics.velocity = new Vector3(0, 4.2f, 0);
+       
     }
     public void StartSwing(float force)
     {
