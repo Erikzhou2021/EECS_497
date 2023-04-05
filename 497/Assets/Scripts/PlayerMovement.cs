@@ -54,11 +54,11 @@ public class PlayerMovement : NetworkBehaviour
     }
     private void FixedUpdate()  
     {
-        if (IsLocalPlayer)
-        {
+        //if (IsLocalPlayer)
+        //{
             
-           // plmoveServerRpc();
-        }
+        //   // plmoveServerRpc();
+        //}
 
         plmove();
 
@@ -170,11 +170,11 @@ public class PlayerMovement : NetworkBehaviour
         return targetPos;
     }
 
-    [ServerRpc]
-    private void plmoveServerRpc()
-    {
-        plmove();
-    }
+    //[ServerRpc]
+    //private void plmoveServerRpc()
+    //{
+    //    plmove();
+    //}
 
 
 }
