@@ -57,7 +57,6 @@ public class CharacterSpawner : NetworkBehaviour
 
                     instantiatePlayerClientRpc(characterInstance, (int)client.Value.clientId - 1);
 
-
                     // spawn ball if two players
                     var sp = firstPlayerSpawn;
                     ball = Instantiate(ballPrefab, sp.position, Quaternion.identity);
@@ -65,10 +64,8 @@ public class CharacterSpawner : NetworkBehaviour
                     //ulong ballId = ball.GetComponent<NetworkObject>().NetworkObjectId;
                     //Debug.Log(ballId);
                     GameManager.Instance.ball = ball;
-                    if(IsClient)
-                    {
                         instantiateClientRpc(ball);
-                    }
+
                     
 
                 }
@@ -79,7 +76,7 @@ public class CharacterSpawner : NetworkBehaviour
     [ClientRpc]
     public void instantiateClientRpc(NetworkObjectReference ballRef)
     {
-        GameManager.Instance.ball = ballRef;
+        GameManager.Instance.ball = (GameObject)ballRef;
         GameManager.Instance.StartGame();
     }
 
