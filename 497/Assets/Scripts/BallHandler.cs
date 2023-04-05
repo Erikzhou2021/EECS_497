@@ -39,7 +39,8 @@ public class BallHandler : NetworkBehaviour
     IEnumerator setVars()
     {
         yield return new WaitForSeconds(1);
-        ball = GameObject.Find("Ball(Clone)");
+        //ball = NetworkServer.FindLocalObject(netId);
+
         ballPhysics = ball.GetComponent<Rigidbody>();
     }
 
