@@ -56,16 +56,13 @@ public class PlayerMovement : NetworkBehaviour
     {
         //if (IsLocalPlayer)
         //{
-            
+
         //   // plmoveServerRpc();
         //}
 
-        plmove();
+        //plmove();
 
-    }
 
-    private void plmove()
-    {
         racketHeight = transform.GetChild(0).position.y;
         racketOffset = transform.position.z - transform.GetChild(0).position.z;
         Debug.Log("entered fix update");
@@ -160,6 +157,12 @@ public class PlayerMovement : NetworkBehaviour
         }
 
         oldPosZ = transform.position.z;
+
+    }
+
+    private void plmove()
+    {
+        
     }
 
     private Vector3 calculateTargetPos(float t, Vector3 ballVelocity)
