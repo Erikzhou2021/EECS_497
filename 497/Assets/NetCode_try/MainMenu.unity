@@ -925,7 +925,7 @@ MonoBehaviour:
   m_MaxConnectAttempts: 60
   m_DisconnectTimeoutMS: 30000
   ConnectionData:
-    Address: 35.2.175.108
+    Address: 192.168.1.18
     Port: 7777
     ServerListenAddress: 
   DebugSimulator:

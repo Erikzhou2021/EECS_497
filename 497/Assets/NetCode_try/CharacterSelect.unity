@@ -723,6 +723,12 @@ MonoBehaviour:
   state: 1
   serveCount: 0
   pauseGame: 0
+  newMatch: 0
+  endGame: 0
+  match: 0
+  lead: 0
+  animator1: {fileID: 0}
+  animator2: {fileID: 0}
 --- !u!4 &342865876
 Transform:
   m_ObjectHideFlags: 0
@@ -754,6 +760,9 @@ MonoBehaviour:
   stateDisplay: {fileID: 192771199}
   stateDisplayObj: {fileID: 687609849}
   bannerDisplayObj: {fileID: 1579492783}
+  endPanel: {fileID: 0}
+  endCamera: {fileID: 0}
+  winTransform: {fileID: 0}
 --- !u!1 &427441182
 GameObject:
   m_ObjectHideFlags: 0
@@ -1429,8 +1438,8 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.43004346, g: 0.26312745, b: 0.6886792, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1596,6 +1605,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5704990dbe2b34817bb190c39ac34fb4, type: 3}
       propertyPath: m_Name
       value: tennisNet
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5704990dbe2b34817bb190c39ac34fb4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5704990dbe2b34817bb190c39ac34fb4, type: 3}
@@ -2534,7 +2547,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &2021048717
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3089,6 +3102,18 @@ PrefabInstance:
       propertyPath: m_text
       value: Select
       objectReference: {fileID: 0}
+    - target: {fileID: 1213653643007462946, guid: 6881e47c61ebd4928bfbeb2d8329f184, type: 3}
+      propertyPath: m_text
+      value: chara name
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213653643007462946, guid: 6881e47c61ebd4928bfbeb2d8329f184, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: b656cb4e2164a484aad3edef3d6cbd14, type: 2}
+    - target: {fileID: 1213653643007462946, guid: 6881e47c61ebd4928bfbeb2d8329f184, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -418382958040647907, guid: b656cb4e2164a484aad3edef3d6cbd14, type: 2}
     - target: {fileID: 1305141499103561775, guid: 6881e47c61ebd4928bfbeb2d8329f184, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -3185,6 +3210,14 @@ PrefabInstance:
       propertyPath: m_text
       value: Player 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4800376111776120311, guid: 6881e47c61ebd4928bfbeb2d8329f184, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 1ae2adfbbc716f44eb51ffa5c2fad51f, type: 2}
+    - target: {fileID: 4800376111776120311, guid: 6881e47c61ebd4928bfbeb2d8329f184, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8282421539423660191, guid: 1ae2adfbbc716f44eb51ffa5c2fad51f, type: 2}
     - target: {fileID: 4923167946237648079, guid: 6881e47c61ebd4928bfbeb2d8329f184, type: 3}
       propertyPath: m_Name
       value: CharacterNameText
@@ -3208,6 +3241,10 @@ PrefabInstance:
     - target: {fileID: 5967113179316772603, guid: 6881e47c61ebd4928bfbeb2d8329f184, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7289009609542640613, guid: 6881e47c61ebd4928bfbeb2d8329f184, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -14
       objectReference: {fileID: 0}
     - target: {fileID: 7481950067244173583, guid: 6881e47c61ebd4928bfbeb2d8329f184, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3257,6 +3294,18 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8756844178377102470, guid: 6881e47c61ebd4928bfbeb2d8329f184, type: 3}
+      propertyPath: m_text
+      value: chara name
+      objectReference: {fileID: 0}
+    - target: {fileID: 8756844178377102470, guid: 6881e47c61ebd4928bfbeb2d8329f184, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: b656cb4e2164a484aad3edef3d6cbd14, type: 2}
+    - target: {fileID: 8756844178377102470, guid: 6881e47c61ebd4928bfbeb2d8329f184, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -418382958040647907, guid: b656cb4e2164a484aad3edef3d6cbd14, type: 2}
     - target: {fileID: 8884906812575093387, guid: 6881e47c61ebd4928bfbeb2d8329f184, type: 3}
       propertyPath: m_IsActive
       value: 1

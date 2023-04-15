@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   displayName: Penguin
-  icon: {fileID: 21300000, guid: 372e7b39fc8f34549ac25d8757965a2c, type: 3}
+  icon: {fileID: 21300000, guid: efffbbee8f153004caf8c708f9936596, type: 3}
   introPrefab: {fileID: 406901297806643121, guid: 24d27c358e6394db89ce8b3885e2f81a, type: 3}
   gameplayPrefab: {fileID: 3149244317999155181, guid: f15e6c5d3771c484f80e53210c6b4716, type: 3}
