@@ -242,7 +242,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a9395b58be925f64b96511c16e6e4334, type: 2}
+  - {fileID: 2100000, guid: 5be0057a39c6dad4398cf72e93d48fc9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1362,27 +1362,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &6511747454900558020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 99022075770555790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74e88fa879508d64db9b59236c9585e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ball: {fileID: 0}
-  swingForce: 12
-  rotationSpeed: 300
-  aimStrength: 1
-  bounceHeight: 0
-  bounceSpeed: 0
-  speedCap: 20
-  targetHeight: 1.5
-  racketBounce: {fileID: 8300000, guid: bc142f83f8b4f5e438ebf72c2332e3f2, type: 3}
 --- !u!114 &3526338444152154922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1409,6 +1388,27 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
+--- !u!114 &6511747454900558020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99022075770555790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74e88fa879508d64db9b59236c9585e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 0}
+  swingForce: 12
+  rotationSpeed: 300
+  aimStrength: 1
+  bounceHeight: 0
+  bounceSpeed: 0
+  speedCap: 20
+  targetHeight: 1.5
+  racketBounce: {fileID: 8300000, guid: bc142f83f8b4f5e438ebf72c2332e3f2, type: 3}
 --- !u!4 &726236918694123316 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bbc86e9c1b1e58742ba25ae5a2e481eb, type: 3}
@@ -1713,7 +1713,7 @@ PrefabInstance:
     - target: {fileID: 4112984690662791721, guid: 11b1bac1e1c7e40efb688e812072af50, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 6ab2193343f33ae47908a2de1a1750a9, type: 2}
+      objectReference: {fileID: 2100000, guid: 5be0057a39c6dad4398cf72e93d48fc9, type: 2}
     - target: {fileID: 5866666021909216657, guid: 11b1bac1e1c7e40efb688e812072af50, type: 3}
       propertyPath: m_Controller
       value: 
