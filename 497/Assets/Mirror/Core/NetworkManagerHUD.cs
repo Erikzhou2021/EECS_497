@@ -51,6 +51,13 @@ namespace Mirror
             GUILayout.EndArea();
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                manager.StartHost();
+            }
+        }
         void StartButtons()
         {
             if (!NetworkClient.active)
