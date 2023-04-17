@@ -57,21 +57,21 @@ namespace Mirror
 
             if (isLocalPlayer)
             {
-                Quaternion newRot = Input.gyro.attitude;
-                // change from a right handed coordinate system to left handed
-                float temp = newRot.y;
-                newRot.x *= -1;
-                newRot.y = -newRot.z;
-                newRot.z = -temp;
+                //Quaternion newRot = Input.gyro.attitude;
+                //// change from a right handed coordinate system to left handed
+                //float temp = newRot.y;
+                //newRot.x *= -1;
+                //newRot.y = -newRot.z;
+                //newRot.z = -temp;
 
-                newRot *= Quaternion.Euler(-90,180,90); // offset to make the racket start in the correct spot
-                //racket.transform.localRotation = Quaternion.Slerp(racket.transform.rotation, newRot, 5f * Time.deltaTime);
-                if (Quaternion.Angle(racket.transform.rotation, newRot) > 3f)
-                {
-                    racket.transform.rotation = newRot;
-                }
-                //debugText.text = Input.gyro.attitude.eulerAngles.ToString();
-                float upForce = Vector3.Dot(Input.gyro.userAcceleration, Vector3.Normalize(Input.gyro.gravity));
+                //newRot *= Quaternion.Euler(-90,180,90); // offset to make the racket start in the correct spot
+                ////racket.transform.localRotation = Quaternion.Slerp(racket.transform.rotation, newRot, 5f * Time.deltaTime);
+                //if (Quaternion.Angle(racket.transform.rotation, newRot) > 3f)
+                //{
+                //    racket.transform.rotation = newRot;
+                //}
+                ////debugText.text = Input.gyro.attitude.eulerAngles.ToString();
+                //float upForce = Vector3.Dot(Input.gyro.userAcceleration, Vector3.Normalize(Input.gyro.gravity));
 
                 if (Time.time - lastSwing >= swingTime)
                 {
@@ -96,6 +96,7 @@ namespace Mirror
                     if (p.forehand && Mathf.Abs(racket.transform.localPosition.z + 1.5f) <= rotateAmount)
                     {
                         racket.transform.localPosition = new Vector3(0, 0, -1.5f);
+                        racket.transform.rotation = Quaternion.Euler(0, 90, 120);
                     }
                     else if (!p.forehand && Mathf.Abs(racket.transform.localPosition.z - 1.5f) <= rotateAmount)
                     {
@@ -107,17 +108,17 @@ namespace Mirror
                         racket.transform.RotateAround(transform.position, new Vector3(0, 1, 0), rotationSpeed * Time.deltaTime);
                     }
                 }
-                else if (upForce > 0.3f && GameManager.Instance.state == GameState.Serve) // need to make this take multiple frames to detect
-                {
-                    // lmao dont look, resetting all variables 
-                    BallBoundary.Instance.touchedGroundOnceOut = false;
-                    BallBoundary.Instance.scoreStop = false;
-                    BallBoundary.Instance.bouncedInOpponentCourtOnce = false;
-                    BallBoundary.Instance.playerTurn = GetComponent<Player>().playerTeam;
-                    ballPhysics.GetComponent<Rigidbody>().useGravity = true;
+                //else if (upForce > 0.3f && GameManager.Instance.state == GameState.Serve) // need to make this take multiple frames to detect
+                //{
+                //    // lmao dont look, resetting all variables 
+                //    BallBoundary.Instance.touchedGroundOnceOut = false;
+                //    BallBoundary.Instance.scoreStop = false;
+                //    BallBoundary.Instance.bouncedInOpponentCourtOnce = false;
+                //    BallBoundary.Instance.playerTurn = GetComponent<Player>().playerTeam;
+                //    ballPhysics.GetComponent<Rigidbody>().useGravity = true;
 
-                    bh.Serve();
-                }
+                //    bh.Serve();
+                //}
                 else if (!isSwingingBack && Input.gyro.userAcceleration.magnitude > 2) // need to test if this stops you from spamming swing
                 {
                     float force = Input.acceleration.magnitude - 2;
