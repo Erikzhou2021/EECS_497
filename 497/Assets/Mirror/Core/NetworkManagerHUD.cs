@@ -1,6 +1,7 @@
 // vis2k: GUILayout instead of spacey += ...; removed Update hotkeys to avoid
 // confusion if someone accidentally presses one.
 using UnityEngine;
+using UnityEngine.iOS;
 
 namespace Mirror
 {
@@ -55,7 +56,11 @@ namespace Mirror
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                manager.StartHost();
+                manager.StartServer();
+            }
+            if(Input.touchCount > 0)
+            {
+                manager.StartClient();
             }
         }
         void StartButtons()
