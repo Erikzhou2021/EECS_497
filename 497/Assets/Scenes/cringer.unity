@@ -2389,8 +2389,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2767,6 +2767,31 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 5db33af81742ff248aefca57cea31717, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &938984982 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6686617178380152834, guid: 90444a16219b6d842b7420a95de79094, type: 3}
+  m_PrefabInstance: {fileID: 4003234151722092277}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &938984989
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938984982}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8d2d7f4f31e9d4345973f8a625e69d0f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5049,6 +5074,26 @@ PrefabInstance:
     - target: {fileID: 3913179119035664497, guid: 90444a16219b6d842b7420a95de79094, type: 3}
       propertyPath: sceneId
       value: 3039681868
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305165136595249848, guid: 90444a16219b6d842b7420a95de79094, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.14246258
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305165136595249848, guid: 90444a16219b6d842b7420a95de79094, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.8532621
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305165136595249848, guid: 90444a16219b6d842b7420a95de79094, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.39788264
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305165136595249848, guid: 90444a16219b6d842b7420a95de79094, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.30551204
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305165136595249848, guid: 90444a16219b6d842b7420a95de79094, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 140.6
       objectReference: {fileID: 0}
     - target: {fileID: 8133429099965458666, guid: 90444a16219b6d842b7420a95de79094, type: 3}
       propertyPath: m_RootOrder
