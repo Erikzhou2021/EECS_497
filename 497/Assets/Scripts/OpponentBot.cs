@@ -13,6 +13,8 @@ public class OpponentBot : MonoBehaviour
     public float aimStrength = 1;
     public float speedCap = 20;
     public float targetHeight = 1.5f;
+    public AudioClip racketMiss;
+    bool isSwingingBack = false;
 
     public AudioClip racketBounce;
 
@@ -31,9 +33,9 @@ public class OpponentBot : MonoBehaviour
             ball = GameManager.Instance.ball;
             ballPhysics = ball.GetComponent<Rigidbody>();
         }
-        if (Time.time - lastSwing <= 1)
+        if (Time.time - lastSwing >= 0.35)
         {
-            return;
+            isSwinging = false;
         }
 
         bool isInFront = ballPhysics.position.x <= transform.position.x;
@@ -43,10 +45,41 @@ public class OpponentBot : MonoBehaviour
         if (isInFront && isCloseEnough)
         {
             lastSwing = Time.time;
+            isSwinging = true;
             AudioManager.Instance.Play(racketBounce);
+            isSwingingBack = true;
             HitBall();
         }
-        
+
+        if(isSwinging)
+        {
+            Debug.Log("entered if statement");
+            transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), -250 * Time.deltaTime);
+            //if (!AudioManager.Instance.EffectsSource.isPlaying)
+            //{
+            if (!(AudioManager.Instance.EffectsSource.isPlaying && AudioManager.Instance.EffectsSource.clip == racketBounce))
+                AudioManager.Instance.Play(racketMiss);
+        }
+        else if (isSwingingBack)
+        {
+            Debug.Log("is swinging back");
+            transform.GetComponent<TrailRenderer>().emitting = false;
+            isSwingingBack = false;
+            float rotateAmount = Mathf.Abs(Mathf.Cos(250 * Time.deltaTime * Mathf.Deg2Rad));
+            Debug.Log(rotateAmount);
+            if (Mathf.Abs(transform.localPosition.z + 1.5f) <= rotateAmount)
+            {
+                Debug.Log(transform.localPosition);
+                transform.localPosition = new Vector3(0, 0, -1.5f);
+                transform.rotation = Quaternion.Euler(0, -90, 120);
+               
+            }
+            else
+            {
+                isSwingingBack = true;
+                transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), 250 * Time.deltaTime);
+            }
+        }
     }
 
     void HitBall()
@@ -85,4 +118,5 @@ public class OpponentBot : MonoBehaviour
     {
         return isSwinging;
     }
+
 }
